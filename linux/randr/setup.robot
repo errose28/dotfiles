@@ -7,9 +7,11 @@
 
 *** Settings ***
 Library    DotfilesLibrary
+Default Tags    arch
 
 *** Tasks ***
-Install
+Arch Install
+    [Tags]    arch
     # Should install evdi driver.
     Yay Install    displaylink
 

@@ -11,9 +11,11 @@
 
 *** Settings ***
 Library    DotfilesLibrary
+Default Tags    arch
 
 *** Tasks ***
-Install
+Arch Install
+    [Tags]    arch
     # Main audio drivers and control panel.
     Pacman Install
     ...    pavucontrol

@@ -1,8 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
+Default Tags    arch
 
 *** Tasks ***
 Install
+    [Tags]    arch
     Yay Install    i3-gaps
 
     # Used for gestures.

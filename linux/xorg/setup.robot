@@ -1,8 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
+Default Tags    arch
 
 *** Tasks ***
-Install
+Arch Install
+    [Tags]    arch
     Pacman Install
         ...    xorg-server
         ...    xorg-xinit
