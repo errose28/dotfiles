@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+x="$(yabai -m query --windows --window | jq '.frame.x + .frame.w / 2 | floor')"
+y="$(yabai -m query --windows --window | jq '.frame.y + .frame.h / 2 | floor')"
+
+cliclick m:"$x","$y"

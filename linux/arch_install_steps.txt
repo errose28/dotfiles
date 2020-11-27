@@ -1,0 +1,152 @@
+# Documents the install process of arch linux with lts kernel on a GPT/EFI system dual booted with Windows.
+
+# Things in <braces> are meant to be manually replaced.
+# Lines beginning with # are comment explanations.
+
+# Before following these instructions:
+#
+# 1. Partition the disk using a gparted bootable drive.
+#   - Leave an empty space for Windows (do not format it). Windows wants to create and format its own NTFS partitions.
+#   - Format all other non-Windows parititons as desired.
+# 2. Make sure that the computer is set to boot in UEFI mode.
+# 3. Install Windows into the empty space using a bootable drive.
+#   - This will create the EFI parititon.
+
+### STEPS TO BE RUN FROM HOST (usb) ###
+
+# Can connect to wifi with wifi-menu, but this goes away once you arch-chroot in.
+# Use result of ping www.google.com to check for internet access.
+
+# To list all partitions:
+#   - lsblk -o name,mountpoint,label,size,uuid
+# root is the arch partition, which should be /dev/sda<X>
+mount <root> /mnt
+# Make sure EFI partition (/dev/sda<Y>, called esp here) is mounted as /boot the whole time so things are installed in the right place.
+mount <esp> /mnt/boot
+
+# Move any guides or resources you are reading from the host to the target's root directory.
+cp <guides> /mnt
+
+# Set up Mirror List on usb host for pacstrap.
+# pacstrap will copy this mirror list to the target.
+pacman -Syu
+pacman -S reflector
+reflector -c "US" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
+
+# Install everything needed on this line while we have wifi.
+# Remove the '-lts' from package names if not using an lts kernel.
+pacstrap /mnt base base-devel vim linux-lts linux-headers-lts \
+linux-firmware dhcpcd \ # For wifi.
+ntfs-3g \ # For mounting windows.
+ranger \ # For easier file browsing in terminal.
+git # For retrieving public dotfiles and guides.
+
+# From host, generate fstab file.
+# This should add an entry for the arch partition at /, and one for the EFI partition at /boot.
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Switch from the host to the target.
+arch-chroot /mnt
+
+### STEPS TO BE RUN FROM THE TARGET (the computer) ###
+
+# SANITY CHECKS
+# Make sure you are booted in EFI mode:
+#   - ls /sys/firmware/efi/efivars
+# Make sure that the EFI partition is mounted to /boot with lsblk.
+# To list all partitions and mountpoints:
+#   - lsblk -o name,mountpoint,label,size,uuid
+
+# Set locale and timezone
+# Use timedatectl list-timezones to list the options
+timedatectl set-timezone <timezone>
+# Allow system to update time via the network.
+timedatectl set-ntp true
+
+# Open this file and uncomment en_US.UTF-8
+vim /etc/locale.gen
+
+# Run these commands:
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+# Set timezone.
+# Can browse /usr/share/zoneinfo for options to change this.
+ln -sf /usr/share/zoneinfo/US/Eastern etc/localtime
+# Set hardware clock to use UTC:
+hwclock --systohc
+
+# Choose the host name to use.
+echo <hostname> > /etc/hostname
+
+# Add to /etc/hosts:
+# 127.0.0.1 localhost
+# ::1 localhost
+# 127.0.0.1 <hostname>
+vim /etc/hosts
+
+# Set password for root user.
+passwd
+
+# Create new group for plugable usb device permissions.
+groupadd plugdev
+
+# Add a user account for yourself, and add yourself to groups.
+# video group allows xbacklight modification.
+useradd -mG wheel,users,plugdev,video -s /bin/bash <username>
+passwd <username>
+
+# Give your user the ability to use sudo.
+# Set to tell visudo which editor to use.
+export EDITOR=vim
+# The line 'root ALL=(ALL) ALL' should be present in the file currently.
+# Copy the line, and change 'root' to your username.
+visudo
+
+# Wifi
+# Enable IP assignment when logging in.
+systemctl enable --now dhcpcd
+# Can use lspci -k to check that a Network Controller exists.
+# Use ip link to get the name of the wifi interface (usually begins with 'wlp').
+ip link set <interface> up
+
+# Allow mounting ntfs (windows) formatted drives:
+# Uncomment the allow_other_user line in /etc/fuse.conf.
+
+# Configure systemd-boot EFI bootloader, which comes with Arch.
+# systemd-boot will automatically detect Windows partitions, but needs to be configured for arch.
+bootctl --path=/boot install
+
+# Place the following in /boot/loader/loader.conf (config for all of systemd-boot)
+# The default name 'arch' corresponds to the /boot/loader/entries/arch.conf file.
+default arch
+timeout 5
+editor no
+
+# Place the following in /boot/loader/entries/arch.conf (config for arch boot entry)
+# Get the partition uuid of arch partition using lsblk.
+# Make sure that the /vmlinuz-linux-lts and /initramfs-linux-lts.img files exist in /boot.
+title Arch Linux
+linux /vmlinuz-linux-lts
+initrd /initramfs-linux-lts.img
+options root=PARTUUID=<partuuid>
+
+# Run to update systemd-boot settings.
+bootctl --path=/boot update
+
+# Make a swapfile.
+# 4G is 4 gibibytes swapfile.
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile none swap defaults 0 0" >> /etc/fstab
+# Set how much to favor swap (0 to avoid at all costs, 100 to highly favor)
+# Check swappiness by running `sysctl vm.swappiness`
+echo "vm.swappiness=10" > /etc/sysctl.d/99-swappiness.conf
+
+# Leave target and return to host.
+exit
+
+### STEPS TO BE RUN FROM HOST (usb) ###
+
+reboot

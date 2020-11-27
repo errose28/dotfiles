@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+all_ids="$(get-win-ids-in-screen-space)"
+unmaximized_ids=''
+    
+# Determine whether all windows are maximized or not.
+# If any windows are unmaximized, maximize them here.
+for id in $all_ids; do
+    # TODO : Make sure window title is not "Cisco AnyConnect Secure Mobility Client"
+    maximized_result="$(yabai -m query --windows --window "$id" | jq '."zoom-fullscreen"')"
+
+    # If window not maxed, max it.
+    if [ "$maximized_result" = 0 ]; then
+        echo "Maximizing $id"
+        yabai -m window "$id" --toggle zoom-fullscreen
+        unmaximized_ids="$unmaximized_ids $id"
+    fi
+done
+
+# Else if no unmaximized windows were found, unmaximize all of them.
+if [ ! "$unmaximized_ids" ]; then
+    for id in $all_ids; do
+        echo "unmaximizing $id"
+        yabai -m window "$id" --toggle zoom-fullscreen
+    done
+fi
+

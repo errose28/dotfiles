@@ -1,0 +1,44 @@
+# Any commands using yabai will not work when started with brew services.
+# Any commands using custom scripts will not work unless manually started from terminal.
+
+# Misc
+alt - z:
+    toggle-focus-follows-mouse
+
+# Causes computer to freeze for some reason.
+#alt - c:
+#    clear-all-notifications
+
+alt - q:
+    close-or-quit-focused
+
+alt + shift - q:
+    quit-all-apps
+
+cmd + alt + shift - s:
+    user-sleep
+
+cmd + alt + shift - g:
+    user-logout
+
+cmd + alt + shift - l:
+    user-lock
+
+# Open terminal apps.
+alt - return:
+    open -na Alacritty
+
+alt + shift - return:
+    open -na Alacritty --args -e /usr/local/bin/bash ranger
+
+# Switch space (on same display).
+alt + cmd - h:
+    skhd -k "ctrl - left"
+alt + cmd - l:
+    skhd -k "ctrl - right"
+    
+alt - d:
+    open -na launchpad
+
+alt - space:
+    open-mission-control

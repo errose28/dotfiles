@@ -1,0 +1,41 @@
+[global]
+show_icons = left
+alignment = center
+follow = keyboard
+frame_width = 0
+# Align to bottom right corner of window.
+# Allow notification to auto-size based on text.
+geometry = 0x0-4-29
+padding = 10
+horizontal_padding = 10
+font = FiraSans 16
+separator_color = "#383838"
+frame_color = "#ffffff"
+word_wrap = true
+format = " <b>%s</b>\n %b"
+markup = yes
+# Transparency on range [0, 100]
+transparency = 30
+mouse_left_click = do_action
+mouse_right_click = close_current
+
+[shortcuts]
+close = ctrl+space
+close_all = ctrl+shift+space
+history = ctrl+grave
+context = ctrl+shift+period
+
+[urgency_low]
+timeout = 10
+background = "#000000"
+foreground = "#a6a6a6"
+
+[urgency_normal]
+timeout = 10
+background = "#000000"
+foreground = "#a6a6a6"
+
+[urgency_critical]
+background = "#a54242"
+foreground = "#ffffff"
+timeout = 0

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+note_id=111
+
+if [ "$(xset -q | grep "Caps Lock:   off")" ]
+then
+    dunstify --close="$note_id"
+elif [ "$(xset -q | grep "Caps Lock:   on")" ]
+then
+    # If a notification with this ID already exists, this will replace it.
+    dunstify -u critical --replace="$note_id" 'CAPSLOCK ON'
+fi
+

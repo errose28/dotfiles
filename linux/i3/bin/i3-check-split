@@ -1,0 +1,11 @@
+#!/bin/sh
+
+note_id=222
+
+i3_split_type () {
+    i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout'
+}
+
+dunstify --close="$note_id"
+dunstify --replace="$note_id" "$(i3_split_type)"
+

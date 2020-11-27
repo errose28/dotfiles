@@ -1,0 +1,6 @@
+#! /usr/bin/env sh
+
+dest="$(realpath "$1")"
+
+mkdir -p ~/Shortcuts
+ln -sv "$dest" ~/Shortcuts

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if bluetoothctl show | grep -q 'Powered: yes'
+then
+    if bluetoothctl info | grep -q 'Connected: yes'
+    then
+        # Connected icon.
+        echo ''
+    fi
+
+    # On but disconnected icon.
+    echo ''
+else
+    # Off icon.
+    echo ''
+fi

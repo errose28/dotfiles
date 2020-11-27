@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+mouse_pos="$(cliclick p)"
+cliclick m:0,0
+yabai -m space --toggle mission-control
+cliclick m:"$mouse_pos"

@@ -1,0 +1,69 @@
+#!/usr/bin/env sh
+
+# Logs:
+# stderr: /usr/local/var/log/yabai/yabai.err.log
+# stdout: /usr/local/var/log/yabai/yabai.out.log
+
+### MOUSE SETTINGS ###
+
+yabai -m config mouse_modifier               fn
+# Left click.
+yabai -m config mouse_action1                move
+# Right click.
+yabai -m config mouse_action2                resize
+# Disabled while mouse modifier is held.
+yabai -m config focus_follows_mouse          autofocus
+yabai -m config mouse_follows_focus          on
+
+# Add new windows to right and bottom.
+yabai -m config window_placement             second_child
+# Make floating windows stay on top.
+yabai -m config window_topmost               on
+
+### WINDOW EFFECTS ###
+
+yabai -m config window_shadow                off
+yabai -m config window_opacity               off
+# yabai -m config window_opacity_duration      0.0
+# yabai -m config active_window_opacity        1.0
+# yabai -m config normal_window_opacity        0.90
+
+### WINDOW BORDERS ###
+
+yabai -m config window_border                off
+# yabai -m config window_border_width          6
+# yabai -m config active_window_border_color   0xff775759
+# yabai -m config normal_window_border_color   0xff555555
+
+### GAPS AND PADDING ###
+
+# Space between window and each edge of screen.
+yabai -m config top_padding                  0
+yabai -m config bottom_padding               0
+yabai -m config left_padding                 0
+yabai -m config right_padding                0
+# Space between windows.
+yabai -m config window_gap                   5
+
+### RULES ###
+
+# TODO : If the workspace is already floating, this will tile it. want it to float always.
+# yabai -m signal --add event=application_launched app='System Preferences' action='toggle-float-focused'
+
+# yabai -m signal --add event=mission_control_enter action='/usr/local/bin/cliclick -r m:0,0'
+
+
+### MISC SETTINGS ###
+
+# yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config auto_balance                 off
+yabai -m config layout                       bsp
+
+### CUSTOM STATUS BAR SETTINGS ###
+
+# add 20 padding to the top and 0 padding to the bottom of every space located on the main display
+# yabai -m config external_bar main:20:0
+# add 20 padding to the top and bottom of all spaces regardless of the display it belongs to
+# yabai -m config external_bar all:20:20
+
+echo "yabai configuration loaded..."

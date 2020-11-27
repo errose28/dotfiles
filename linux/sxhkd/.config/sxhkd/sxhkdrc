@@ -1,0 +1,76 @@
+# button4 = scroll down
+# button5 = scroll up
+# button6 = scroll right
+# button7 = scroll left
+
+# To make sxhkd reload its config file: pkill -USR1 -x sxhkd
+
+# General Commands:
+Caps_Lock
+    check-caps-lock
+
+@Caps_Lock
+    check-caps-lock
+
+super + Return
+    $PREF_TERM
+
+# Kills all polybars and relaunches them.
+super + shift + p
+    launch-polybars
+
+# Force setting the title so it ends up in the correct i3 workspace.
+super + shift + Return
+    $PREF_TERM --title ranger -e ranger
+
+super + m
+    toggle-trackpad-enabled
+
+# autorandr does not manually detect docked monitor for some reason.
+# Force the detection here.
+super + shift + d
+    autorandr --change docked
+
+# Generic autorandr refresh.
+# force trigers the refresh even if the setup hasn't changed.
+super + shift + m
+    autorandr --change --force
+
+# Rofi Commands:
+super + x
+    power-menu
+
+super + d
+    rofi -no-show-match -modi drun -show drun -theme launcher_theme
+
+super + shift + w
+    rofi -no-show-match -show window -theme window_switcher_theme
+
+# Volume Controls:
+
+# @DEFAULT_SINK@ tells pactl to use the default sink instead of specifying a name/index.
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86Audio{Raise,Lower}Volume
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+# Scroll for volume.
+super + {button5,button4}
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+super + {button6,button7}
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+# Screen Brightness Commands:
+
+XF86MonBrightness{Up,Down}
+   xbacklight {-inc,-dec} 5
+
+# Scroll for screen brightness.
+super + shift + {button5,button4}
+   xbacklight {-inc,-dec} 5
+
+super + shift + {button6,button7}
+   xbacklight {-inc,-dec} 5
+

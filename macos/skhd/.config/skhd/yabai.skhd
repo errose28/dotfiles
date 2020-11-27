@@ -1,0 +1,107 @@
+# Most commands only work when skhd is started manually, not via brew services.
+
+### MOVE FOCUS ###
+
+# Swap window focus.
+alt - h:
+    yabai -m window --focus west
+alt - j:
+    yabai -m window --focus south
+alt - k:
+    yabai -m window --focus north
+alt - l:
+    yabai -m window --focus east
+
+# Swap display focus.
+alt + cmd - k:
+    yabai -m display --focus north
+alt + cmd - j:
+    yabai -m display --focus south
+
+### MOVE WINDOWS ###
+
+# Move window within space.
+alt + shift - h:
+    yabai -m window --warp west && center-mouse-in-focused
+alt + shift - j:
+    yabai -m window --warp south && center-mouse-in-focused
+alt + shift - k:
+    yabai -m window --warp north && center-mouse-in-focused
+alt + shift - l:
+    yabai -m window --warp east && center-mouse-in-focused
+
+# Move windows to other screen.
+alt + cmd + shift - k:
+    yabai -m window --display north && center-mouse-in-focused
+
+alt + cmd + shift - j:
+    yabai -m window --display south && center-mouse-in-focused
+
+# Move window to other space and focus it.
+# Note that the only space options that work are specifying numbers.
+alt + cmd + shift - 1:
+    yabai -m window --space 1; \
+    skhd -k "ctrl - 1"
+alt + cmd + shift - 2:
+    yabai -m window --space 2; \
+    skhd -k "ctrl - 2"
+alt + cmd + shift - 3:
+    yabai -m window --space 3; \
+    skhd -k "ctrl - 3"
+
+# Move where next window is inserted.
+# Press again to turn off animation.
+alt - left:
+    yabai -m window --insert west
+alt - right:
+    yabai -m window --insert east
+alt - up:
+    yabai -m window --insert north
+alt - down:
+    yabai -m window --insert south
+
+# Makes all vertical splits horizontal and vice versa.
+alt - s:
+    yabai -m window --toggle split && center-mouse-in-focused
+
+### MAXIMIZE MINIMIZE FLOAT WINDOWS ###
+
+# Toggle floating window to center of screen.
+alt - f:
+    toggle-float-focused && center-mouse-in-focused
+
+# Maximize focused window.
+# 0x18 is key code for +.
+alt - 0x18:
+    yabai -m window --layer above; \
+    yabai -m window --toggle zoom-fullscreen; \
+    yabai -m window --focus
+
+# Fullscreen focused window.
+# 0x18 is key code for +.
+alt + shift - 0x18:
+    yabai -m window --toggle native-fullscreen
+
+# Mimize focused window.
+# 0x1B is key code for minus.
+alt - 0x1B:
+    yabai -m window --minimize
+
+alt - r:
+    yabai -m space --rotate 90 && center-mouse-in-focused
+
+### SPACE CONTROLS ###
+
+# Restore default tiling divisions after dragging.
+alt - b:
+    yabai -m space --balance && center-mouse-in-focused
+
+# Mirroring (flips window ordering about axis).
+alt - x:
+    yabai -m space --mirror y-axis && center-mouse-in-focused
+alt - y:
+    yabai -m space --mirror x-axis && center-mouse-in-focused
+
+alt - a:
+    toggle-stack-layout && center-mouse-in-focused
+

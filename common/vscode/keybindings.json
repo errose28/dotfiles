@@ -1,0 +1,42 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+// Toggle between terminal and editor focus
+{
+    "key":"ctrl+shift+`", "command": "workbench.action.terminal.focus"
+},
+{
+    "key": "ctrl+shift+s",
+    "command": "latex-workshop.synctex",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+alt+s",
+    "command": "-latex-workshop.synctex",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+shift+v",
+    "command": "latex-workshop.view",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+alt+t",
+    "command": "-latex-workshop.tab",
+    "when": "editorTextFocus"
+},
+// move bottom terminal and error panels to the right
+{
+    "key": "ctrl+shift+r",
+    "command": "workbench.action.togglePanelPosition"
+},
+{
+    "key": "ctrl+alt+v",
+    "command": "latex-preview.showPreviewToSide",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+alt+v",
+    "command": "-latex-workshop.view",
+    "when": "editorTextFocus"
+}
+]

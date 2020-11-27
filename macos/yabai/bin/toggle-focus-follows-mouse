@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ "$(yabai -m config focus_follows_mouse)" = 'disabled' ]; then
+    yabai -m config focus_follows_mouse autofocus
+else
+    yabai -m config focus_follows_mouse off
+fi

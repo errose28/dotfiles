@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# HACK : Will break if keyboard shortcut for screen lock is changed.
+# Have not found a better way to programatically do this.
+
+skhd -k "ctrl + cmd - l"

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Script to kill all running polybars, and launch the bar(s) on every connected monitor.
+
+# For some reason, when the configuration for two moinitors is force refreshed, two instances of this script are launched.
+# Make sure that only one instance of this script runs at a time by flocking on file descriptor 200.
+# The file descriptor cannot be a variable, because the it must be used both in and out of the subshell.
+
+(
+flock -nx 200 || exit 1
+
+# Terminate already running bar instances
+killall -q polybar
+
+# Wait until the processes have been shut down
+while pgrep -u $UID -x polybar > /dev/null
+    do sleep 1
+done
+
+# Get the wireless and ethernet devices for polybar.
+# Use the first one listed for each.
+
+# TODO: Update this after not using nmcli so values are not hard coded.
+# export WIFI_DEVICE="$(nmcli device status | grep -wi "\swifi\s" | head -n1 | awk '{print $1}')"
+# export ETH_DEVICE="$(nmcli device status | grep -wi "\sethernet\s" | head -n1 | awk '{print $1}')"
+export WIFI_DEVICE='wlp4s0'
+export ETH_DEVICE='enp0s31f6'
+
+for monitor in $(connected-monitors)
+do
+    export MONITOR="$monitor"
+    polybar -c ~/.config/polybar/window_bar.ini window_bar &
+    polybar -c ~/.config/polybar/status_bar.ini status_bar &
+done
+
+unset MONITOR
+unset WIFI_DEVICE
+unset ETH_DEVICE
+
+rm -f /tmp/launch_polybars.lock
+
+) 200>/tmp/launch_polybars.lock

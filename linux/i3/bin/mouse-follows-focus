@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+
+import i3ipc
+from Xlib import display
+
+class MouseCenterer:
+    def __init__(self) -> None:
+        self.focused: i3ipc.Con = None
+
+        self.i3 = i3ipc.Connection()
+
+        # Subscribe to events
+        self.i3.on(i3ipc.Event.WINDOW_FOCUS, self.center_mouse)
+        self.i3.on(i3ipc.Event.WINDOW_MOVE, self.center_mouse)
+        self.i3.on(i3ipc.Event.WINDOW_NEW, self.center_mouse)
+
+    def run(self) -> None:
+        # Start the main loop and wait for events to come in.
+        self.i3.main()
+
+    def center_mouse(self, _: i3ipc.Connection, __: i3ipc.events.IpcBaseEvent) -> None:
+        self.focused = self.i3.get_tree().find_focused()
+
+        if not self.mouse_in_focused_container():
+            # Round floats.
+            new_x = int(self.focused.rect.x + self.focused.rect.width / 2)
+            new_y = int(self.focused.rect.y + self.focused.rect.height / 2)
+
+            self.move_mouse(new_x, new_y)
+
+    def move_mouse(self, x: int, y: int) -> None:
+        disp = display.Display()
+        root = disp.screen().root
+        root.warp_pointer(x, y)
+        disp.sync()
+
+    def mouse_in_focused_container(self) -> bool:
+        """
+        Returns True if the mouse is inside the focused container.
+        Returns False if the mouse is outside the focused container, or there is no focused container.
+        """
+
+        if self.focused is not None:
+            data = display.Display().screen().root.query_pointer()._data
+
+            x = data["root_x"]
+            y = data["root_y"]
+
+            rect = self.focused.rect
+
+            return (rect.x <= x <= rect.x + rect.width) and (rect.y <= y <= rect.y + rect.height)
+        else:
+            return False
+
+if __name__ == '__main__':
+    MouseCenterer().run()

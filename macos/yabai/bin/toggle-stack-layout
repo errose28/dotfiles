@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# raw output flag removes double quotes from jq output.
+layout="$(yabai -m query --spaces --space | jq --raw-output '.type')"
+
+if [ "$layout" = "bsp" ]; then
+    yabai -m space --layout stack
+elif [ "$layout" = "stack" ]; then
+    yabai -m space --layout bsp
+else
+    echo Cannot toggle from layout "$layout"
+fi
+

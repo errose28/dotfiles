@@ -1,0 +1,78 @@
+! Can find color themes from http://dotshare.it/category/terms/colors/
+! and terminal.sexy
+! To reload this file without logging out, run 'xrdb ~/.Xresources' and laumch a new terminal.
+
+! Fonts
+! URxvt.font: xft:inconsolata:pixelsize=28
+URxvt.font: xft:Droid Sans Mono:pixelsize=28
+! URxvt.boldFont:
+! URxvt.italicFont:
+! URxvt.boldItalicFont:
+
+URxvt.scrollBar: False
+
+! Terminl: stdin and stdout
+! Ranger: regular file color
+URxvt.foreground:   #c5c8c6
+
+URxvt.background:   #1d1f21
+URxvt.cursorColor:  #c5c8c6
+
+! Unused
+URxvt.color0:       #977325
+
+! Ranger: Empty directory contents
+URxvt.color1:       #a54242
+
+! Unused
+URxvt.color2:       #977325
+
+! Unused
+URxvt.color3:       #977325
+
+! Ranger: Loading bar at the bottom.
+URxvt.color4:        #a54242
+
+! Ranger: File permissions in root directory only.
+URxvt.color5:       #85678f
+
+! Ranger: File permissionsin non root directory, symlinks to normal files.
+URxvt.color6:       #85678f
+
+! Unused
+URxvt.color7:       #977325
+
+! Ranger: File on clipboard
+URxvt.color8:      #b5bd68
+
+! Ranger: Error messages.
+URxvt.color9:       #a54242
+
+! Ranger: Executable files and working directory.
+! Terminal: Working directory.
+URxvt.color10:      #5f819d
+
+! Vim: Primary color, including line numbers.
+URxvt.color11:      #5f819d
+
+! Ranger: Directories
+! Terminal: Current Directory
+URxvt.color12:       #977325
+
+! Vim: Double quote strings.
+URxvt.color13:      #5f819d
+
+! Ranger: Symlinks to directories and executable files.
+! Vim: Comments
+URxvt.color14:      #8c9440
+
+! Current directory at top of ranger
+URxvt.color15:      #85678f
+
+! Use this color to test: #0FFD03
+
+! Other nice unused colors
+! #de935f
+! #707880
+! #f0c674
+! #5f819d

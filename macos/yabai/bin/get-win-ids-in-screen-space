@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+focused_display="$(yabai -m query --displays --display | jq .index)"
+focused_space="$(yabai -m query --spaces --space | jq .index)"
+
+echo "$(yabai -m query --windows | jq ".[] | select(.display==$focused_display and .space==$focused_space) | .id")"
+

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# TODO : Figure out why the number of focused apps is always returned as 0 when run with skhd only.
+
+# Closes the focused window if there are other instances of the application running.
+# Else, quits the application if this is its last window.
+
+focused_app="$(yabai -m query --windows --window | jq '.app')"
+num_windows="$(yabai -m query --windows | jq --arg app "$focused_app" '.[] | select(.app == $app) .app' | wc -l)"
+
+# echo $focused_app
+# echo $num_windows
+# echo "$(yabai -m query --windows | jq --arg app "$focused_app" '.[] | select(.app == $app) .app')"
+
+if [ "$num_windows" = 1 ]; then
+    quit-apps "$focused_app"
+else
+    yabai -m window --close
+fi

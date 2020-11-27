@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Run after autorandr detects a monitor change.
+
+# Launch polybars on each monitor.
+launch-polybars
+
+# Set identical wallpaper for all backgrounds.
+feh --bg-scale ~/.dotfiles/public/linux/arch/randr/wallpapers/grey_mountain.jpg
+

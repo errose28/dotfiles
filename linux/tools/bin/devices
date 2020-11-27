@@ -1,0 +1,52 @@
+#!/bin/sh
+
+### BEGIN FUNCTION DEFINITIONS ###
+
+# Capture the echo output to get the return value.
+get_label_path() {
+    echo "$(lsblk -pro label,name | grep "$1" | cut -d ' ' -f2)"
+}
+
+is_mounted() {
+    dev_path="$(get_label_path $label)"
+    mount | grep -q "$dev_path.*$label"
+}
+
+cmd="$1"
+label="$2"
+
+### END FUNCTION DEFINITIONS ###
+
+if [ "$cmd" = "ls" ]
+then
+    # use grep to discard the snap loops listed by lsblk.
+    lsblk -po label,name,fstype,mountpoint,model,size | grep -vE "loop"
+elif [ "$cmd" = "mount" ]
+then
+    dev_path="$(get_label_path $label)"
+    echo "$dev_path"
+    udisksctl mount -b "$dev_path"
+elif [ "$cmd" = "unmount" ]
+then
+    dev_path="$(get_label_path $label)"
+    udisksctl unmount -b "$dev_path"
+elif [ "$cmd" = "eject" ]
+then
+    dev_path="$(get_label_path $label)"
+
+    is_mounted && udisksctl unmount -b "$dev_path"
+    udisksctl power-off -b "$dev_path"
+elif [ "$cmd" = "devpath" ]
+then
+    dev_path="$(get_label_path $label)"
+    echo "$dev_path"
+elif [ "$cmd" = "ismounted" ]
+then
+    # Return code of this function is returned by last line in script.
+    is_mounted
+else
+    echo "devices: Unknown command: $cmd"
+    exit 1
+fi
+
+exit "$?"

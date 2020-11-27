@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Supported commands:
+# connect <mac-address>
+# disconnect <mac-address>
+# is-on
+# toggle
+# ls
+# on
+# off
+# state
+
+# Use bluetoothctl directly for more advanced operations.
+# There is also a bluetooth executable in /usr/bin/bluetooth, be sure this one is in the path first.
+
+bluetoothctl agent on
+
+is_on() {
+    bluetoothctl show | grep -q "Powered: yes"
+}
+
+if [ "$1" == 'connect' ]
+then
+    bluetoothctl -- connect "$2"
+elif [ "$1" == 'disconnect' ]
+then
+    bluetoothctl -- disconnect "$2"
+elif [ "$1" == 'toggle' ]
+then
+    if is_on
+    then
+        bluetoothctl power off
+    else
+        bluetoothctl power on
+    fi
+elif [ "$1" == 'is-on' ]
+then
+    # Return value of this function is exit code of the script.
+    is_on
+elif [ "$1" == 'ls' ]
+then
+    bluetoothctl -- devices
+elif [ "$1" == 'on' ]
+then
+    bluetoothctl -- power on
+elif [ "$1" == 'off' ]
+then
+    bluetoothctl -- power off
+elif [ "$1" == 'state' ]
+then
+    bluetoothctl -- show | grep -Eiw --color=never 'Powered|Discoverable|Pairable'
+else
+    echo "Unrecognized command $@"
+fi
+
+
+

@@ -1,0 +1,55 @@
+configuration {
+    show-icons:   true;
+    sidebar-mode: false;
+}
+
+* {
+    // Default bg is transparent.
+    background-color: transparent;
+    // Default text is white
+    text-color:       White;
+    spacing:          30;
+}
+
+#window {
+    // Default font
+    font: "System San Francisco Display 30";
+    fullscreen: true;
+    // this option would use the desktop background as the rofi background
+    // transparency: "background";
+    transparency: 0.1;
+    background-color: Black;
+}
+
+// controls the whole list of results
+#listview {
+    // lines doesn't seem to work, see #mainbox bottom margin to adjust this.
+    lines: 5;
+    cycle: false;
+    scrollbar: false;
+}
+
+#prompt {
+    enabled: false;
+}
+
+// Controls where on the screen the main area is located.
+// Since listview.lines does not seem to be working, adjust the bottom margin
+// to adjust how many results are shown.
+// Move the position left or right by shrinking or growing the left margin so
+// long results are not cut off.
+// top right bottom left
+#mainbox {
+    margin: 30% 0% 10% 20%;
+}
+
+// controls matches showed below the input line
+#element {
+   text-color: Grey;
+}
+
+// controls the vertical bar next to the selected element
+#element selected{
+    text-color: White;
+}
+

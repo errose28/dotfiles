@@ -1,0 +1,11 @@
+#!/usr/bin/env osascript
+
+on run argv
+    repeat with app_name in argv
+        -- Some apps (like Zoom) throw an error when quit.
+        -- Ignore it and continue.
+        try
+            quit app app_name
+        end try
+    end repeat
+end run

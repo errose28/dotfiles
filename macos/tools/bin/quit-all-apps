@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Get all app names, whether or not they have open windows.
+# Applescript outputs results separated by comma and space.
+apps="$(osascript -e 'tell application "System Events" to get name of (processes where background only is false)')"
+
+IFS=','
+for app_name in $apps
+do
+    # Remove leading white space.
+    app_name="$(echo $app_name | awk '{$1=$1};1')"
+
+    if [ "$app_name" != 'Finder' ] && [ "$app_name" != 'osascript' ]; then
+        echo "quitting $app_name"
+        quit-apps "$app_name"
+    fi
+done
+

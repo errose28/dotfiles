@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# This is the only switcher with enough configuration to need its own script.
+# variables have underscores because logout and restart might be actual commands.
+_lock="Lock"
+_logout="Log Out"
+_restart="Restart"
+_shut_down="Shut Down"
+_suspend="Sleep"
+# currently not using hibernate because it requires sudo permissions
+#_hibernate="Hibernate"
+
+# Send the options to rofi in dmenu mode, and save the selected one as a string.
+selected=$(echo "$_lock
+$_logout
+$_suspend
+$_restart
+$_shut_down
+" | rofi -i -no-show-match -dmenu -theme power_menu_theme)
+# -i makes rofi match ignoring case when in dmenu mode (capital letters)
+# -no-show-match does not underline and bold matching part of entries.
+
+if [ "$selected" = "$_lock" ]
+then
+    light-locker-command -l
+elif [ "$selected" = "$_logout" ]
+then
+    i3-msg exit
+elif [ "$selected" = "$_restart" ]
+then
+    systemctl reboot
+elif [ "$selected" = "$_shut_down" ]
+then
+    systemctl poweroff
+elif [ "$selected" = "$_suspend" ] # Sleep
+then
+    systemctl suspend
+# currently not using hibernate because it requires sudo permissions
+#elif [ "$selected" = "$_hibernate" ]
+#then
+#    systemctl hibernate 
+fi
+# if Esc was pressed and nothing was selected, do nothing.

@@ -1,0 +1,57 @@
+configuration {
+    sidebar-mode: false;
+}
+
+* {
+    // Default bg is transparent.
+    background-color: transparent;
+    // Default text is white
+    text-color:       White;
+    spacing:          30;
+}
+
+#window {
+    // Default font
+    font: "System San Francisco Display 35";
+    fullscreen: true;
+    // this option would use the desktop background as the rofi background
+    transparency: "background";
+    // transparency: 0.1;
+    background-color: Black;
+}
+
+// controls the whole list of results
+#listview {
+    lines: 6;
+    cycle: false;
+    scrollbar: false;
+    fixed-height: true;
+}
+
+// Makes the main box centered on the screen.
+// leave the bottom margin at 0% and adjust top spacing only to control height,
+// otherwise some elements of the listview will get cut off.
+// Adjust the horizontal position by moving the left (last) margin.
+#mainbox {
+    margin: 25% 0% 0% 40%;
+}
+
+#prompt {
+    enabled: false;
+}
+
+// hides the - symbol at the end of the input line
+#case-indicator {
+    enabled: false;
+}
+
+// controls matches shown below the input line.
+#element {
+    text-color: Grey;
+}
+
+// controls properties of the selected element in the listview.
+#element selected{
+    text-color: White;
+}
+
