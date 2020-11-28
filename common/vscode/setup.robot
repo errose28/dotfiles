@@ -36,6 +36,6 @@ Install Extensions
 
     # vscode will skip extensions already installed.
     FOR     ${extension}    IN    @{extensions}
-        DotfilesLibrary.Interactive    code     --install-extension='${extension}'
+        DotfilesLibrary.Interactive    code     --install-extension=${extension}
     END
 
