@@ -6,5 +6,5 @@
 launch-polybars
 
 # Set identical wallpaper for all backgrounds.
-feh --bg-scale ~/.dotfiles/public/linux/arch/randr/wallpapers/grey_mountain.jpg
+~/.fehbg
 

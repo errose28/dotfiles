@@ -16,7 +16,6 @@ Arch Install
     Yay Install    displaylink
 
     Pacman Install
-    ...    feh
     ...    autorandr
     ...    arandr
 
