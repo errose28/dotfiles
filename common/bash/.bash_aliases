@@ -1,10 +1,10 @@
-# taken from archwiki to prevent nested ranger instances.
+# Taken from archwiki to prevent nested ranger instances.
 # ranger() {
-    # if [ -z "$RANGER_LEVEL" ]; then
-        # /usr/bin/ranger "$@"
-    # else
-        # exit
-    # fi
+#     if [ -z "$RANGER_LEVEL" ]; then
+#         /usr/bin/ranger "$@"
+#     else
+#         exit
+#     fi
 # }
 
 # Mirror the ranger shortcut I made to open an identical terminal in the same
@@ -28,12 +28,8 @@ git-tracked() {
 
 # Kill and Remove any docker containers.
 rm-containers() {
-    docker rm -f "$(docker ps -a -q)"
-}
-
-backup() {
-    rsync-backup
-    borg-backup
+    docker stop "$(docker ps -aq)"
+    docker rm "$(docker ps -aq)"
 }
 
 # Remove dead symlinks in the provided directory and its subdirectoires.
