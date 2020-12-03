@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-robot
-    --variable=VERBOSE:True \
-    #--report=None \
-    #--log=None \
-    #--output=None \
-    "$@"
