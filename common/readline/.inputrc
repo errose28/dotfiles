@@ -1,3 +1,5 @@
+# Input settings for bash, python, and some other shells.
+# Not used by zsh.
 # run bind -f ~/.inputrc to refresh keybindings.  Do not call source on this file.
 
 # Set vim keyboard shortcuts in terminal

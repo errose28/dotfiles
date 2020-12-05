@@ -1,3 +1,5 @@
+# Aliases shared between shells.
+
 # Taken from archwiki to prevent nested ranger instances.
 # ranger() {
 #     if [ -z "$RANGER_LEVEL" ]; then
