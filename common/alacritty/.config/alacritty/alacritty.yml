@@ -529,11 +529,11 @@ key_bindings:
     mods: Control
     action: IncreaseFontSize
 
-  - key: Add
+  - key: Plus
     mods: Control
     action: IncreaseFontSize
 
-  - key: Subtract
+  - key: Minus
     mods: Control
     action: DecreaseFontSize
 
