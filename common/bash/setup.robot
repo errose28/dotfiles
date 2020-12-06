@@ -4,6 +4,13 @@ Library    DotfilesLibrary
 Default Tags    arch    macos
 
 *** Tasks ***
+MacOS Install
+    [Tags]    macos
+    Brew Install    bash
+
+    Interactive    echo    "$(which bash)"    |    sudo     tee    -a    /etc/shells
+    Interactive    chsh    -s    "$(which bash)"
+
 Link
     Deep Link    *
 
