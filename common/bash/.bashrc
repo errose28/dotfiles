@@ -117,9 +117,9 @@ if ! shopt -oq posix; then
 fi
 
 # Use powerline for custom prompt.
-powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
+powerline-daemon -q
 . /usr/share/powerline/bindings/bash/powerline.sh
 
 # Load my custom aliases and functions across shells.
