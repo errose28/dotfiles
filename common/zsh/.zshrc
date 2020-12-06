@@ -53,6 +53,8 @@ bindkey '^e' edit-command-line
 # Load powerline prompt.
 powerline-daemon -q
 source /usr/share/powerline/bindings/zsh/powerline.zsh
+# zsh variable to disable right side prompt.
+RPROMPT=""
 
 # Init pyenv if it is installed.
 if command -v pyenv 1>/dev/null 2>&1; then
