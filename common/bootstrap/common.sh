@@ -10,11 +10,12 @@ pyenv install --skip-existing "$PYENV_VERSION"
 pyenv global "$PYENV_VERSION"
 
 # Pyenv may not fetch latest version of pip.
-pip install --upgrade pip
+pip install --upgrade pip wheel
 
 # Install the latest version of the robot framework DotfilesLibrary.
 # This installs robotframework as a dependency.
 repo="/tmp/DotfilesLibrary"
 git clone https://github.com/errose28/DotfilesLibrary.git "$repo"
 pip install "$repo"
+rm -rf "$repo"
 
