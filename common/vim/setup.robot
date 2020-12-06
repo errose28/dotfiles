@@ -5,7 +5,7 @@ Default Tags    arch    macos
 *** Tasks ***
 MacOS Install
     [Tags]    macos
-    Brew Install    vim
+    Brew Install    macvim
 
 Pacman Install
     [Tags]    arch
