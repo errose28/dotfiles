@@ -6,7 +6,7 @@
 
 ### MOUSE SETTINGS ###
 
-yabai -m config mouse_modifier               fn
+yabai -m config mouse_modifier               alt
 # Left click.
 yabai -m config mouse_action1                move
 # Right click.
