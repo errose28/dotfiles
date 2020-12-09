@@ -100,7 +100,9 @@ font:
     #   - (Windows) Consolas
 
     # monospace defaults to Droid Sans Mono, which looks good but does not have bold or italic options.
-    family: Source Code Pro
+    # Using the powerline patched font version of Source Code Pro for powerline prompt.
+    # From some package managers, or here:  https://github.com/powerline/fonts
+    family: Source Code Pro for Powerline
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -140,7 +142,7 @@ font:
 
   # Point size
   # size: 12 # for external monitor
-  size: 10 # for laptop
+  size: 16 # for laptop
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -529,11 +531,11 @@ key_bindings:
     mods: Control
     action: IncreaseFontSize
 
-  - key: Plus
+  - key: Add
     mods: Control
     action: IncreaseFontSize
 
-  - key: Minus
+  - key: Subtract
     mods: Control
     action: DecreaseFontSize
 
