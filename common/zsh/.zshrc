@@ -50,25 +50,45 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Load powerline prompt.
-powerline-daemon -q
-source /usr/share/powerline/bindings/zsh/powerline.zsh
-# zsh variable to disable right side prompt.
-RPROMPT=""
+# Fix compinit failure on macos.
+if [ "$(uname -s)" = Darwin ]; then
+    compaudit | xargs chmod g-w
+fi
 
 # Init pyenv if it is installed.
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
-# Load my custom aliases and functions across shells.
-if [ -f ~/.aliases ]; then
-    . ~/.aliases
+# Load powerline prompt.
+if [ "$(uname -s)" = Darwin ]; then
+    POWERLINE_DIR="$(python -m site --user-site)"
+else
+    POWERLINE_DIR='/usr/share'
+fi
+powerline-daemon -q
+. "$POWERLINE_DIR"/powerline/bindings/zsh/powerline.zsh
+# zsh variable to disable right side prompt.
+RPROMPT=''
+
+
+# Load my custom functions across shells.
+if [ -d ~/.functions ]; then
+    for file in ~/.functions/*; do
+        . "$file"
+    done
 fi
 
 ### LOAD ZSH PLUGINS ###
 
-ZSH_PLUGIN_DIR='/usr/share/zsh/plugins'
+#if you receive "highlighters directory not found" error message,
+#you may need to add the following to your .zshenv:
+#  export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighter
+if [ "$(uname -s)" = Darwin ]; then
+    ZSH_PLUGIN_DIR='/usr/local/share'
+else
+    ZSH_PLUGIN_DIR='/usr/share/zsh/plugins'
+fi
 
 # Syntax highlighting.
 source "$ZSH_PLUGIN_DIR"/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

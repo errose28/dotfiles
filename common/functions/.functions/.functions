@@ -1,4 +1,4 @@
-# Aliases shared between shells.
+# Functions shared between shells.
 
 # Taken from archwiki to prevent nested ranger instances.
 # ranger() {

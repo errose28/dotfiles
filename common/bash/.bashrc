@@ -116,19 +116,30 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Use powerline for custom prompt.
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-powerline-daemon -q
-. /usr/share/powerline/bindings/bash/powerline.sh
-
-# Load my custom aliases and functions across shells.
-if [ -f ~/.aliases ]; then
-    . ~/.aliases
-fi
-
 # Init pyenv if it is installed.
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
+fi
+
+# Load powerline prompt.
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+# Add pip scripts dir to path for mac.
+PATH="$PATH:$HOME/.local/bin"
+if [ "$(uname -s)" = Darwin ]; then
+    POWERLINE_DIR="$(python -m site --user-site)"
+else
+    POWERLINE_DIR='/usr/share'
+fi
+powerline-daemon -q
+. "$POWERLINE_DIR"/powerline/bindings/bash/powerline.sh
+# zsh variable to disable right side prompt.
+RPROMPT=''
+
+# Load my custom aliases and functions across shells.
+if [ -d ~/.functions ]; then
+    for file in ~/.functions/*; do
+        . "$file"
+    done
 fi
 

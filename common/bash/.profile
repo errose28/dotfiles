@@ -40,3 +40,10 @@ export JAVA_HOME='/usr/lib/jvm/java-8-openjdk'
 export DOTFILES="${HOME}/.dotfiles"
 export PREF_TERM='alacritty'
 export WALLPAPER="${DOTFILES}/randr/wallpapers/grey_mountain.jpg"
+
+# Load system specific env variables.
+if [ -d ~/.variables ]; then
+    for file in ~/.variables/*; do
+        . "$file"
+    done
+fi
