@@ -28,8 +28,9 @@ cmd + alt + shift - l:
 alt - return:
     open -na Alacritty
 
+# TODO: Fix this so switching to terminal from ranger works.
 alt + shift - return:
-    open -na Alacritty --args -e /usr/local/bin/bash ranger
+    open -na Alacritty --args -e ranger
 
 # Switch space (on same display).
 alt + cmd - h:
