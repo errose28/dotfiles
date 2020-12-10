@@ -142,7 +142,7 @@ font:
 
   # Point size
   # size: 12 # for external monitor
-  size: 16 # for laptop
+  size: 10 # for laptop
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -531,11 +531,15 @@ key_bindings:
     mods: Control
     action: IncreaseFontSize
 
-  - key: Add
+  - key: Plus
     mods: Control
     action: IncreaseFontSize
 
-  - key: Subtract
+  - key: NumpadAdd
+    mods: Control
+    action: IncreaseFontSize
+
+  - key: NumpadSubtract
     mods: Control
     action: DecreaseFontSize
 
