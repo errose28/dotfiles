@@ -32,6 +32,10 @@ alt - return:
 alt + shift - return:
     open -na Alacritty --args -e ranger
 
+# Open web browser.
+alt - b:
+    open -na 'Google Chrome'
+
 # Switch space (on same display).
 alt + cmd - h:
     skhd -k "ctrl - left"
