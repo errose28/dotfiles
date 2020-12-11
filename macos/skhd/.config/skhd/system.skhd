@@ -25,12 +25,14 @@ cmd + alt + shift - l:
     user-lock
 
 # Open terminal apps.
+# Override linux font size in common config.
+# --args tells open to pass the args to the program.
 alt - return:
-    open -na Alacritty
+    open -na Alacritty --args --option 'font.size=16'
 
 # TODO: Fix this so switching to terminal from ranger works.
 alt + shift - return:
-    open -na Alacritty --args -e ranger
+    open -na Alacritty --args --option 'font.size=16' -e ranger
 
 # Open web browser.
 alt - b:
