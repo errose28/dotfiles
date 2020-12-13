@@ -13,7 +13,7 @@
 
 ## Deployment
 
-- Deploying dotfiles is handled using [Robot Framework]() with my custom [Dotfiles Library]().
+- Deploying dotfiles is handled using [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
     - Each package contains a *.robot* file with commands for linking dotfiles, installing programs, and other general setup for that program.
 
 - Tasks that are specific to one OS are tagged as such.
