@@ -14,7 +14,7 @@ MacOS Install
 
 MacOS Link
     [Tags]    macos
-    Set Target    ~/Library/Application Support/Code/User
+    Set Target    ~/Library/Application Support
     Deep Link    *
 
 ### Arch ###
@@ -25,7 +25,7 @@ Arch Install
 
 Arch Link
     [Tags]    arch
-    Set Target    ~/.config/Code/User
+    Set Target    ~/.config
     Deep Link    *
 
 ### Common ###
