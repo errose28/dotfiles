@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Path to qcow2 or other image format (not the iso)
+img_file="$1"
+
+qemu-system-x86_64 \
+-cpu host \
+-boot d \
+-enable-kvm \
+-m 2G \
+-smp 4 \
+-nic user,model=virtio \
+-drive file="$img_file",media=disk,if=virtio \
+-vga qxl \
+-usb -device usb-tablet \
+#-cdrom ubuntu-20.04.1-desktop-amd64.iso \
+
+# OPTIONS EXPLANATION:
+# Emulate host CPU for better performance.
+# -cpu host \
+# Amount of RAM.
+# -m 2G \
+# Number of cores to use.
+# -smp 4 \
+# Network controller.
+# -nic user,model=virtio \
+# -drive file="$img_file",media=disk,if=virtio \
+# Graphics driver.
+# -vga qxl \
+# Better support for moving mouse in and out of VM.
+# -usb -device usb-tablet \
+# Uncomment and replace with iso to install for first time.
+#-cdrom ubuntu-20.04.1-desktop-amd64.iso \
