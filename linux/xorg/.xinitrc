@@ -19,9 +19,6 @@ picom &
 # Force the change if the config was already loaded so the background image is set via the postswitch.
 autorandr --change --force &
 
-# Start the keybinding daemon for non i3 key bindings.
-sxhkd &
-
 # Start gesture detection.
 libinput-gestures-setup start &
 
@@ -39,7 +36,4 @@ xset s off -dpms &
 
 # light-locker uses lightDM and xscreenlock to lock the screen.
 light-locker --lock-on-suspend --no-lock-on-lid &
-
-# Start i3
-exec i3
 

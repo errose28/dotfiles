@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+# Move the specified desktop to the specified monitor (or direction).
+# If no desktop is specified, the currently focused one is used.
+# If no monitor/direction is specified, the next monitor is used.
+# If the desktop to move is the only one on the monitor, a new default
+# desktop is created on the old monitor so the specified one can be moved.
+# Moves focus (and mouse) to the desktop that was moved.
+
+# Name used if a new desktop must be created on this monitor to move the
+# specified one.
+default_new_desktop='Desktop'
+
+if [ "$1" ] && [ "$2" ]; then
+    desktop="$1"
+    monitor="$2"
+elif [ "$1" ]; then
+    desktop="$(bspc query --desktops --desktop .focused)"
+    monitor="$1"
+else
+    desktop="$(bspc query --desktops --desktop .focused)"
+    monitor="$(bspc query --monitors --monitor next)"
+fi
+
+# If there is only one desktop on the current monitor, add another one so we
+# can move this one.
+monitor_desktop_count="$(bspc query --desktops --monitor .focused | wc -l)"
+if [ "$monitor_desktop_count" -le 1 ]; then
+    bspwm-new-desktop "$default_new_desktop"
+fi
+
+# Do not use the --follow option when moving the desktop, because the mouse
+# will not travel with the window.
+bspc desktop "$desktop" --to-monitor "$monitor"
+bspc desktop "$desktop" --focus
+

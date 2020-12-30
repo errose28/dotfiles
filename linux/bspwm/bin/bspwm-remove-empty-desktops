@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Removes all desktops with no windows that are not focused.
+
+empty_unfocused="$(bspc query -D -d .!occupied.\!focused)"
+
+while IFS= read -r desktop; do
+    bspc desktop "$desktop" --remove
+done <<< "$empty_unfocused"
+

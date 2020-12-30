@@ -3,13 +3,11 @@ Library    DotfilesLibrary
 Default Tags    arch
 
 *** Tasks ***
-Arch Install
+Install
     [Tags]    arch
-    # wmctrl to detect window manager for logout.
-    Pacman Install
-    ...    rofi
-    ...    wmctrl
+    Pacman Install    bspwm
 
 Link
+    Add Ignore    todo.txt
     Deep Link    *
 

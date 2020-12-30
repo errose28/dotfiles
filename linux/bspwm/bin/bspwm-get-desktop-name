@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# Removes the last whitespace separated word from the string provided, if it has more than one word.
+# This removes the window status information from each desktop name.
+# If a desktop ID is passed, its cleaned name is returned.
+
+# If no arg is given, used the current focused desktop.
+desktop="$1"
+if [ "$desktop" ]; then
+    # If an ID was passed in, get its corresponding name.
+    if echo "$desktop" | grep -q "$(bspc query --desktops)"; then
+        desktop_status="$(bspc query --desktops --desktop "$desktop" --names)"
+    else
+        desktop_status="$desktop"
+    fi
+else
+    # No desktop passed in, used focused desktop.
+    desktop_status="$(bspc query --desktops --desktop .focused --names)"
+fi
+
+# Remove the window status from the name if present.
+# TODO: Make this work for desktop names with spaces.
+if [ "$(echo "$desktop_status" | wc -w)" -gt 1 ]; then
+    desktop="$(echo "$desktop_status" | sed 's, [^ ]*$,,')"
+else
+    desktop="$desktop_status"
+fi
+
+# Use xargs to trim leading or trailing whitepspace left by sed.
+desktop="$(echo "$desktop" | xargs)"
+
+echo "$desktop"

@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+
+# Adds a status string to the end of each desktop name.
+# This string indicates the number of windows in the desktop, and if any of
+# them are marked.
+# If no desktop is specified as an argument, operates on all desktops.
+
+get_window_count() {
+    local desktop="$1"
+    echo "$(bspc query --nodes --desktop "$desktop" | grep -f <(bspc query --nodes --node .leaf) | wc -l)"
+}
+
+get_marked_count() {
+    local desktop="$1"
+    echo "$(bspc query --nodes --desktop "$desktop" | grep -f <(bspc query --nodes --node .marked) | wc -l)"
+}
+
+set_status() {
+    # Desktop name or ID.
+    local desktop="$1"
+    # Get window and mark count
+    local window_count="$(get_window_count "$desktop")"
+    local marked_count="$(get_marked_count "$desktop")"
+
+    # Get original name without status
+    local name="$(bspwm-get-desktop-name "$desktop")"
+
+    # Add new status
+    local desktop_status="$name"
+    if [ "$window_count" -gt 0 ]; then
+        # In monocle mode, show index of the current window as well.
+        if [ "$(bspc query --tree --desktop "$desktop" | jq '.layout')" = '"monocle"' ]; then
+            # Note that this only works when the desktop is focused, otherwise
+            # we can't tell what the focused node would be in that desktop.
+            focused_node="$(bspc query --nodes --node)"
+            index="$(bspc query --nodes --desktop --node .leaf | awk "/"$focused_node"/{print NR}")"
+            window_count="$index/$window_count"
+        fi
+
+        if [ "$marked_count" -gt 0 ]; then
+            desktop_status="$name ["$window_count*"]"
+        else
+            desktop_status="$name ["$window_count"]"
+        fi
+    fi
+
+    bspc desktop "$desktop" --rename "$desktop_status"
+}
+
+desktop="$1"
+if [ "$desktop" ]; then
+    set_status "$desktop"
+else
+    for desktop in $(bspc query --desktops); do
+        set_status "$desktop"
+    done
+fi

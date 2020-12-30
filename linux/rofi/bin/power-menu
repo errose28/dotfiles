@@ -7,8 +7,6 @@ _logout="Log Out"
 _restart="Restart"
 _shut_down="Shut Down"
 _suspend="Sleep"
-# currently not using hibernate because it requires sudo permissions
-#_hibernate="Hibernate"
 
 # Send the options to rofi in dmenu mode, and save the selected one as a string.
 selected=$(echo "$_lock
@@ -25,7 +23,8 @@ then
     light-locker-command -l
 elif [ "$selected" = "$_logout" ]
 then
-    i3-msg exit
+    # Custom logout script to determine logout command based on window manager.
+    user-logout
 elif [ "$selected" = "$_restart" ]
 then
     systemctl reboot
@@ -35,9 +34,5 @@ then
 elif [ "$selected" = "$_suspend" ] # Sleep
 then
     systemctl suspend
-# currently not using hibernate because it requires sudo permissions
-#elif [ "$selected" = "$_hibernate" ]
-#then
-#    systemctl hibernate 
 fi
 # if Esc was pressed and nothing was selected, do nothing.

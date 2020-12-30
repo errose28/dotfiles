@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+# Removes marks on all marked nodes.
+
+for node_id in $(bspc query --nodes --node .marked); do
+    bspc node "$node_id" --flag marked
+done
+

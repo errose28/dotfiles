@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Closes all windows in all desktops.
+# If a desktop is passed in, only closes windows in that desktop.
+
+desktop="$1"
+if [ "$desktop" ]; then
+    nodes="$(bspc query --nodes --desktop "$desktop" --node .leaf)"
+else
+    nodes="$(bspc query --nodes --node .leaf)"
+fi
+
+for node_id in $nodes; do
+    bspc node "$node_id" --close
+done

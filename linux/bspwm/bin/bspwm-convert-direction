@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+# Focus a node in the current desktop regardless of monocle mode.
+# Pass in 'east' or 'west'.
+# If the desktop is in monocle mode, these will be translated to 'prev' and 'next'.
+# Else, they will be forwarded as is.
+
+direction="$1"
+
+# If in monocle mode and converting to prev/next, must specify .leaf,
+# or bspwm may focus a node not corresponding to a window.
+# "monocle" is stored as a string in double quotes in the json.
+if [ "$(bspc query --tree --desktop | jq '.layout')" = '"monocle"' ]; then
+    if [ "$direction" = 'west' ]; then
+        direction='prev.leaf'
+    elif [ "$direction" = 'east' ]; then
+        direction='next.leaf'
+    fi
+fi
+
+echo "$direction"

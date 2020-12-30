@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Moves all marked windows to the specified desktop.
+# If no arg is given, used the current focused desktop.
+# Desktop can be name or ID.
+desktop="$1"
+if [ -z "$desktop" ]; then
+    desktop="$(bspc query --desktops --desktop .focused)"
+fi
+
+for node_id in $(bspc query --nodes --node .marked); do
+    bspc node "$node_id" --to-desktop "$desktop" --follow
+done
+

@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+
+# Creates a new desktop on the focused monitor.
+# If no desktop name is provided, Rofi is opened to select a name.
+default_name="Desktop"
+
+# If no arg is given, get a name from Rofi.
+new_name="$1"
+if [ -z "$new_name" ]; then
+    new_name="$(echo "$default_name" | rofi -dmenu -theme new_workspace.rasi -p 'New desktop: ')"
+fi
+
+# If Rofi was cancelled, the new name will be empty.
+if [ "$new_name" ]; then
+    # Trim white space from the name.
+    new_name="$(bspwm-get-desktop-name "$new_name")"
+    bspc monitor --add-desktops "$new_name"
+fi
