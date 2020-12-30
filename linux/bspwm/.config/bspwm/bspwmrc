@@ -2,10 +2,12 @@
 
 ### CONFIG VARIABLES ###
 normal_border_width=1
-marked_border_width=5
 border_on_color="#a6a6a6"
-#border_off_color="#817f7f"
 border_off_color="#000000"
+# This color is passed to the chwb tool, not bspwm, so it must be prefixed with
+# '0x' instead of '#'.
+marked_border_color="0xFF0000"
+preselect_color="##FF0000"
 
 ### FUNCTIONS ###
 
@@ -17,6 +19,8 @@ bspc config border_width "$normal_border_width"
 bspc config focused_border_color "$border_on_color"
 bspc config active_border_color "$border_off_color"
 bspc config normal_border_color "$border_off_color"
+
+bspc config presel_feedback_color "$preselect_color"
 
 bspc config window_gap 5
 
@@ -53,24 +57,25 @@ bspc subscribe desktop_layout | while read event monitor_id desktop_id layout; d
     bspwm-set-desktop-status "$desktop_id"
 done &
 
-# TODO: Fix this to show marked nodes.
-#   It seems that even when specifying a specific node, the config changes apply to all nodes.
-bspc subscribe node_flag | while read event monitor_id desktop_id node_id flag value; do
-    if [ "$flag" = marked ]; then
-#        if [ "$value" = on ]; then
-#             bspc config -n "$node_id" border_width "$marked_border_width"
+# Change border color of marked windows.
+# Taken from here: https://github.com/baskerville/bspwm/issues/1241
+# Requires chwb from wmutils package.
+while bspc subscribe -c 1 node_focus node_flag > /dev/null; do
+    bspc config focused_border_color "$(bspc config focused_border_color)"
 
-#             bspc config -n "$node_id" focused_border_color "$border_on_color"
-#             bspc config -n "$node_id" active_border_color "$border_on_color"
-#             bspc config -n "$node_id" normal_border_color "$border_on_color"
-#         else
-#             bspc config -n "$node_id" border_width "$normal_border_width"
+    # Marked normal windows.
+    bspc query -N -n '.marked.!focused.window' | while read -r wid; do
+        chwb -c "$marked_border_color" "$wid"
+    done
+    # Marked active windows.
+    bspc query -N -n '.marked.active.!focused.window' | while read -r wid; do
+        chwb -c "$marked_border_color" "$wid"
+    done
+    # Marked focused windows.
+    bspc query -N -n "focused.marked" | while read -r wid; do
+        chwb -c "$marked_border_color" "$wid"
+    done
 
-#             bspc config -n "$node_id" focused_border_color "$border_on_color"
-#             bspc config -n "$node_id" active_border_color "$border_off_color"
-#             bspc config -n "$node_id" normal_border_color "$border_off_color"
-#         fi
-
-        bspwm-set-desktop-status "$desktop_id"
-    fi
+    bspwm-set-desktop-status "$desktop_id"
 done &
+

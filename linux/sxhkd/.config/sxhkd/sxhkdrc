@@ -23,7 +23,7 @@ super + shift + p
 super + shift + Return
     $PREF_TERM --title ranger -e ranger
 
-super + m
+super + t
     toggle-trackpad-enabled
 
 # autorandr does not manually detect docked monitor for some reason.

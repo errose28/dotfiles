@@ -8,7 +8,13 @@ if [ -z "$desktop" ]; then
     desktop="$(bspc query --desktops --desktop .focused)"
 fi
 
+last_node_id=''
 for node_id in $(bspc query --nodes --node .marked); do
-    bspc node "$node_id" --to-desktop "$desktop" --follow
+    bspc node "$node_id" --to-desktop "$desktop"
+    last_node_id="$node_id"
 done
+
+if [ "$last_node_id" ]; then
+    bspc node --focus "$last_node_id"
+fi
 

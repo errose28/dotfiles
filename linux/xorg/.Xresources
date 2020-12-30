@@ -1,0 +1,2 @@
+! Fix the cursor size so it does not change on external monitors.
+Xcursor.size: 16

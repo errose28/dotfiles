@@ -8,6 +8,7 @@ Pacman Install
     Pacman Install
     ...    xorg-xinput
     ...    udisks2
+    ...    unclutter
 
 Link
     Deep Link    *

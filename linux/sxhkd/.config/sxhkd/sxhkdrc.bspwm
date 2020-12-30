@@ -1,26 +1,54 @@
 # Close window.
 super + q
-    bspc node -c
+    bspc node --close
 
 super + shift + q
-    bspwm-close-all-windows
+    bspwm-close-all-windows; \
+    bspwm-remove-empty-desktops
 
 # Toggle monocle.
 super + a
     bspc desktop --layout next
 
+# Toggle floating focused window.
+super + f
+    bspc node --state \~floating; \
+    bspc node --focus
+
+# Restore windows in focused desktop to their default sizes.
+super + e
+    bspc node @/ --equalize; \
+    bspc node --focus
+
+# Rotate all nodes in the focused desktop.
+super + r
+    bspc node @/ --rotate 90; \
+    bspc node --focus
+
+# Toggle preselect in the given direction.
+super + {Up,Right,Down,Left}
+    bspc node --presel-dir \~{north,east,south,west}
+
+# Move focused window (which may be floating) to preselected area in the last focused node.
+# This works across desktops because .local is omitted.
+super + m
+    bspc node --to-node last.\!automatic --state tiled; \
+    bspc node -- focus
+
 # Swap nodes.
 # Do not use the --follow flag, because the mouse will not travel with the window.
+# The convert direction script will substitute east/west with next/prev in monocle mode.
 super + shift + {h,j,k,l}
     direction="$(bspwm-convert-direction {west,south,north,east})"; \
     bspc node --swap "$direction".local; \
     bspc node --focus
 
+# Focus node in focused desktop.
 super + {h,j,k,l}
     direction="$(bspwm-convert-direction {west,south,north,east})"; \
     bspc node --focus "$direction".local
 
-# Reload bsp and sxhkd.
+# Reload bspwm and sxhkd.
 # Note that sxhkd is restarted in the bspwmrc config.
 super + shift + r
     pkill sxhkd && bspc wm -r
