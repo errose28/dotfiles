@@ -7,13 +7,14 @@
 
 get_window_count() {
     local desktop="$1"
-    echo "$(bspc query --nodes --desktop "$desktop" | grep -f <(bspc query --nodes --node .leaf) | wc -l)"
+    echo "$(bspc query --nodes --desktop "$desktop" --node .window | wc -l)"
 }
 
 get_marked_count() {
     local desktop="$1"
-    echo "$(bspc query --nodes --desktop "$desktop" | grep -f <(bspc query --nodes --node .marked) | wc -l)"
+    echo "$(bspc query --nodes --desktop "$desktop" --node .marked | wc -l)"
 }
+
 
 set_status() {
     # Desktop name or ID.
@@ -30,10 +31,10 @@ set_status() {
     if [ "$window_count" -gt 0 ]; then
         # In monocle mode, show index of the current window as well.
         if [ "$(bspc query --tree --desktop "$desktop" | jq '.layout')" = '"monocle"' ]; then
-            # Note that this only works when the desktop is focused, otherwise
-            # we can't tell what the focused node would be in that desktop.
-            focused_node="$(bspc query --nodes --node)"
-            index="$(bspc query --nodes --desktop --node .leaf | awk "/"$focused_node"/{print NR}")"
+            # Get the focused node (or the node that would be focused if the desktop were active).
+            # Cannot use .focused to select node because the desktop may not be focused when this is run.
+            focused_node="$(bspc query --nodes --node @"$desktop": --node .window)"
+            index="$(bspc query --nodes --desktop "$desktop" --node .window | awk "/"$focused_node"/{print NR}")"
             window_count="$index/$window_count"
         fi
 

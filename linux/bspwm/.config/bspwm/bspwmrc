@@ -7,7 +7,7 @@ border_off_color="#000000"
 # This color is passed to the chwb tool, not bspwm, so it must be prefixed with
 # '0x' instead of '#'.
 marked_border_color="0xFF0000"
-preselect_color="##FF0000"
+preselect_color="#FF0000"
 
 ### FUNCTIONS ###
 
@@ -41,10 +41,6 @@ bspc subscribe node_remove | while read event monitor_id desktop_id node_id; do
 done &
 
 bspc subscribe node_swap | while read event monitor_id desktop_id node_id; do
-    bspwm-set-desktop-status "$desktop_id"
-done &
-
-bspc subscribe node_focus | while read event monitor_id desktop_id node_id; do
     bspwm-set-desktop-status "$desktop_id"
 done &
 

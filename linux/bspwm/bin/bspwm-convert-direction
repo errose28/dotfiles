@@ -7,14 +7,14 @@
 
 direction="$1"
 
-# If in monocle mode and converting to prev/next, must specify .leaf,
+# If in monocle mode and converting to prev/next, must specify .window,
 # or bspwm may focus a node not corresponding to a window.
 # "monocle" is stored as a string in double quotes in the json.
 if [ "$(bspc query --tree --desktop | jq '.layout')" = '"monocle"' ]; then
     if [ "$direction" = 'west' ]; then
-        direction='prev.leaf'
+        direction='prev.window'
     elif [ "$direction" = 'east' ]; then
-        direction='next.leaf'
+        direction='next.window'
     fi
 fi
 

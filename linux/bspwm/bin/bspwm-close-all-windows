@@ -5,9 +5,9 @@
 
 desktop="$1"
 if [ "$desktop" ]; then
-    nodes="$(bspc query --nodes --desktop "$desktop" --node .leaf)"
+    nodes="$(bspc query --nodes --desktop "$desktop" --node .window)"
 else
-    nodes="$(bspc query --nodes --node .leaf)"
+    nodes="$(bspc query --nodes --node .window)"
 fi
 
 for node_id in $nodes; do
