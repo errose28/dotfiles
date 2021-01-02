@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    macos
+Default Tags    arch    nix    macos
 
 *** Tasks ***
 Arch Install
@@ -17,11 +17,18 @@ MacOS Install
     ...    zsh-autosuggestions
     ...    zsh-syntax-highlighting
 
+Nix Install
+    [Tags]    nix
+    Nix Install
+    ...    zsh
+    ...    zsh-autosuggestions
+    ...    zsh-syntax-highlighting
+
 Link
     Deep Link    *
 
 Change Shell
-    [Tags]    arch
+    [Tags]    arch    nix    macos
     # TODO: Make this work form robot.
     Interactive    chsh    -s    $(    which     zsh    )
 

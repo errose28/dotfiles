@@ -11,7 +11,7 @@
 
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
 Arch Install
@@ -28,6 +28,23 @@ Arch Install
     ...    pulseaudio-bluetooth
     ...    bluez
     ...    bluez-utils
+    ...    blueberry
+
+# TODO: Manage audio from configuration.nix.
+Nix Install
+    [Tags]    nix
+    # Main audio drivers and control panel.
+    Nix Install
+    ...    pavucontrol
+    ...    pulseaudio
+    ...    pulseaudio-ctl
+
+    # Bluetooth.
+    # blueberry is a more reliable front end than blueman.
+    Nix Install
+    ...    pulseaudio-modules-bt
+    ...    bluez
+    ...    bluez-tools
     ...    blueberry
 
 Services

@@ -2,7 +2,7 @@
 Library    DotfilesLibrary    ignore=vscode_extensions.txt
 Library    OperatingSystem
 Library    String
-Default Tags    arch    macos
+Default Tags    arch    nix    macos
 
 *** Tasks ***
 
@@ -17,13 +17,17 @@ MacOS Link
     Set Target    ~/Library/Application Support
     Deep Link    *
 
-### Arch ###
+### Linux ###
 
 Arch Install
     [Tags]    arch
     Yay Install    visual-studio-code-bin
 
-Arch Link
+Nix Install
+    [Tags]    nix
+    Nix Install    vscode
+
+Linux Link
     [Tags]    arch
     Set Target    ~/.config
     Deep Link    *

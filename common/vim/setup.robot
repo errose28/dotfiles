@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    macos
+Default Tags    arch    nix    macos
 
 *** Tasks ***
 MacOS Install
@@ -11,6 +11,10 @@ Pacman Install
     [Tags]    arch
     # gvim provides global clipboard support.
     Pacman Install    gvim
+
+Nix Install
+    [Tags]    nix
+    Nix Install    vim
 
 Link
     Deep Link    *

@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    macos
+Default Tags    arch    nix    macos
 
 *** Tasks ***
 Arch Install
@@ -11,8 +11,9 @@ Arch Install
     # If we switch to using nix as the MacOS package manager this may not be necessary.
     # ...    powerline-fonts
 
-MacOS Install
-    [Tags]    macos
+# TODO: Determine if installing with nix or pip is better for NixOS.
+Pip Install
+    [Tags]    macos    nix
     Pip Install
     ...    powerline-status
 

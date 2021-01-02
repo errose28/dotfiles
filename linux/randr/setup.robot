@@ -7,7 +7,7 @@
 
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
 Arch Install
@@ -16,6 +16,15 @@ Arch Install
     Yay Install    displaylink
 
     Pacman Install
+    ...    autorandr
+    ...    arandr
+
+# TODO: handle displaylink setup in configuration.nix
+Nix Install
+    [Tags]    nix
+    # Should install evdi drivern
+    Nix Install
+    ...    displaylink
     ...    autorandr
     ...    arandr
 
