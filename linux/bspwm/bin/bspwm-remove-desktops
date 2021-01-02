@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Removes all desktops that match the passed in query.
+# Query could be '.!active.!occupied', for example.
+
+query="$1"
+desktops="$(bspc query --desktops --desktop "$query")"
+
+while IFS= read -r desktop; do
+    if [ "$desktop" ]; then
+        bspc desktop "$desktop" --remove
+    fi
+done <<< "$desktops"
+

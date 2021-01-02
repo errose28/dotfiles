@@ -1,3 +1,5 @@
+# Contains universal sxhkd keybindings regardless of window manager.
+
 # button4 = scroll down
 # button5 = scroll up
 # button6 = scroll right
@@ -26,13 +28,8 @@ super + shift + Return
 super + t
     toggle-trackpad-enabled
 
-# autorandr does not manually detect docked monitor for some reason.
-# Force the detection here.
-super + shift + d
-    autorandr --change docked
-
 # Generic autorandr refresh.
-# force trigers the refresh even if the setup hasn't changed.
+# --force triggers the refresh even if the setup hasn't changed.
 super + shift + m
     autorandr --change --force
 

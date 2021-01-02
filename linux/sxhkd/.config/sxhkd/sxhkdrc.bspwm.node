@@ -1,14 +1,8 @@
+# Contains all bspwm node related sxhkd key bindings.
+
 # Close window.
 super + q
     bspc node --close
-
-super + shift + q
-    bspwm-close-all-windows; \
-    bspwm-remove-empty-desktops
-
-# Toggle monocle.
-super + a
-    bspc desktop --layout next
 
 # Toggle floating focused window.
 super + f
@@ -48,47 +42,13 @@ super + {h,j,k,l}
     direction="$(bspwm-convert-direction {west,south,north,east})"; \
     bspc node --focus "$direction".local
 
-# Reload bspwm and sxhkd.
-# Note that sxhkd is restarted in the bspwmrc config.
-super + shift + r
-    pkill sxhkd && bspc wm -r
-
 # Toggle fullscreen.
 super + shift + plus
     bspc node --state \~fullscreen
 
-# Focus desktop on this monitor.
-super + alt + {h,l}
-    bspc desktop --focus {prev,next}.local
-
-# Focus the last used desktop, regardless of monitor.
-super + alt + Tab
-    bspc desktop last --focus
-
 # Focus the last used window in the current desktop.
 super + Tab
     bspc node last.local.leaf --focus
-
-# Move desktop between monitors.
-# Use prev/next instead of north/south in case monitors are not stacked vertically.
-super + alt + shift {j,k}
-    bspwm-move-desktop-to-monitor {prev,next}
-
-# Move monitor focus.
-# TODO: Move mouse even when there is no window present.
-super + alt + {j,k}
-    bspc monitor --focus {south,north}
-
-# Move desktop one space left or right.
-super + alt + shift + {h,l}
-    bspc desktop --bubble {prev,next}
-
-# Open Rofi to select a name for the new desktop.
-super + alt + equal
-    bspwm-new-desktop
-
-super + alt + slash
-    bspwm-rename-desktop
 
 # Toggle whether a window is marked.
 super + v
@@ -98,13 +58,7 @@ super + v
 super + Escape
     bspwm-clear-marks
 
-# Move all marked windows to the current workspace, and clear the window marks.
+# Move all marked windows to the current desktop, and clear the window marks.
 super + p
     bspwm-move-marked-windows && bspwm-clear-marks
 
-# Remove current desktop.
-super + alt + minus
-    bspc desktop --remove
-
-super + alt + shift + minus
-    bspwm-remove-empty-desktops

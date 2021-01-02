@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 ### CONFIG VARIABLES ###
+
 normal_border_width=1
 border_on_color="#a6a6a6"
 border_off_color="#000000"
@@ -9,7 +10,8 @@ border_off_color="#000000"
 marked_border_color="0xFF0000"
 preselect_color="#FF0000"
 
-### FUNCTIONS ###
+# Initial desktops to create.
+bspc monitor --add-desktops Files Web
 
 # Pass all files in sxhkd config directory as extra configs
 sxhkd ~/.config/sxhkd/* &
