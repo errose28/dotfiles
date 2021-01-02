@@ -26,20 +26,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Init pyenv if it is installed.
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
-
-# Init virtualenvwrapper. Its location should be added to the path if it is not
-# already.
-if pip list | grep -q virtualenvwrapper; then
-    . "$(which virtualenvwrapper.sh)"
-    if workon | grep -q default; then
-        workon default
-    fi
-fi
-
 # VARIABLES I SET
 export EDITOR='vim'
 export VISUAL="$EDITOR"

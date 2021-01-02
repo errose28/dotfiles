@@ -1,0 +1,23 @@
+# Script to set up pyenv virtualenv if installed.
+# TODO Move this to a better named directory.
+#   It is just here because it will get sourced.
+
+# Default path to virtualenvwrapper init script if not using pyenv.
+venv_wrapper_path="$(which virtualenvwrapper.sh)"
+
+# Init pyenv if it is installed.
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    venv_wrapper_path="$(pyenv prefix)"/bin/virtualenvwrapper.sh
+fi
+
+# Init virtualenvwrapper if used and use created env 'default' if it exists.
+if [ "$venv_wrapper_path" ] && [ -f "$venv_wrapper_path" ]; then
+    . "$venv_wrapper_path"
+    if workon | grep -q default; then
+        workon default
+    else
+        mkvirtualenv default
+    fi
+fi
+
