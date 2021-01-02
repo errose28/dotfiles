@@ -11,6 +11,9 @@
 				"function": "powerline.segments.common.env.user"
 			},
 			{
+				"function": "powerline.segments.common.env.virtualenv"
+			},
+			{
 				"function": "powerline.segments.shell.cwd",
                 "args": {
                     "dir_limit_depth": 5

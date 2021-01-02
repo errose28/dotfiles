@@ -60,6 +60,9 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
+# Init virtualenvwrapper installed with pyenv python.
+source ~/.pyenv/versions/3.9.0/bin/virtualenvwrapper.sh
+
 # Load powerline prompt.
 if [ "$(uname -s)" = Darwin ]; then
     POWERLINE_DIR="$(python -m site --user-site)"
