@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 # This script requires git to be installed.
-# It will use pyenv optionally if it is present, and will set up virtualenv.
+# If pyenv is present, it will use it to install virtualenv and virtualenvwrapper.
+# Else, it will assume virtualenv and virtualenvwrapper have already been installed.
 
 # If pyenv is installed, use it instead of system python.
 if command -v pyenv > /dev/null; then
@@ -11,10 +12,12 @@ if command -v pyenv > /dev/null; then
     eval "$(pyenv init -)"
     pyenv install --skip-existing "$PYENV_VERSION"
     pyenv global "$PYENV_VERSION"
+    # Pyenv may not fetch latest version of pip.
+    python -m pip install --upgrade pip setuptools wheel virtualenv virtualenvwrapper
+else
+    pip install --upgrade pip setuptools wheel
 fi
 
-# Pyenv may not fetch latest version of pip.
-python -m pip install --upgrade pip wheel virtualenv virtualenvwrapper
 
 if command -v pyenv > /dev/null; then
     venv_wrapper_path="$(pyenv prefix)"/bin/virtualenvwrapper.sh
@@ -32,7 +35,7 @@ mkvirtualenv default
 # Install the latest version of the robot framework DotfilesLibrary.
 # This installs robotframework as a dependency.
 repo="/tmp/DotfilesLibrary"
-git clone https://github.com/errose28/DotfilesLibrary.git "$repo"
+git clone https://github.com/errose28/DotfilesLibrary.git "$repo" --branch='nix-support'
 pip install "$repo"
 rm -rf "$repo"
 

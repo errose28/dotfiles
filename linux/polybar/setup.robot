@@ -12,7 +12,10 @@ Arch Install
 Nix Install
     [Tags]    Nix
     # TODO: ibam setup (hosted on sourceforge)
-    Nix Install    polybar
+    # psmisc has killall to restart polybars.
+    Nix Install
+    ...    polybar
+    ...    psmisc
 
 Link
     Deep Link    *

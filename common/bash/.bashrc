@@ -8,6 +8,13 @@ case $- in
       *) return;;
 esac
 
+# Load my custom aliases and functions across shells.
+if [ -d ~/.functions ]; then
+    for file in ~/.functions/*; do
+        . "$file"
+    done
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -121,25 +128,22 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
-# Load powerline prompt.
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 # Add pip scripts dir to path for mac.
 PATH="$PATH:$HOME/.local/bin"
-if [ "$(uname -s)" = Darwin ]; then
-    POWERLINE_DIR="$(python -m site --user-site)"
-else
-    POWERLINE_DIR='/usr/share'
-fi
-powerline-daemon -q
-. "$POWERLINE_DIR"/powerline/bindings/bash/powerline.sh
-# zsh variable to disable right side prompt.
-RPROMPT=''
 
-# Load my custom aliases and functions across shells.
-if [ -d ~/.functions ]; then
-    for file in ~/.functions/*; do
-        . "$file"
-    done
+# Load powerline prompt.
+
+# If installed with system pip.
+POWERLINE_DIR="$(python -m site --user-site)"/powerline
+if [ ! -d "$POWERLINE_DIR"  ]; then
+    # If installed in virtualenv.
+    POWERLINE_DIR="$(cdsitepackages && pwd)"/powerline
+fi
+
+if [ -d "$POWERLINE_DIR"  ]; then
+    powerline-daemon -q
+    . "$POWERLINE_DIR"/bindings/bash/powerline.sh
 fi
 

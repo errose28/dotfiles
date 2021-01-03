@@ -30,13 +30,11 @@ Nix Install
     ...    hunspellDicts.en_US
     ...    htop
     ...    neofetch
-    ...    nautilus
+    ...    gnome3.nautilus
     ...    evince
     ...    gthumb
-    ...    gnome-mplayer
-    ...    gparted
+    ...    gnome_mplayer
     ...    firefox
-    ...    android-tools
     ...    jre
     ...    jdk
 
