@@ -30,24 +30,20 @@ Arch Install
     ...    bluez-utils
     ...    blueberry
 
-# TODO: Manage audio from configuration.nix.
+# Audio drivers set up by configuration.nix.
 Nix Install
     [Tags]    nix
     # Main audio drivers and control panel.
     Nix Install
     ...    pavucontrol
-    ...    pulseaudio
-    ...    pulseaudio-ctl
 
     # Bluetooth.
     # blueberry is a more reliable front end than blueman.
     Nix Install
-    ...    pulseaudio-modules-bt
-    ...    bluez
-    ...    bluez-tools
     ...    blueberry
 
 Services
+    [Tags]    arch
     Enable Systemd Services    bluetooth
 
 Link

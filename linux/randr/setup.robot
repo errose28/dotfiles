@@ -19,12 +19,10 @@ Arch Install
     ...    autorandr
     ...    arandr
 
-# TODO: handle displaylink setup in configuration.nix
+# displaylink drivers managed by configuration.nix.
 Nix Install
     [Tags]    nix
-    # Should install evdi drivern
     Nix Install
-    ...    displaylink
     ...    autorandr
     ...    arandr
 
@@ -32,9 +30,11 @@ Link
     Shallow Link    .config/autorandr
 
 Services
+    [Tags]    arch
     Enable Systemd Services    displaylink
 
 # Not sure if this is necessary.
 Modprobe
+    [Tags]    arch
     Interactive    sudo    modprobe    udl
 

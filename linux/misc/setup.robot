@@ -27,7 +27,7 @@ Nix Install
     [Tags]    nix
     Nix Install
     ...    libreoffice
-    ...    hunspell-en_US
+    ...    hunspellDicts.en_US
     ...    htop
     ...    neofetch
     ...    nautilus

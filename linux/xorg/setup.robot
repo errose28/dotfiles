@@ -14,7 +14,7 @@ Arch Install
 
 Nix Install
     [Tags]    nix
-    # Base xserver configuration handled by configuration.nix
+    # Base xserver configuration is handled by configuration.nix
     Nix Install
         ...    xorg.xinput
         ...    xdotool

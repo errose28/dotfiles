@@ -11,7 +11,6 @@ if command -v pyenv > /dev/null; then
     eval "$(pyenv init -)"
     pyenv install --skip-existing "$PYENV_VERSION"
     pyenv global "$PYENV_VERSION"
-    venv_wrapper_path="$(pyenv prefix)"/bin/virtualenvwrapper.sh
 fi
 
 # Pyenv may not fetch latest version of pip.
