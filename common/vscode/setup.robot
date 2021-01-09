@@ -28,7 +28,7 @@ Nix Install
     Nix Install    vscode
 
 Linux Link
-    [Tags]    arch
+    [Tags]    arch    nix
     Set Target    ~/.config
     Deep Link    *
 

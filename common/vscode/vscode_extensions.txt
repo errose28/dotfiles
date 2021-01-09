@@ -5,7 +5,7 @@ fabiospampinato.vscode-diff
 James-Yu.latex-workshop
 mhutchie.git-graph
 ms-python.python
-ms-python.pylance
+ms-python.vscode-pylance
 ms-vscode.cpptools
 naco-siren.gradle-language
 redhat.java

@@ -50,7 +50,7 @@
     // "cmake.configureOnOpen": true,
 
     // python settings
-    "python.pythonPath": "/usr/bin/python3",
+    "python.pythonPath": "/home/ethan/.virtualenvs/default/bin/python",
     "python.autoComplete.addBrackets": true,
     "python.linting.pylintArgs": 
     [
