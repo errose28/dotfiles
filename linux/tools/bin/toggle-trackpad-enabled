@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 trackpad_id=$(xinput list --id-only "SynPS/2 Synaptics TouchPad")
 mouse_id=$(xinput list --id-only "pointer:HP HP Link-5 micro dongle")
