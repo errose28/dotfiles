@@ -15,7 +15,7 @@ if command -v pyenv > /dev/null; then
     # Pyenv may not fetch latest version of pip.
     python -m pip install --upgrade pip setuptools wheel virtualenv virtualenvwrapper
 else
-    pip install --upgrade pip setuptools wheel
+    pip install --upgrade setuptools wheel
 fi
 
 

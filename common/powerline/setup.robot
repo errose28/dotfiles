@@ -8,7 +8,7 @@ Pip Install
     ...    powerline-status
 
 Font Install
-    Interactive    install_powerline_fonts.sh
+    Interactive    ./install_powerline_fonts.sh
 
 # Any configs not overridden by dotfiles will be taken from <python site packages>/powerline/config_files.
 # Copy files from there to dotfiles and modify them to override.
