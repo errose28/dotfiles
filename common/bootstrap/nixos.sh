@@ -10,3 +10,6 @@ nix-env --install --attr \
     nixos.python39Packages.virtualenvwrapper
 
 ./common.sh
+
+# Deploy nix package configuration for user.
+robot -v MODE:replace --include=nix ../../linux/nixpkgs
