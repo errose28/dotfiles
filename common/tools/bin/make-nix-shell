@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# Creates a template default.nix file in the current directory to be used with nix-shell.
+# Pass --command <shell> to nix-shell to change the shell from the default bash.
+
+name="$1"
+
+if [ ! "$name" ]; then
+    echo "Must specify a name for the shell" 1>&2
+    exit 1
+fi
+
+echo \
+"with import <nixpkgs> {};
+
+stdenv.mkDerivation rec {
+  name = \""$1"\";
+  buildInputs = [
+
+  ];
+  shellHook = ''
+
+  '';
+}
+" > default.nix
+
