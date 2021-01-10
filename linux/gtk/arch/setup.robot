@@ -1,18 +1,12 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    arch
 
 *** Tasks ***
 Arch Install
     [Tags]    arch
     Pacman Install
     ...    ant-gtk-theme
-    ...    ubuntu-themes
-
-Nix Install
-    [Tags]    nix
-    Nix Install
-    ...    ant-theme
     ...    ubuntu-themes
 
 Link
