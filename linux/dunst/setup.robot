@@ -5,11 +5,15 @@ Default Tags    arch    nix
 *** Tasks ***
 Arch Install
     [Tags]    arch
-    Pacman Install    dunst
+    Pacman Install
+    ...    dunst
+    ...    libnotify
 
 Nix Install
     [Tags]    nix
-    Nix Install    dunst
+    Nix Install
+    ...    dunst
+    ...    libnotify
 
 Link
     Deep Link    *

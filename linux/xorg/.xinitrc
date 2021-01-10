@@ -15,6 +15,9 @@ fi
 # Use picom to round window corners.
 picom &
 
+# Notification daemon.
+dunst &
+
 # Load the monitor configuration and set the background.
 # Force the change if the config was already loaded so the background image is set via the postswitch.
 autorandr --change --force &
