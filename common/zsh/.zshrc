@@ -62,6 +62,11 @@ if [ "$(uname -s)" = Darwin ]; then
     compaudit | xargs chmod g-w
 fi
 
+# Enable zsh in direnv (nix-shell) if available.
+if command -v direnv > /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
 # Load powerline prompt. Find directory to source the script from.
 
 # If installed with system pip.
