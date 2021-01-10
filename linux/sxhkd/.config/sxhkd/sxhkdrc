@@ -22,7 +22,7 @@ super + shift + p
     launch-polybars
 
 super + shift + Return
-    $PREF_TERM ranger -e ranger
+    $PREF_TERM -e ranger
 
 super + t
     toggle-trackpad-enabled

@@ -42,9 +42,14 @@ Nix Install
     Nix Install
     ...    blueberry
 
-Services
+Arch Services
     [Tags]    arch
     Enable Systemd Services    bluetooth
+
+Nix Services
+    [Tags]    Nix
+    # Nix requires pulseaudio user service to be enabled.
+    Enable Systemd Services    pulseaudio    user=True
 
 Link
     Deep Link    *
