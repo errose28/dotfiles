@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    macos
+Default Tags    arch    nix    macos
 
 *** Tasks ***
 Arch Install
@@ -10,6 +10,10 @@ Arch Install
 MacOS Install
     [Tags]    macos
     Brew Install    qemu
+
+Nix Install
+    [Tags]    nix
+    Nix Install    qemu
 
 Link
     Deep Link    *

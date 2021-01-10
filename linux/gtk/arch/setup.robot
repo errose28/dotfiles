@@ -3,7 +3,7 @@ Library    DotfilesLibrary
 Default Tags    arch
 
 *** Tasks ***
-Pacman Install
+Arch Install
     [Tags]    arch
     Pacman Install
     ...    ant-gtk-theme

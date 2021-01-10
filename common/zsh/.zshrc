@@ -1,3 +1,10 @@
+# Load my custom functions across shells.
+if [ -d ~/.functions ]; then
+    for file in ~/.functions/*; do
+        . "$file"
+    done
+fi
+
 # Enable colors.
 autoload -U colors && colors
 
@@ -55,24 +62,27 @@ if [ "$(uname -s)" = Darwin ]; then
     compaudit | xargs chmod g-w
 fi
 
-# Load powerline prompt.
-if [ "$(uname -s)" = Darwin ]; then
-    POWERLINE_DIR="$(python -m site --user-site)"
-else
-    POWERLINE_DIR='/usr/share'
+# Enable zsh in direnv (nix-shell) if available.
+if command -v direnv > /dev/null; then
+    eval "$(direnv hook zsh)"
 fi
-powerline-daemon -q
-. "$POWERLINE_DIR"/powerline/bindings/zsh/powerline.zsh
+
+# Load powerline prompt. Find directory to source the script from.
+
+# If installed with system pip.
+POWERLINE_DIR="$(python -m site --user-site)"/powerline
+if [ ! -d "$POWERLINE_DIR"  ]; then
+    # If installed in virtualenv.
+    POWERLINE_DIR="$(cdsitepackages && pwd)"/powerline
+fi
+
+if [ -d "$POWERLINE_DIR"  ]; then
+    powerline-daemon -q
+    . "$POWERLINE_DIR"/bindings/zsh/powerline.zsh
+fi
+
 # zsh variable to disable right side prompt.
 RPROMPT=''
-
-
-# Load my custom functions across shells.
-if [ -d ~/.functions ]; then
-    for file in ~/.functions/*; do
-        . "$file"
-    done
-fi
 
 ### LOAD ZSH PLUGINS ###
 
@@ -85,11 +95,13 @@ else
     ZSH_PLUGIN_DIR='/usr/share/zsh/plugins'
 fi
 
-# Syntax highlighting.
-source "$ZSH_PLUGIN_DIR"/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# On NixOS, zsh plugins are handled by configuration.nix, so the directory does
+# not exist and we can ignore it.
+if [ -d "$ZSH_PLUGIN_DIR" ]; then
+    source "$ZSH_PLUGIN_DIR"/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source "$ZSH_PLUGIN_DIR"/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-# Auto suggestions.
-source "$ZSH_PLUGIN_DIR"/zsh-autosuggestions/zsh-autosuggestions.zsh
 # First check history for command completion, then check tab complete.
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Makes tab completion history search not lag typing.

@@ -1,0 +1,7 @@
+# All theme options are directories in /usr/share/themes.
+# They should have gtk-2.0 and gtk-3.0 directories.
+# This is not an ini file like the gtk3 config file.
+gtk-application-prefer-dark-theme=true
+gtk-decoration-layout=menu
+gtk-theme-name=Ant
+

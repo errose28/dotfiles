@@ -21,9 +21,8 @@ super + Return
 super + shift + p
     launch-polybars
 
-# Force setting the title so it ends up in the correct i3 workspace.
 super + shift + Return
-    $PREF_TERM --title ranger -e ranger
+    $PREF_TERM -e ranger
 
 super + t
     toggle-trackpad-enabled

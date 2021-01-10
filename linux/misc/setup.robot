@@ -1,9 +1,9 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
-Install
+Arch Install
     [Tags]    arch
     Pacman Install
     ...    libreoffice
@@ -20,6 +20,21 @@ Install
     ...    pacman-contrib     # for cleaning pacman cache with paccache -rk 1
 
     Yay Install
+    ...    jre
+    ...    jdk
+
+Nix Install
+    [Tags]    nix
+    Nix Install
+    ...    libreoffice
+    ...    hunspellDicts.en_US
+    ...    htop
+    ...    neofetch
+    ...    gnome3.nautilus
+    ...    evince
+    ...    gthumb
+    ...    gnome_mplayer
+    ...    firefox
     ...    jre
     ...    jdk
 

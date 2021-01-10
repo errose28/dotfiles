@@ -1,11 +1,19 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
-Install
+Arch Install
     [Tags]    arch
-    Pacman Install    dunst
+    Pacman Install
+    ...    dunst
+    ...    libnotify
+
+Nix Install
+    [Tags]    nix
+    Nix Install
+    ...    dunst
+    ...    libnotify
 
 Link
     Deep Link    *

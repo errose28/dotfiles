@@ -1,9 +1,9 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    nix
 
 *** Tasks ***
-# No installation required.
+# Currently only using nix-env for NixOS.
 Link
     Deep Link    *
 

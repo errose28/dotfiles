@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
 Arch Install
@@ -11,6 +11,15 @@ Arch Install
         ...    xorg-xinput
         ...    xdotool
         ...    unclutter
+
+Nix Install
+    [Tags]    nix
+    # Base xserver configuration is handled by configuration.nix
+    Nix Install
+        ...    xorg.xinput
+        ...    xdotool
+        ...    unclutter
+
 Link
     Deep Link    *
 

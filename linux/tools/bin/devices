@@ -1,21 +1,38 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 ### BEGIN FUNCTION DEFINITIONS ###
 
-# Capture the echo output to get the return value.
-get_label_path() {
-    echo "$(lsblk -pro label,name | grep "$1" | cut -d ' ' -f2)"
+get_device_path() {
+    local dev_or_label="$1"
+
+    # Use path on its own to point to block device if it is valid.
+    if [ -b "$dev_or_label" ]; then
+        echo "$dev_or_label"
+    else
+        local dev_path=/dev/disk/by-label/"$dev_or_label"
+        if [ -b "$dev_path" ]; then
+            echo "$dev_path"
+        else
+            echo "Unable to match $dev_or_label to a block device path or device label." 1>&2
+        fi
+    fi
 }
 
 is_mounted() {
-    dev_path="$(get_label_path $label)"
-    mount | grep -q "$dev_path.*$label"
+    # Use realpath to resolve the symlink to the actual /dev block device,
+    # which will show up in the mount output.
+    mount | grep -q "$(realpath "$dev_path")"
 }
 
-cmd="$1"
-label="$2"
-
 ### END FUNCTION DEFINITIONS ###
+
+cmd="$1"
+dev_or_label="$2"
+mount_options="$3"
+
+if [ "$dev_or_label" ]; then
+    dev_path="$(get_device_path "$dev_or_label")"
+fi
 
 if [ "$cmd" = "ls" ]
 then
@@ -23,29 +40,23 @@ then
     lsblk -po label,name,fstype,mountpoint,model,size | grep -vE "loop"
 elif [ "$cmd" = "mount" ]
 then
-    dev_path="$(get_label_path $label)"
-    echo "$dev_path"
-    udisksctl mount -b "$dev_path"
+    udisksctl mount --options "$mount_options" --block-device "$dev_path"
 elif [ "$cmd" = "unmount" ]
 then
-    dev_path="$(get_label_path $label)"
-    udisksctl unmount -b "$dev_path"
+    udisksctl unmount --block-device "$dev_path"
 elif [ "$cmd" = "eject" ]
 then
-    dev_path="$(get_label_path $label)"
-
-    is_mounted && udisksctl unmount -b "$dev_path"
-    udisksctl power-off -b "$dev_path"
+    is_mounted && udisksctl unmount --block-device "$dev_path"
+    udisksctl power-off --block-device "$dev_path"
 elif [ "$cmd" = "devpath" ]
 then
-    dev_path="$(get_label_path $label)"
     echo "$dev_path"
 elif [ "$cmd" = "ismounted" ]
 then
     # Return code of this function is returned by last line in script.
     is_mounted
 else
-    echo "devices: Unknown command: $cmd"
+    echo "devices: Unknown command: $cmd" 1>&2
     exit 1
 fi
 

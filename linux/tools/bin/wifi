@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+# Wrapper over network mamager CLI.
+# See: https://developer.gnome.org/NetworkManager/stable/nmcli.html
+# To forget a connection or change a password, use the network manager GUI or nmtui.
+
+# Commands are:
+# ls
+# connect [ssid|mac-address] # Will prompt for ssid, mac address, and password if not provided/needed.
+# on
+# off
+# toggle
+
+if [ "$1" == 'ls' ]
+then
+    nmcli -f IN-USE,SSID,BSSID,RATE,CHAN,SIGNAL,BARS,SECURITY device wifi
+elif [ "$1" == 'toggle' ]
+then
+    if nmcli radio wifi | grep -q disabled
+    then
+        nmcli radio wifi on
+    else
+        nmcli radio wifi off
+    fi
+elif [ "$1" == 'connect' ]
+then
+    nmcli --ask device wifi connect "$2"
+elif [ "$1" == 'on' ]
+then
+    nmcli radio wifi on
+elif [ "$1" == 'off' ]
+then
+    nmcli radio wifi off
+else
+    echo "Unknown command $1"
+fi

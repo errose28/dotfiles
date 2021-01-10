@@ -11,7 +11,7 @@ marked_border_color="0xFF0000"
 preselect_color="#FF0000"
 
 # Initial desktops to create.
-bspc monitor --add-desktops Files Web
+bspc monitor --reset-desktops Files Web
 
 # Pass all files in sxhkd config directory as extra configs
 sxhkd ~/.config/sxhkd/* &

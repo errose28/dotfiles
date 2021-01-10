@@ -7,7 +7,7 @@
 
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
 Arch Install
@@ -19,13 +19,22 @@ Arch Install
     ...    autorandr
     ...    arandr
 
+# displaylink drivers managed by configuration.nix.
+Nix Install
+    [Tags]    nix
+    Nix Install
+    ...    autorandr
+    ...    arandr
+
 Link
     Shallow Link    .config/autorandr
 
 Services
+    [Tags]    arch
     Enable Systemd Services    displaylink
 
 # Not sure if this is necessary.
 Modprobe
+    [Tags]    arch
     Interactive    sudo    modprobe    udl
 

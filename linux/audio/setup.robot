@@ -11,7 +11,7 @@
 
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch
+Default Tags    arch    nix
 
 *** Tasks ***
 Arch Install
@@ -30,8 +30,26 @@ Arch Install
     ...    bluez-utils
     ...    blueberry
 
-Services
+# Audio drivers set up by configuration.nix.
+Nix Install
+    [Tags]    nix
+    # Main audio drivers and control panel.
+    Nix Install
+    ...    pavucontrol
+
+    # Bluetooth.
+    # blueberry is a more reliable front end than blueman.
+    Nix Install
+    ...    blueberry
+
+Arch Services
+    [Tags]    arch
     Enable Systemd Services    bluetooth
+
+Nix Services
+    [Tags]    Nix
+    # Nix requires pulseaudio user service to be enabled.
+    Enable Systemd Services    pulseaudio    user=True
 
 Link
     Deep Link    *
