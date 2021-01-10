@@ -8,12 +8,15 @@ case $- in
       *) return;;
 esac
 
-# Load my custom aliases and functions across shells.
-if [ -d ~/.functions ]; then
-    for file in ~/.functions/*; do
-        . "$file"
-    done
-fi
+# Source startup scripts.
+source_dirs=(~/.shell-init/common ~/.shell-init/bash)
+for source_dir in source_dirs; do
+    if [ -d "$source_dir" ]; then
+        for file in source_dir/*; do
+            source "$file"
+        done
+    fi
+done
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

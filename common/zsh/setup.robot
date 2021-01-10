@@ -10,12 +10,18 @@ Arch Install
     ...    zsh-autosuggestions
     ...    zsh-syntax-highlighting
 
+    # TODO: Symlink scripts to source to ~/.shell-init/zsh
+    # Interactive    ln    -s    
+
 MacOS Install
     [Tags]    macos
     Brew Install
     ...    zsh
     ...    zsh-autosuggestions
     ...    zsh-syntax-highlighting
+
+    # TODO: Symlink scripts to source to ~/.shell-init/zsh
+    # Interactive    ln    -s    
 
 Nix Install
     [Tags]    nix
@@ -28,7 +34,7 @@ Link
     Deep Link    *
 
 Change Shell
-    [Tags]    arch    nix    macos
+    [Tags]    arch    macos
     # TODO: Make this work form robot.
     Interactive    chsh    -s    $(    which     zsh    )
 

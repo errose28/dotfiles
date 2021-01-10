@@ -1,9 +1,12 @@
-# Load my custom functions across shells.
-if [ -d ~/.functions ]; then
-    for file in ~/.functions/*; do
-        . "$file"
-    done
-fi
+# Source startup scripts.
+source_dirs=(~/.shell-init/common ~/.shell-init/zsh)
+for source_dir in $source_dirs; do
+    if [ -d "$source_dir" ]; then
+        for file in "$source_dir"/*; do
+            source "$file"
+        done
+    fi
+done
 
 # Enable colors.
 autoload -U colors && colors
@@ -67,40 +70,10 @@ if command -v direnv > /dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
-# Load powerline prompt. Find directory to source the script from.
-
-# If installed with system pip.
-POWERLINE_DIR="$(python -m site --user-site)"/powerline
-if [ ! -d "$POWERLINE_DIR"  ]; then
-    # If installed in virtualenv.
-    POWERLINE_DIR="$(cdsitepackages && pwd)"/powerline
-fi
-
-if [ -d "$POWERLINE_DIR"  ]; then
-    powerline-daemon -q
-    . "$POWERLINE_DIR"/bindings/zsh/powerline.zsh
-fi
-
 # zsh variable to disable right side prompt.
 RPROMPT=''
 
-### LOAD ZSH PLUGINS ###
-
-#if you receive "highlighters directory not found" error message,
-#you may need to add the following to your .zshenv:
-#  export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighter
-if [ "$(uname -s)" = Darwin ]; then
-    ZSH_PLUGIN_DIR='/usr/local/share'
-else
-    ZSH_PLUGIN_DIR='/usr/share/zsh/plugins'
-fi
-
-# On NixOS, zsh plugins are handled by configuration.nix, so the directory does
-# not exist and we can ignore it.
-if [ -d "$ZSH_PLUGIN_DIR" ]; then
-    source "$ZSH_PLUGIN_DIR"/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    source "$ZSH_PLUGIN_DIR"/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
+### SETTINGS FOR ZSH PLUGINS ###
 
 # First check history for command completion, then check tab complete.
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
