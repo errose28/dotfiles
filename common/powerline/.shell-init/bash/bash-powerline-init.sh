@@ -12,3 +12,6 @@ for pl_dir in "${powerline_dirs[@]}"; do
     fi
 done
 
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+

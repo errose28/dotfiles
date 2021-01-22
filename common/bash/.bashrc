@@ -125,23 +125,3 @@ fi
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
-
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-# Add pip scripts dir to path for mac.
-PATH="$PATH:$HOME/.local/bin"
-
-# Load powerline prompt.
-
-# If installed with system pip.
-POWERLINE_DIR="$(python -m site --user-site)"/powerline
-if [ ! -d "$POWERLINE_DIR"  ]; then
-    # If installed in virtualenv.
-    POWERLINE_DIR="$(cdsitepackages && pwd)"/powerline
-fi
-
-if [ -d "$POWERLINE_DIR"  ]; then
-    powerline-daemon -q
-    . "$POWERLINE_DIR"/bindings/bash/powerline.sh
-fi
-
