@@ -1,21 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    Pacman Install
-        ...    xorg-server
-        ...    xorg-xinit
-        ...    xorg-xinput
-        ...    xdotool
-        ...    unclutter
-
-Nix Install
-    [Tags]    nix
-    # Base xserver configuration is handled by configuration.nix
-    Nix Install
+Install
+    Emit    Install
         ...    xorg.xinput
         ...    xdotool
         ...    unclutter

@@ -1,26 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
-MacOS Install
-    [Tags]    macos
-    # Might need to do other stuff for docker I don't remember.
-    Brew Cask Install
-    ...    docker
-    ...    docker-compose
-
-Pacman Install
+Install
     # TODO: Add user to the docker group and other setup.
-    [Tags]    arch
-    Pacman Install
-    ...    docker
-    ...    docker-compose
-
-Nix Install
-    # TODO: Add user to the docker group and other setup.
-    [Tags]    nix
-    Nix Install
+    Emit    Install
     ...    docker
     ...    docker-compose
 

@@ -1,19 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
+Install
     # wmctrl to detect window manager for logout.
-    Pacman Install
-    ...    rofi
-    ...    wmctrl
-
-Nix Install
-    [Tags]    nix
-    # wmctrl to detect window manager for logout.
-    Nix Install
+    Emit    Install
     ...    rofi
     ...    wmctrl
 

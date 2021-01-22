@@ -1,19 +1,12 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    Pacman Install    qemu
-
-MacOS Install
-    [Tags]    macos
-    Brew Install    qemu
-
-Nix Install
-    [Tags]    nix
-    Nix Install    qemu
+Install
+    Emit    Install
+    ...    qemu
+    ...    OVMF
 
 Link
     Deep Link    *

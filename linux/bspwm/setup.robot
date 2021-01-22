@@ -1,19 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    Pacman Install
-    ...    bspwm
-    ...    jq
-    # chwb tool from wmutils used to change marked window border color.
-    Yay Install    wmutils-git
-
-Nix Install
-    [Tags]    nix
-    Nix Install
+Install
+    Emit    Install
     ...    bspwm
     ...    sxhkd
     ...    jq
@@ -21,6 +12,5 @@ Nix Install
     ...    wmutils-core
 
 Link
-    Add Ignore    todo.txt
     Deep Link    *
 

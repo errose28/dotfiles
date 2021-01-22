@@ -1,17 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Pacman Install
-    [Tags]    arch
-    Yay Install
-    ...    font-manager
-    ...    ttf-google-fonts-git
-
-Nix Install
-    [Tags]    nix
-    Nix Install
+Install
+    Emit    Install
     ...    font-manager
     ...    google-fonts
 

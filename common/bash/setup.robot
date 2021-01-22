@@ -1,15 +1,11 @@
 *** Settings ***
 Library    OperatingSystem
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
-MacOS Install
-    [Tags]    macos
-    Brew Install    bash
-
-    Interactive    echo    "$(which bash)"    |    sudo     tee    -a    /etc/shells
-    Interactive    chsh    -s    "$(which bash)"
+Install
+    Emit    Install    bash
 
 Link
     Deep Link    *

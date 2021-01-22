@@ -1,19 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    # Used by combined battery script.
-    Pacman Install    ibam
-    Yay Install    polybar
-
-Nix Install
-    [Tags]    Nix
-    # TODO: ibam setup (hosted on sourceforge)
+Install
     # psmisc has killall to restart polybars.
-    Nix Install
+    Emit    Install
     ...    polybar
     ...    psmisc
 

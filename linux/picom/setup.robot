@@ -1,17 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    # sdhand's picom fork (picom-rounded-corners) does not have window blur.
-    Yay Install    picom-ibhagwan-git
-
-Nix Install
-    [Tags]    nix
+Install
     # Stock picom, not a special fork.
-    Nix Install    picom
+    Emit    Install    picom
 
 Link
     Deep Link    *

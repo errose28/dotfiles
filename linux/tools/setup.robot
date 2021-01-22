@@ -1,19 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Pacman Install
-    [Tags]    arch
-    Pacman Install
-    ...    xorg-xinput
-    ...    udisks2
-    ...    unclutter
-
-*** Tasks ***
-Nix Install
-    [Tags]    nix
-    Nix Install
+Install
+    Emit    Install
     ...    xorg.xinput
     ...    udisks
     ...    unclutter
