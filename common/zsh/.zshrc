@@ -1,11 +1,6 @@
 # Source startup scripts.
-source_dirs=(~/.shell-init/common ~/.shell-init/zsh)
-for source_dir in $source_dirs; do
-    if [ -d "$source_dir" ]; then
-        for file in "$source_dir"/*; do
-            source "$file"
-        done
-    fi
+for file in $("$SHELL_INIT_DIR"/init_scripts.sh zsh); do
+    source "$file"
 done
 
 # Enable colors.
@@ -72,13 +67,4 @@ fi
 
 # zsh variable to disable right side prompt.
 RPROMPT=''
-
-### SETTINGS FOR ZSH PLUGINS ###
-
-# First check history for command completion, then check tab complete.
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-# Makes tab completion history search not lag typing.
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-# Accept suggestion (don't run command) with ctrl+space.
-bindkey '^ ' autosuggest-accept
 
