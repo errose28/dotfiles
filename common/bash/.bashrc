@@ -9,13 +9,8 @@ case $- in
 esac
 
 # Source startup scripts.
-source_dirs=(~/.shell-init/common ~/.shell-init/bash)
-for source_dir in source_dirs; do
-    if [ -d "$source_dir" ]; then
-        for file in source_dir/*; do
-            source "$file"
-        done
-    fi
+for file in $("$SHELL_INIT_DIR"/init_scripts.sh bash); do
+    source "$file"
 done
 
 # don't put duplicate lines or lines starting with space in the history.

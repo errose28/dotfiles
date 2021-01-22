@@ -39,6 +39,7 @@ export VISUAL="$EDITOR"
 export DOTFILES="${HOME}/.dotfiles"
 export PREF_TERM='alacritty'
 export WALLPAPER="${HOME}/.wallpapers/grey_mountain.jpg"
+export SHELL_INIT_DIR="${HOME}/.shell-init"
 
 # Load system specific env variables from my custom directory.
 if [ -d ~/.variables ]; then

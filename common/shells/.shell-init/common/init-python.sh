@@ -1,6 +1,5 @@
+#!/usr/bin/env sh
 # Script to set up pyenv virtualenv if installed.
-# TODO Move this to a better named directory.
-#   It is just here because it will get sourced.
 
 # Default path to virtualenvwrapper init script if not using pyenv.
 venv_wrapper_path="$(which virtualenvwrapper.sh)"

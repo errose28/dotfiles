@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 # Functions shared between shells.
 
 # Taken from archwiki to prevent nested ranger instances.
