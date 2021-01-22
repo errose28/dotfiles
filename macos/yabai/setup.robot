@@ -4,7 +4,7 @@ Default Tags    macos
 
 *** Tasks ***
 Install
-    Brew Install
+    Emit    Install
     ...    yabai
     ...    jq
 

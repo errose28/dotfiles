@@ -1,15 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    Pacman Install    sxhkd
-
-Nix Install
-    [Tags]    nix
-    Nix Install    sxhkd
+Install
+    Emit    Install    sxhkd
 
 Link
     Deep Link    *

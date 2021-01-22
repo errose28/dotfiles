@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
 Link

@@ -1,16 +1,11 @@
 # feh executable should be triggered on autorandr change.
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix
+Default Tags    linux
 
 *** Tasks ***
-Arch Install
-    [Tags]    arch
-    Pacman Install    feh
-
-Nix Install
-    [Tags]    nix
-    Nix Install    feh
+Install
+    Emit    Install    feh
 
 Link
     # Wallpapers directory is for convenience.

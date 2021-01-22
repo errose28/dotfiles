@@ -2,37 +2,21 @@
 Library    DotfilesLibrary    ignore=vscode_extensions.txt
 Library    OperatingSystem
 Library    String
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
+Install
+    Emit    Install    vscode
 
-### MacOS ###
-
-MacOS Install
-    [Tags]    macos
-    Brew Cask Install    visual-studio-code
+Linux Link
+    [Tags]    linux
+    Set Target    ~/.config
+    Deep Link    *
 
 MacOS Link
     [Tags]    macos
     Set Target    ~/Library/Application Support
     Deep Link    *
-
-### Linux ###
-
-Arch Install
-    [Tags]    arch
-    Yay Install    visual-studio-code-bin
-
-Nix Install
-    [Tags]    nix
-    Nix Install    vscode
-
-Linux Link
-    [Tags]    arch    nix
-    Set Target    ~/.config
-    Deep Link    *
-
-### Common ###
 
 Install Extensions
     ${contents} =    Get File    vscode_extensions.txt

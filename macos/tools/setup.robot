@@ -4,10 +4,10 @@ Default Tags    macos
 
 *** Tasks ***
 Install
-    Brew Install
-    ...    cliclick
+    Emit    Install
     ...    yabai
     ...    skhd
+    ...    cliclick
 
 Link
     Deep Link    *

@@ -12,7 +12,7 @@ fi
 
 # Start my desktop programs:
 
-# Use picom to round window corners.
+# Compositor.
 picom &
 
 # Notification daemon.
@@ -37,6 +37,7 @@ xset r rate 280 40
 # disable screen blanking (screen will not automatically turn off)
 xset s off -dpms &
 
+# Start light-locker daemon.
 # light-locker uses lightDM and xscreenlock to lock the screen.
 light-locker --lock-on-suspend --no-lock-on-lid &
 

@@ -3,9 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux    macos
 
 *** Tasks ***
-Install
-    Emit    Install    vim
-
+# Only needed if nix is being used as the package manager,
+# But does not hurt otherwise.
 Link
     Deep Link    *
 

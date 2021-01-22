@@ -1,39 +1,12 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    arch    nix    macos
+Default Tags    linux    macos
 
 *** Tasks ***
-Pacman Install
-    [Tags]    arch
+Install
     # w3m does image previews.
     # ffmpeg does video previews.
-    Pacman Install
-    ...    ranger
-    ...    trash-cli
-    ...    w3m
-    ...    ffmpegthumbnailer
-    ...    atool
-    ...    zip
-    ...    unzip
-
-MacOS Install
-    [Tags]    macos
-    # w3m does image previews.
-    # ffmpeg does video previews.
-    Brew Install
-    ...    ranger
-    ...    trash-cli
-    ...    w3m
-    ...    ffmpegthumbnailer
-    ...    atool
-    ...    zip
-    ...    unzip
-
-Nix Install
-    [Tags]    nix
-    # w3m does image previews.
-    # ffmpeg does video previews.
-    Nix Install
+    Emit    Install
     ...    ranger
     ...    trash-cli
     ...    w3m

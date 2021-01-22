@@ -4,7 +4,8 @@ Default Tags    macos
 
 *** Tasks ***
 Install
-    Brew Install    skhd
+    Emit    Install
+    ...    skhd
 
 Link
     Deep Link    *
