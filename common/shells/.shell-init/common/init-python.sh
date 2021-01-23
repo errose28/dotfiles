@@ -13,10 +13,14 @@ fi
 # Init virtualenvwrapper if used and use created env 'default' if it exists.
 if [ "$venv_wrapper_path" ] && [ -f "$venv_wrapper_path" ]; then
     . "$venv_wrapper_path"
-    if workon | grep -q default; then
-        workon default
-    else
-        mkvirtualenv default
+
+    # Set this variable to use a default virtualenv in every shell.
+    if [ "$DEFAULT_VIRTUALENV" ]; then
+        if workon | grep -q "$DEFAULT_VIRTUALENV"; then
+            workon "$DEFAULT_VIRTUALENV"
+        else
+            mkvirtualenv "$DEFAULT_VIRTUALENV"
+        fi
     fi
 fi
 
