@@ -6,8 +6,7 @@ Default Tags    linux
 Install
     Emit    Install
     ...    materia-theme
-    ...    ant-bloody-theme
-    ...    ubuntu-themes
+    ...    papirus-icon-theme
 
 Link
     Deep Link    *
