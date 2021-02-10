@@ -1,7 +1,8 @@
 # Ignore vim swap files.
 **/*.swp
 **/todo.*
+**/TODO.*
 # Ignore robot output files
-*/log.html
+**/log.html
 **/report.html
 **/output.xml
