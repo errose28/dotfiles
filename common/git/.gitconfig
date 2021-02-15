@@ -1,0 +1,29 @@
+[user]
+	email = erose@apache.org
+	name = Ethan Rose
+[credential]
+	helper = cache
+[merge]
+    # Never use fast forward merge.
+	ff = false
+    # Include headers of commits from merged branch in merge commit message
+    # body.
+    log = true
+[pull]
+    # Always rebase when pulling changes, instead of merging.
+    rebase = true
+[rerere]
+    # Reuse Recorded Resolutions automatically.
+    # When there are merge conflicts, a line 'recorded preimage for <file>' will be added to the output.
+    # `git rerere status` will list what files it is recording resolutions on for the current merge.
+    # Recorded resolutions are saved in '<repo>/.git/rr-cache'
+    # After fixing the conflict, run `git rerere diff` before adding to check the results.
+
+    # When the conflict re-emerges on a later merge, the CONFLICT line will still appear in the output, but a later line:
+    # 'Resolved <file> using previous resolution.' will also be present.
+    # `git rerere status` will tell you the remaining conflicts that actually need to be fixed.
+    enabled = true
+
+    # Automatically add files whose conflicts are resolved by rerere.
+    # Now after merging, you will see an output line 'Staged <file> using previous resolution'.
+    autoupdate = true
