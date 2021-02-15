@@ -6,4 +6,5 @@ Default Tags    linux    macos
 
 *** Tasks ***
 Link
+    Add Ignore    README.md
     Deep Link    *

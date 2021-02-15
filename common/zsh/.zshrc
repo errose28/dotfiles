@@ -1,5 +1,5 @@
 # Source startup scripts.
-for file in $("$SHELL_INIT_DIR"/init_scripts.sh zsh); do
+for file in $(~/.shell.d/init-scripts.sh zsh); do
     source "$file"
 done
 

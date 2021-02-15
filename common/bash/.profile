@@ -42,8 +42,8 @@ export WALLPAPER="${HOME}/.wallpapers/grey_mountain.jpg"
 export SHELL_INIT_DIR="${HOME}/.shell-init"
 
 # Load system specific env variables from my custom directory.
-if [ -d ~/.variables ]; then
-    for file in ~/.variables/*; do
+if [ -d ~/.profile.d ]; then
+    for file in ~/.profile.d/*; do
         . "$file"
     done
 fi

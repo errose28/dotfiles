@@ -9,10 +9,10 @@ if [ ! "$shell" ]; then
     exit 1
 fi
 
-for file in "$SHELL_INIT_DIR"/common/*; do
+for file in ~/.shell.d/common/*; do
     echo "$file"
 done
 
-for file in "$SHELL_INIT_DIR"/"$shell"/*; do
+for file in ~/.shell.d/"$shell"/*; do
     echo "$file"
 done

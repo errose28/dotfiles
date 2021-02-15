@@ -10,7 +10,7 @@ esac
 
 # Source startup scripts.
 # TODO: This gives error complete command not found.
-for file in $("$SHELL_INIT_DIR"/init_scripts.sh bash); do
+for file in $(~/.shell.d/init-scripts.sh bash); do
     source "$file"
 done
 
