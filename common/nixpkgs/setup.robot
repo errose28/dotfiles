@@ -8,3 +8,8 @@ Default Tags    linux    macos
 Link
     Deep Link    *
 
+Install
+    Emit    Insall
+    ...    nix-zsh-completions
+    ...    nix-bash-completions
+

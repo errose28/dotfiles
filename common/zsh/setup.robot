@@ -12,4 +12,3 @@ Install
 Link
     Deep Link    *
 
-# TODO: Change shell if necessary.
