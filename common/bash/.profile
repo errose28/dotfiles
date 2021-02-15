@@ -8,6 +8,12 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# For some reason this does not run automatically on MacOS when using nix.
+nix_daemon=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+if [ -f "$nix_daemon" ]; then
+    . "$nix_daemon"
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists

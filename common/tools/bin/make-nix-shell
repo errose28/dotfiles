@@ -16,10 +16,10 @@ echo \
 stdenv.mkDerivation rec {
   name = \""$1"\";
   buildInputs = [
-
+    # Put packages to use in the shell here.
   ];
   shellHook = ''
-
+    # Put commands to be run on shell startup here.
   '';
 }
 " > default.nix
