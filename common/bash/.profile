@@ -35,6 +35,8 @@ fi
 # VARIABLES I SET
 export EDITOR='vim'
 export VISUAL="$EDITOR"
+# Do not have homebrew update on every install.
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 # Disable opengl hardware acceleration.
 # If this is not set and the laptop screen is turned off, opengl applications
@@ -45,7 +47,6 @@ export VISUAL="$EDITOR"
 export DOTFILES="${HOME}/.dotfiles"
 export PREF_TERM='alacritty'
 export WALLPAPER="${HOME}/.wallpapers/grey_mountain.jpg"
-export SHELL_INIT_DIR="${HOME}/.shell-init"
 
 # Load system specific env variables from my custom directory.
 if [ -d ~/.profile.d ]; then
