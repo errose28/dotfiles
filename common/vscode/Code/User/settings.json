@@ -36,7 +36,6 @@
         "**/.keep": true,
         // file exclusions for latex
         "**/*.fls": true,
-        "**/*.log": true,
         "**/*.aux": true,
         "**/*.fdb_latexmk": true,
         "**/*.synctex.gz": true
@@ -117,7 +116,7 @@
     "explorer.confirmDelete": false,
 
     // toggle debugger with ctrl+shift+D
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     // show and hide menu by pressing Alt
     "window.menuBarVisibility": "toggle",
 
