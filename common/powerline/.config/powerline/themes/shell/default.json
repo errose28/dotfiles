@@ -5,13 +5,10 @@
 				"function": "powerline.segments.shell.last_status"
 			},
 			{
-				"function": "powerline.segments.common.vcs.branch"
-			},
-			{
-				"function": "powerline.segments.common.env.user"
-			},
-			{
 				"function": "powerline.segments.common.env.virtualenv"
+			},
+			{
+				"function": "powerline.segments.common.vcs.branch"
 			},
 			{
 				"function": "powerline.segments.shell.cwd",
