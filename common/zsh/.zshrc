@@ -55,6 +55,8 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
+bindkey -s '^h' 'r^M'
+
 # Fix compinit failure on macos.
 if [ "$(uname -s)" = Darwin ]; then
     compaudit | xargs chmod g-w
@@ -67,4 +69,12 @@ fi
 
 # zsh variable to disable right side prompt.
 RPROMPT=''
+
+# TODO: Start shell in last tmux dir if a variable is set.
+# cd "$(tmux display -p "#{pane_current_path}")"
+# TODO: Start tmux with a new session attached to the last one if a variable is set.
+# tmux new-session -t "$(tmux display -p "#P")"
+if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ ! -o login ]] && [[ -o interactive ]]; then
+  tmux
+fi
 

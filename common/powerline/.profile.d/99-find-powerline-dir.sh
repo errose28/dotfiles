@@ -13,7 +13,7 @@ for pl_dir in $powerline_dirs; do
         export POWERLINE_DIR="$pl_dir"
         # Start powerline daemon to speed up startup.
         # Should be in PATH if powerline is installed.
-        powerline-daemon --quiet
+        # powerline-daemon --quiet
         break
     fi
 done

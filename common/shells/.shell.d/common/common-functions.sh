@@ -1,19 +1,18 @@
 #!/usr/bin/env sh
 # Functions shared between shells.
 
-# Taken from archwiki to prevent nested ranger instances.
-# ranger() {
-#     if [ -z "$RANGER_LEVEL" ]; then
-#         /usr/bin/ranger "$@"
-#     else
-#         exit
-#     fi
-# }
+# Launch ranger, and go to its last directory in shell when it exits.
+r() {
+    local dir_file="/tmp/rangerdir$$"
+    ranger --choosedir="$dir_file"
+    cd "$(cat "$dir_file")"
+    rm "$dir_file"
+}
 
-# Mirror the ranger shortcut I made to open an identical terminal in the same
-# working diretory.
-rr() {
-    "$PREF_TERM" --working-directory "$(pwd)"
+# Create a new tmux session attached to an existing one.
+# Cannot be run from inside tmux.
+t() {
+    tmux new-session -t "$1"
 }
 
 # Print the size of a directory or file.

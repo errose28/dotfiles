@@ -5,6 +5,9 @@
 				"function": "powerline.segments.common.env.user"
 			},
             {
+                "function": "powerline.segments.common.vcs.branch"
+            },
+            {
 				"function": "powerline.segments.common.net.hostname",
                 "args": {
                     "only_if_ssh": true
