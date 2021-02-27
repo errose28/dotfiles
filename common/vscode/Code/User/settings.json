@@ -66,6 +66,13 @@
         "editor.wordWrapColumn": 120,
     },
 
+    // Markdown Settings
+    "[markdown]":
+    {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120,
+    },
+
     // Latex settings
     "[latex]":
     {
