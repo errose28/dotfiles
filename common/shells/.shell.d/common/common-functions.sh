@@ -51,3 +51,7 @@ nix-this-shell() {
         nix-shell "$@"
     fi
 }
+
+git-root() {
+    cd "$(git rev-parse --show-toplevel)"
+}

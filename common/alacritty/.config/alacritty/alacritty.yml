@@ -573,6 +573,68 @@ key_bindings:
     mods: Control|Shift
     action: ScrollToTop
 
+  ### TMUX KEY BINDINGS ###
+
+  # Duplicate of tmux key bindings, but can use ctrl alt as modifier keys without weird tmux bugs excluding certain key configurations.
+  # If the focus is changed to a different tmux session in a different terminal, the commands will operate on the previously focused session until a command is sent to the current tmux session.
+  # Can just enter the tmux prefix to restore focus.
+  - key: H
+    mods: Control|Alt
+    command: { program: "tmux", args: ["previous-window"] }
+
+  - key: L
+    mods: Control|Alt
+    command: { program: "tmux", args: ["next-window"] }
+
+  - key: H
+    mods: Control|Alt|Shift
+    command: { program: "tmux", args: ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"] }
+
+  - key: L
+    mods: Control|Alt|Shift
+    command: { program: "tmux", args: ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"] }
+
+  - key: Tab
+    mods: Control|Alt
+    command: { program: "tmux", args: ["last-window"] }
+
+  - key: Q
+    mods: Control|Alt
+    command: { program: "tmux", args: ["killw"] }
+
+  # Alias for killing windows that is on the other side of the keyboard.
+  - key: Minus
+    mods: Control|Alt
+    command: { program: "tmux", args: ["killw"] }
+
+  - key: Return
+    mods: Control|Alt
+    command: { program: "tmux", args: ["new-window"] }
+
+  - key: Return
+    mods: Control|Alt|Shift
+    command: { program: "tmux", args: ["new-window", "-c", "#{pane_current_path}"] }
+
+  - key: T
+    mods: Control|Alt
+    command: { program: "tmux", args: ["new-window"] }
+
+  - key: T
+    mods: Control|Alt|Shift
+    command: { program: "tmux", args: ["new-window", "-c", "#{pane_current_path}"] }
+
+  - key: R
+    mods: Control|Alt
+    command: { program: "tmux", args: ["source-file", "~/.tmux.conf"] }
+
+  - key: Slash
+    mods: Control|Alt
+    command: { program: "tmux", args: ["command-prompt", "rename-window '%%'"]  }
+
+  - key: Slash
+    mods: Control|Alt|Shift
+    command: { program: "tmux", args: ["command-prompt", "rename-session '%%'"] }
+
 debug:
   # Display the time it takes to redraw each frame.
   render_timer: false

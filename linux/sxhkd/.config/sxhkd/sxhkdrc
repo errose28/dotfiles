@@ -15,7 +15,7 @@ Caps_Lock
     check-caps-lock
 
 super + Return
-    $PREF_TERM
+    $PREF_TERM -e tmux
 
 # Kills all polybars and relaunches them.
 super + shift + p
