@@ -29,7 +29,7 @@ cmd + alt + shift - l:
 # --args tells open to pass the args to the program.
     # alacritty --option 'font.size=16'
 alt - return:
-    open -na Alacritty --args --option 'font.size=16'
+    open -na Alacritty --args --option 'font.size=16' -e tmux
 
 # TODO: Fix this so switching to terminal from ranger works.
     # alacritty --option 'font.size=16' -e ranger
