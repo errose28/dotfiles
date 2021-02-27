@@ -62,7 +62,7 @@ if [ "$(uname -s)" = Darwin ]; then
     compaudit | xargs chmod g-w
 fi
 
-# Enable zsh in direnv (nix-shell) if available.
+# Enable zsh in direnv if available.
 if command -v direnv > /dev/null; then
     eval "$(direnv hook zsh)"
 fi
