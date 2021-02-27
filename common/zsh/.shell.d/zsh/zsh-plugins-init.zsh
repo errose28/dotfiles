@@ -2,18 +2,9 @@
 
 ### LOAD PLUGINS ###
 
-# Locates zsh plugins and sources them.
-# Add locations to look and plugin names to this file.
-
-zsh_plugin_dirs=(~/.nix-profile/share /usr/share/zsh/plugins) 
 zsh_plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-
-for plugin_dir in $zsh_plugin_dirs; do
-    if [ -d "$plugin_dir" ]; then
-        for plugin in $zsh_plugins; do
-            source "$plugin_dir/$plugin/$plugin".zsh
-        done
-    fi
+for plugin in $zsh_plugins; do
+    source "$ZSH_PLUGIN_DIR/$plugin/$plugin".zsh
 done
 
 ### PLUGINS SETTINGS ###
