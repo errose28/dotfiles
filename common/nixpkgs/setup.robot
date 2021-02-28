@@ -12,6 +12,7 @@ Install
     Emit    Insall
     ...    nix-zsh-completions
     ...    nix-bash-completions
-    # direnv used to automatically enable nix-shells.
+    # direnv used to automatically enable nix-shells and lorri.
     ...    direnv
+    ...    lorri
 
