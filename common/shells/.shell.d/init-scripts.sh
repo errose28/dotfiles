@@ -9,10 +9,14 @@ if [ ! "$shell" ]; then
     exit 1
 fi
 
-for file in ~/.shell.d/common/*; do
-    echo "$file"
-done
+if [ -d  ~/.shell.d/common ]; then
+    for file in ~/.shell.d/common/*; do
+        echo "$file"
+    done
+fi
 
-for file in ~/.shell.d/"$shell"/*; do
-    echo "$file"
-done
+if [ -d ~/.shell.d/"$shell" ]; then
+    for file in ~/.shell.d/"$shell"/*; do
+        echo "$file"
+    done
+fi

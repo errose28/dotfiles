@@ -9,7 +9,6 @@ case $- in
 esac
 
 # Source startup scripts.
-# TODO: This gives error complete command not found.
 for file in $(~/.shell.d/init-scripts.sh bash); do
     source "$file"
 done

@@ -3,9 +3,9 @@
 ### LOAD PLUGINS ###
 
 zsh_plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-for plugin in $zsh_plugins; do
-    source "$ZSH_PLUGIN_DIR/$plugin/$plugin".zsh
-done
+source "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$ZSH_PLUGIN_DIR/zsh-powerlevel10k/powerlevel10k.zsh-theme"
 
 ### PLUGINS SETTINGS ###
 
