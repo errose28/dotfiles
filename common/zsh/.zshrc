@@ -1,3 +1,12 @@
+# Do not start tmux in linux login shells. 
+# MacOS (Darwin) starts every shell as login shell.
+if command -v tmux &> /dev/null && [[ -z "$TMUX" ]] && [[ ( ! -o login || $(uname -s) == 'Darwin' ) ]] && [[ -o interactive ]]; then
+  tmux
+fi
+
+# Instant prompt before entering tmux seems to cause issues, so enter tmux session first.
+# Instant prompt will be activated within the tmux session.
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -62,12 +71,8 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
+# Quick launch of Ranger function.
 bindkey -s '^h' 'r^M'
-
-# Fix compinit failure on macos.
-if [ "$(uname -s)" = Darwin ]; then
-    compaudit | xargs chmod g-w
-fi
 
 # Enable zsh in direnv if available.
 if command -v direnv > /dev/null; then
@@ -81,9 +86,6 @@ RPROMPT=''
 # cd "$(tmux display -p "#{pane_current_path}")"
 # TODO: Start tmux with a new session attached to the last one if a variable is set.
 # tmux new-session -t "$(tmux display -p "#P")"
-if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ ! -o login ]] && [[ -o interactive ]]; then
-  tmux
-fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
