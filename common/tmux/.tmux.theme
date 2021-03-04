@@ -83,7 +83,7 @@ set -gF @git "#{@git-prefix}#{@git-style}#{@git-format}"
 
 set -gF @user-host-prefix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
 set -gF @user-host-style "#[fg=#{@user-host-fg}]#[bg=#{@user-host-bg}]#[bold]"
-set -gF @user-host-format " #(whoami)@#H "
+set -gF @user-host-format " $USER@#H "
 set -gF @user-host "#{@user-host-prefix}#{@user-host-style}#{@user-host-format}"
 
 set -gF @attached-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-bg}]"
