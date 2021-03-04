@@ -184,6 +184,7 @@
     "python.analysis.extraPaths": [
         "${workspaceFolder}/Source"
     ],
-    "python.analysis.completeFunctionParens": true
+    "python.analysis.completeFunctionParens": true,
+    "editor.largeFileOptimizations": false
 }
 
