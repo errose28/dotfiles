@@ -16,8 +16,13 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
-# Init virtualenvwrapper if used.
-if [ "$VENV_WRAPPER" ] && [ -f "$VENV_WRAPPER" ]; then
-    . "$VENV_WRAPPER"
-fi
+# Currently no need to list possible paths, but this might change.
+venv_wrapper_paths=""$(which virtualenvwrapper.sh)""
+
+for venv_wrapper in $venv_wrapper_paths; do
+    if [ -f "$venv_wrapper" ]; then
+        . "$venv_wrapper"
+        break
+    fi
+done
 

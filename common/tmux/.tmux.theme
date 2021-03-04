@@ -1,0 +1,111 @@
+### BEGIN CONFIG ###
+
+set -g @bg colour0
+
+set -g @session-no-prefix-bg colour255
+set -g @session-no-prefix-fg colour232
+set -g @session-prefix-bg colour31
+set -g @session-prefix-fg colour255
+
+# Background of non-current window is the same as bar background.
+set -g @window-fg colour255
+set -g @current-window-bg colour31
+set -g @current-window-fg colour233
+set -g @last-window-fg default
+
+set -g @attached-bg colour255
+set -g @attached-fg colour232
+
+set -g @user-host-bg colour31
+set -g @user-host-fg colour233
+
+set -g @git-bg colour245
+set -g @git-fg colour255
+
+set -gF @message-bg "#{@bg}"
+set -gF @message-fg default
+
+set -gF @command-bg "#{@bg}"
+set -gF @command-fg default
+
+### END CONFIG ###
+
+set -g status-interval 1
+
+set -gF status-bg "#{@bg}"
+
+### LEFT STATUS ###
+# session
+
+set -g status-left-length 1000
+
+# TODO: Make this work with prefix condition.
+set -g @session-style "#[fg=#{@session-no-prefix-fg}]#[bg=#{@session-no-prefix-bg}]#[bold]"
+set -g @session-suffix "#[fg=#{@session-no-prefix-bg}]#[bg=#{@bg}]"
+set -g @session-format " #S "
+set -gF status-left "#{@session-style}#{@session-format}#{@session-suffix}"
+
+### WINDOW STATUS ###
+# TODO:
+# - Use window_last_flag conditional to mark the last used window instead of #F.
+# - Draw arrow when tabs are cut off.
+
+set -g window-status-separator ""
+set -g status-justify left
+
+# Normal window status.
+set -g @window-style "#[fg=#{@window-fg}]#[bg=#{@bg}]"
+# #F for window flag, #I for window index.
+set -g @window-format "  #F  #W  "
+
+set -gF window-status-format "#{@window-style}#{@window-format}"
+
+# Current window status.
+set -g @current-window-prefix "#[fg=#{@bg}]#[bg=#{@current-window-bg}]"
+set -g @current-window-style "#[fg=#{@current-window-fg}]#[bg=#{@current-window-bg}]#[bold]"
+set -g @current-window-format " #F  #W "
+set -g @current-window-suffix "#[fg=#{@current-window-bg}]#[bg=#{@bg}]"
+
+set -gF window-status-current-format "#{@current-window-prefix}#{@current-window-style}#{@current-window-format}#{@current-window-suffix}"
+
+### RIGHT STATUS ####
+# git user@host attached
+# TODO:
+# - Hide modules when not enough room or with keybinding.
+# - Conditional formatting to not draw git branch when not in git repo.
+
+set -g status-right-length 1000
+
+set -gF @git-prefix "#[bg=#{@bg}]#[fg=#{@git-bg}]"
+set -gF @git-style "#[fg=#{@git-fg}]#[bg=#{@git-bg}]"
+set -g @git-format "  #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) "
+set -gF @git "#{@git-prefix}#{@git-style}#{@git-format}"
+
+set -gF @user-host-prefix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
+set -gF @user-host-style "#[fg=#{@user-host-fg}]#[bg=#{@user-host-bg}]#[bold]"
+set -gF @user-host-format " #(whoami)@#H "
+set -gF @user-host "#{@user-host-prefix}#{@user-host-style}#{@user-host-format}"
+
+set -gF @attached-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-bg}]"
+set -gF @attached-style "#[fg=#{@attached-fg}]#[bg=#{@attached-bg}]#[bold]"
+set -gF @attached-format "  #{session_attached} "
+set -gF @attached "#{@attached-prefix}#{@attached-style}#{@attached-format}"
+
+set -gF status-right "#{@git}#{@user-host}#{@attached}"
+
+### MESSAGES ###
+set -gF message-style "fg=#{@message-fg} bg=#{@message-bg}"
+set -gF message-command-style "fg=#{@command-fg} bg=#{@command-bg}"
+
+### PANES ###
+# TODO
+
+#set -g pane-border-bg default
+#set -g pane-border-fg colour238
+
+#set -g pane-active-border-bg default
+#set -g pane-active-border-fg colour39
+
+# Pane number indicator
+#set -g display-panes-colour colour233
+#set -g display-panes-active-colour colour245
