@@ -23,7 +23,6 @@ export DIRENV_LOG_FORMAT=
 
 # VARIABLES I MADE
 export DOTFILES="${HOME}/.dotfiles"
-export PREF_TERM='alacritty'
 export WALLPAPER="${HOME}/.wallpapers/grey_mountain.jpg"
 
 # Load system specific env variables from my custom directory.

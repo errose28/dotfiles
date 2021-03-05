@@ -27,14 +27,18 @@ cmd + alt + shift - l:
 # Open terminal apps.
 # Override linux font size in common config.
 # --args tells open to pass the args to the program.
-    # alacritty --option 'font.size=16'
 alt - return:
-    open -na Alacritty --args --option 'font.size=16'
+    export USE_TMUX=1; \
+    terminal
 
-# TODO: Fix this so switching to terminal from ranger works.
-    # alacritty --option 'font.size=16' -e ranger
 alt + shift - return:
-    open -na Alacritty --args --option 'font.size=16' -e ranger
+    export USE_TMUX=1; \
+    export USE_TMUX_DIR=1; \
+    terminal
+
+alt + shift + cmd - return:
+    export USE_TMUX_SESSION=1; \
+    terminal
 
 # Open web browser.
 alt - b:

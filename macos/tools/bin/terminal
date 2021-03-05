@@ -1,0 +1,1 @@
+open -na Alacritty --args --option 'font.size=16' "$@"
