@@ -15,12 +15,19 @@ Caps_Lock
     check-caps-lock
 
 super + Return
-    $PREF_TERM -e $SHELL
+    export USE_TMUX=1; \
+    $PREF_TERM
 
 # TODO: Make this start tmux in the dir of the last focused pane.
 #   See .zshrc.
 super + shift + Return
-    $PREF_TERM -e $SHELL -c tmux new-session -c "#{pane_current_path}"
+    export USE_TMUX=1; \
+    export USE_TMUX_DIR=1; \
+    $PREF_TERM
+
+super + alt+ shift + Return
+    export USE_TMUX_SESSION=1; \
+    $PREF_TERM
 
 # Kills all polybars and relaunches them.
 super + shift + p

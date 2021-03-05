@@ -1,7 +1,17 @@
 # Do not start tmux in linux login shells. 
 # MacOS (Darwin) starts every shell as login shell.
 if command -v tmux &> /dev/null && [[ -z "$TMUX" ]] && [[ ( ! -o login || $(uname -s) == 'Darwin' ) ]] && [[ -o interactive ]]; then
-  tmux
+    if [ -n "$USE_TMUX_DIR" ]; then
+        # Use working dir of last tmux pane.
+        cd "$(tmux display -p "#{pane_current_path}")"
+   fi
+
+    if [ -n "$USE_TMUX_SESSION" ]; then
+        # Start new session connected to last tmux session.
+        tmux new-session -t "$(tmux display -p "#S")"
+    elif [ -n "$USE_TMUX" ]; then
+        tmux
+    fi
 fi
 
 # Instant prompt before entering tmux seems to cause issues, so enter tmux session first.
@@ -81,11 +91,6 @@ fi
 
 # zsh variable to disable right side prompt.
 RPROMPT=''
-
-# TODO: Start shell in last tmux dir if a variable is set.
-# cd "$(tmux display -p "#{pane_current_path}")"
-# TODO: Start tmux with a new session attached to the last one if a variable is set.
-# tmux new-session -t "$(tmux display -p "#P")"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
