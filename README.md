@@ -11,7 +11,29 @@
 
 - Within each OS directory, each subdirectory is a package, containing dotfiles, setup, and install commands for one program.
 
-## Deployment with Robot Framework
+## Deployment
+
+### Setup
+
+- With [direnv](https://direnv.net/) and [pyenv](https://github.com/pyenv/pyenv):
+    1. Enter the project directory and run `direnv allow`.
+        - This will set the current python version to the one specified in *.python-version*.
+        - Using this python version, a python venv in the project directory will be automatically loaded by direnv.
+    2. Run `python -m pip install -r requirements.txt`
+
+- With [direnv](https://direnv.net/), [lorri](https://github.com/target/lorri), and [nix](https://nixos.org/manual/nix/stable/):
+    1. Enter the project directory and run `direnv allow`.
+        - This will set the current python version to the one specified in *shell.nix*.
+        - Using this python version, a python venv in the project directory will be automatically loaded by direnv.
+    2. Run `python -m pip install -r requirements.txt`
+
+- Manual:
+    1. Configure your python environment as desired
+    2. Run `python -m pip install -r requirements.txt`
+
+- Note: If both lorri and pyenv are present on the system, lorri will be preferred.
+
+### Robot Framework
 
 - Deploying dotfiles is handled using [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
     - Each package contains a *.robot* file with commands for linking dotfiles, installing programs, and other general setup for that program.
@@ -21,8 +43,6 @@
     - Listeners I use for installation are kept at [DotfilesLibraryListeners](https://github.com/errose28/DotfilesLibraryListeners)
 
     - Installation of programs can be skipped by not registering a listener.
-
-- *bootstrap.sh* at the top level directory will install robot framework, the dotfiles library, and listeners using pip.
 
 - All *.robot* setup files are idempotent.
 
