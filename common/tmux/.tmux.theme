@@ -1,39 +1,43 @@
 ### BEGIN CONFIG ###
 
+# Note: Use set -F if you want to reference another config value.
+
 set -g @bg colour0
 
 set -g @session-no-prefix-bg colour255
-set -g @session-no-prefix-fg colour232
+set -gF @session-no-prefix-fg "#{@bg}"
 set -g @session-prefix-bg colour1
 set -g @session-prefix-fg colour255
 
 # Background of non-current window is the same as bar background.
 set -g @window-fg colour255
 set -g @current-window-bg colour31
-set -g @current-window-fg colour233
-set -g @last-window-fg default
+set -gF @current-window-fg "#{@bg}"
+set -gF @last-window-fg "#{@current-window-bg}"
 
 set -g @attached-no-prefix-bg colour255
-set -g @attached-no-prefix-fg colour232
+set -gF @attached-no-prefix-fg "#{@bg}"
 set -g @attached-prefix-bg colour1
 set -g @attached-prefix-fg colour255
 
 set -g @user-host-bg colour31
-set -g @user-host-fg colour233
+set -gF @user-host-fg "#{@bg}"
 
 set -g @git-bg colour245
 set -g @git-fg colour255
 
 set -gF @message-bg "#{@bg}"
-set -gF @message-fg default
+set -g @message-fg default
 
 set -gF @command-bg "#{@bg}"
-set -gF @command-fg default
+set -g @command-fg default
 
 ### END CONFIG ###
 
-# Note: Use set without -F when saving to variables, and set -F when applying to the status bar.
-#   This makes the results of the variables re-evaulated after config reload.
+# Note: Use -F when you need to reference another config value.
+#   If that referenced config value references another config, you will need to
+#   use -F there too or the end result will only expand one.
+#   When -F is used, the result will not be re-evaluated after config load.
 #   Do not use set -F if evaulating a conditional.
 
 set -g status-interval 1
@@ -47,35 +51,36 @@ set -g status-left-length 1000
 
 set -gF @session-no-prefix-style "#[fg=#{@session-no-prefix-fg}]#[bg=#{@session-no-prefix-bg}]#[bold]"
 set -gF @session-prefix-style "#[fg=#{@session-prefix-fg}]#[bg=#{@session-prefix-bg}]#[bold]"
-set -gF @session-format "  #S "
+set -g @session-format "  #S "
 set -gF @session-no-prefix-suffix "#[fg=#{@session-no-prefix-bg}]#[bg=#{@bg}]"
 set -gF @session-prefix-suffix "#[fg=#{@session-prefix-bg}]#[bg=#{@bg}]"
 
-set -gF @status-left-no-prefix "#{@session-no-prefix-style}#{@session-format}#{@session-no-prefix-suffix}"
-set -gF @status-left-prefix "#{@session-prefix-style}#{@session-format}#{@session-prefix-suffix}"
-
-set -g status-left "#{?client_prefix,#{@status-left-prefix},#{@status-left-no-prefix}}"
+set -g status-left "#{?client_prefix,#{@session-prefix-style},#{@session-no-prefix-style}}"
+set -gaF status-left "#{@session-format}"
+set -ga status-left "#{?client_prefix,#{@session-prefix-suffix},#{@session-no-prefix-suffix}}"
 
 ### WINDOW STATUS ###
-# TODO:
-# - Use window_last_flag conditional to mark the last used window instead of #F.
-# - Draw arrow when tabs are cut off.
+# TODO: Draw arrow when tabs are cut off.
 
 set -g window-status-separator ""
 set -g status-justify left
 
 # Normal window status.
-set -g @window-style "#[fg=#{@window-fg}]#[bg=#{@bg}]"
+set -gF @window-style "#[fg=#{@window-fg}]#[bg=#{@bg}]"
+set -gF @last-window-style "#[fg=#{@last-window-fg}]#[bg=#{@bg}]"
 # #F for window flag, #I for window index.
-set -g @window-format "  #F  #W  "
+# Extra space in beginning keeps name from moving when its the current window,
+# which has an extra > before it.
+set -g @window-format "  #W "
 
-set -gF window-status-format "#{@window-style}#{@window-format}"
+set -g window-status-format "#{?window_last_flag,#{@last-window-style},#{@window-style}}"
+set -gaF window-status-format "#{@window-format}"
 
 # Current window status.
-set -g @current-window-prefix "#[fg=#{@bg}]#[bg=#{@current-window-bg}]"
-set -g @current-window-style "#[fg=#{@current-window-fg}]#[bg=#{@current-window-bg}]#[bold]"
-set -g @current-window-format " #F  #W "
-set -g @current-window-suffix "#[fg=#{@current-window-bg}]#[bg=#{@bg}]"
+set -gF @current-window-prefix "#[fg=#{@bg}]#[bg=#{@current-window-bg}]"
+set -gF @current-window-style "#[fg=#{@current-window-fg}]#[bg=#{@current-window-bg}]#[bold]"
+set -g @current-window-format " #W "
+set -gF @current-window-suffix "#[fg=#{@current-window-bg}]#[bg=#{@bg}]"
 
 set -gF window-status-current-format "#{@current-window-prefix}#{@current-window-style}#{@current-window-format}#{@current-window-suffix}"
 
@@ -84,6 +89,7 @@ set -gF window-status-current-format "#{@current-window-prefix}#{@current-window
 # TODO:
 # - Hide modules when not enough room or with keybinding.
 # - Conditional formatting to not draw git branch when not in git repo.
+#    - Might require an external script.
 
 set -g status-right-length 1000
 
@@ -96,7 +102,7 @@ set -gF @git "#{@git-prefix}#{@git-style}#{@git-format}"
 set -gF @user-host-prefix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
 set -gF @user-host-style "#[fg=#{@user-host-fg}]#[bg=#{@user-host-bg}]#[bold]"
 set -gF @user-host-format " $USER@#H "
-set -gF @user-host "#{@user-host-prefix}#{@user-host-style}#{@user-host-format}"
+set -g @user-host "#{@user-host-prefix}#{@user-host-style}#{@user-host-format}"
 
 set -gF @attached-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-bg}]"
 
