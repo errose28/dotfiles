@@ -86,10 +86,6 @@ set -gF window-status-current-format "#{@current-window-prefix}#{@current-window
 
 ### RIGHT STATUS ####
 # git user@host attached
-# TODO:
-# - Hide modules when not enough room or with keybinding.
-# - Conditional formatting to not draw git branch when not in git repo.
-#    - Might require an external script.
 
 set -g status-right-length 1000
 
@@ -97,8 +93,11 @@ set -gF @git-prefix "#[bg=#{@bg}]#[fg=#{@git-bg}]"
 set -gF @git-style "#[fg=#{@git-fg}]#[bg=#{@git-bg}]"
 # Do not use -F or this will not be re-evaluated.
 set -g @git-format "  #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) "
-set -gF @git-suffix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
 set -gF @git "#{@git-prefix}#{@git-style}#{@git-format}"
+# Only use formatting if we are in a git repo.
+set -gF @git-on-suffix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
+set -gF @git-off-suffix "#[bg=#{@bg}]#[fg=#{@user-host-bg}]"
+set -g @git-conditional "#(cd #{pane_current_path}; is-git-dir.sh \"#{@git}#{@git-on-suffix}\" \"#{@git-off-suffix}\")"
 
 set -gF @user-host-style "#[fg=#{@user-host-fg}]#[bg=#{@user-host-bg}]#[bold]"
 set -gF @user-host-format " $USER@#H "
@@ -118,9 +117,7 @@ set -g @attached-format "  #{session_attached} "
 set -gF @attached-no-prefix "#{@attached-prefix-no-prefix}#{@attached-style-no-prefix}"
 set -gF @attached-prefix "#{@attached-prefix-prefix}#{@attached-style-prefix}"
 
-set -g @git-new "#(cd #{pane_current_path}; tmux-git-format.sh \"#{@git}\")"
-
-set -gF status-right "#{@git-new}#{@user-host}"
+set -gF status-right "#{@git-conditional}#{@user-host}"
 set -ga status-right "#{?client_prefix,#{@attached-prefix},#{@attached-no-prefix}}"
 set -gaF status-right "#{@attached-format}"
 
