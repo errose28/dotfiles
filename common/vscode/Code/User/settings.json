@@ -1,32 +1,61 @@
 {
     "window.titleBarStyle": "native",
-    "workbench.settings.editor": "json",
-
-    // general settings
-    "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 250,
-    "editor.minimap.enabled": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "debug.inlineValues": true,
-    "terminal.integrated.cursorStyle": "line",
-    "problems.decorations.enabled": true,
-    "editor.rulers": 
-    [
-        120
-    ],
-    "workbench.startupEditor": "none",
-    "workbench.editor.enablePreview": false,
     "window.restoreWindows": "none",
-    "vim.textwidth": 120,
-    "editor.cursorBlinking": "solid",
-    "workbench.list.openMode": "doubleClick",
-    "explorer.confirmDragAndDrop": false,
-    "editor.fontSize": 15,
-    "terminal.integrated.fontSize": 15,
     "window.zoomLevel": 0,
+    // show and hide menu by pressing Alt
+    "window.menuBarVisibility": "toggle",
+
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+
+    "workbench.settings.editor": "json",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.startupEditor": "none",
+    "workbench.list.openMode": "doubleClick",
+    "workbench.panel.defaultLocation": "right",
+    "workbench.activityBar.visible": true,
+
+    "editor.minimap.enabled": false,
+    "editor.rulers": [ 120 ],
+    "editor.cursorBlinking": "solid",
+    "editor.fontSize": 15,
     "editor.lineHeight": 27,
     "editor.renderWhitespace": "boundary",
+    "editor.suggestSelection": "first",
+    "editor.largeFileOptimizations": false,
+    "editor.detectIndentation": false,
 
+    // hide errors about using multi line cursor with vim
+    "vim.debug.silent": true,
+    "vim.textwidth": 120,
+
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500,
+
+    "problems.decorations.enabled": true,
+
+    "extensions.ignoreRecommendations": false,
+
+    "debug.inlineValues": true,
+
+    "search.showLineNumbers": true,
+
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.rendererType": "dom",
+
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+    "breadcrumbs.enabled": true,
+
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+
+    "files.associations": {
+        "*SConstruct*": "python",
+        "*SConscript*": "python"
+    },
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -41,15 +70,23 @@
         "**/*.synctex.gz": true
     },
 
-    // language specific editor settings
-    // settings for extensions cannot be put inside language specific blocks
+    // Settings for extensions cannot be put inside language specific blocks
 
-    // C++ settings
-    "C_Cpp.default.includePath": ["${workspaceFolder}/include"],
-    // "cmake.configureOnOpen": true,
+    /// PLAIN TEXT ///
+    "[plaintext]":
+    {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120,
+    },
 
-    // python settings
-    "python.pythonPath": "/home/ethan/.virtualenvs/default/bin/python",
+    /// MARKDOWN ///
+    "[markdown]":
+    {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120,
+    },
+
+    /// PYTHON ///
     "python.autoComplete.addBrackets": true,
     "python.linting.pylintArgs": 
     [
@@ -57,23 +94,22 @@
         // load c extensions for pyqt
         "--extension-pkg-whitelist=PyQt5, lxml"
     ],
-    "python.autoComplete.extraPaths": ["${workspaceFolder}/Source"],
+    "python.languageServer": "Pylance",
+    "python.showStartPage": false,
+    "python.linting.pylintEnabled": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.linting.enabled": true,
 
-    // Plain Text Settings
-    "[plaintext]":
-    {
-        "editor.wordWrap": "wordWrapColumn",
-        "editor.wordWrapColumn": 120,
-    },
+    /// JAVA ///
+    "java.configuration.checkProjectSettingsExclusions": false,
+    "java.errors.incompleteClasspath.severity": "ignore",
 
-    // Markdown Settings
-    "[markdown]":
-    {
-        "editor.wordWrap": "wordWrapColumn",
-        "editor.wordWrapColumn": 120,
-    },
+    /// DOXYGEN ///
+    "doxdocgen.file.fileTemplate": "@file",
+    "doxdocgen.generic.boolReturnsTrueFalse": false,
+    "doxdocgen.generic.returnTemplate": "@return",
 
-    // Latex settings
+    /// LATEX ///
     "[latex]":
     {
         "editor.wordWrap": "wordWrapColumn",
@@ -81,7 +117,10 @@
     },
     "latex-workshop.view.pdf.hand": true,
     "latex-workshop.view.pdf.viewer": "tab",
-
+    "latex-workshop.message.update.show": false,
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.chktex.enabled": true,
+    "latex-workshop.latex.autoClean.run": "onBuilt",
     // Added to add the --shell-escape flag to use minted on build.
     "latex-workshop.latex.tools": [
         {
@@ -116,46 +155,6 @@
             ]
         }
     ],
-
-
-
-    "workbench.panel.defaultLocation": "right",
-    "explorer.confirmDelete": false,
-
-    // toggle debugger with ctrl+shift+D
-    "workbench.activityBar.visible": true,
-    // show and hide menu by pressing Alt
-    "window.menuBarVisibility": "toggle",
-
-    // hie errors about using multi line cursor with vim
-    "vim.debug.silent": true,
-    "latex-workshop.latex.autoBuild.run": "never",
-    "extensions.ignoreRecommendations": false,
-    "java.configuration.checkProjectSettingsExclusions": false,
-    "python.linting.pylintEnabled": true,
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "breadcrumbs.enabled": true,
-    "latex-workshop.chktex.enabled": true,
-    "search.showLineNumbers": true,
-    "terminal.integrated.rendererType": "dom",
-    "latex-workshop.latex.autoClean.run": "onBuilt",
-    "doxdocgen.file.fileTemplate": "@file",
-    "doxdocgen.generic.boolReturnsTrueFalse": false,
-    "doxdocgen.generic.returnTemplate": "@return",
-
-    "files.associations": {
-        "*SConstruct*": "python",
-        "*SConscript*": "python"
-    },
-    "liveshare.featureSet": "insiders",
-    "java.errors.incompleteClasspath.severity": "ignore",
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
-    "printcode.disableTelemetry": true,
-    "editor.detectIndentation": false,
-    "python.linting.enabled": true,
-    "python.jediEnabled": false,
     "latex-workshop.chktex.args.active": [
         "-wall",
         "-n22",
@@ -172,19 +171,4 @@
         "-q",
         "-n46"
     ],
-    "latex-workshop.message.update.show": false,
-    "python.languageServer": "Pylance",
-    "python.showStartPage": false,
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}/Source"
-    ],
-    "python.analysis.completeFunctionParens": true,
-    "editor.largeFileOptimizations": false
 }
-
