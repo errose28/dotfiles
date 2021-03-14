@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 
 zsh_plugin_dirs="$HOME/.nix-profile/share /usr/share/zsh/plugins"
 
