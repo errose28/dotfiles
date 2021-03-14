@@ -43,14 +43,6 @@ helpless() {
     "$1" --help | less
 }
 
-nix-this-shell() {
-    if [ "$SHELL" ]; then
-        nix-shell --command "$SHELL" "$@"
-    else
-        nix-shell "$@"
-    fi
-}
-
 git-root() {
     cd "$(git rev-parse --show-toplevel)"
 }
