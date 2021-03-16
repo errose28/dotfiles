@@ -33,6 +33,7 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     status                  # exit code of the last command
+    command_execution_time  # duration of the last command
     dir                     # current directory
     # =========================[ Line #2 ]=========================
     newline                 # \n
@@ -45,7 +46,6 @@
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     vcs                     # git status
-    command_execution_time  # duration of the last command
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
     java_version          # java version (https://www.java.com/)
