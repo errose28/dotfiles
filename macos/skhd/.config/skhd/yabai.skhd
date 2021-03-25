@@ -12,6 +12,16 @@ alt - k:
 alt - l:
     yabai -m window --focus east
 
+# Focus last window in current space.
+alt - tab:
+    focus-recent-window-in-space
+# Focus last window in last space.
+alt + cmd - tab:
+    focus-recent-window-in-space recent
+# Focus last window anywhere.
+alt + cmd + shift - tab:
+    yabai -m window --focus recent
+
 # Swap display focus.
 alt + cmd - k:
     yabai -m display --focus north
