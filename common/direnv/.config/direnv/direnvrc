@@ -1,0 +1,5 @@
+use_lorri() {
+    if has lorri && [ -f "$(find_up shell.nix)" ]; then
+        eval "$(lorri direnv)"
+    fi
+}
