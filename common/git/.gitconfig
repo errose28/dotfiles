@@ -9,6 +9,7 @@
     # Include headers of commits from merged branch in merge commit message
     # body.
     log = true
+    renamelimit = 99999
 [pull]
     # Always rebase when pulling changes, instead of merging.
     rebase = true
