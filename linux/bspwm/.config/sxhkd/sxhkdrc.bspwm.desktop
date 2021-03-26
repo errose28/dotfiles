@@ -26,7 +26,10 @@ super + alt + slash
     bspwm-rename-desktop
 
 # Toggle monocle.
+# Add alias with space to mimic mission control shortcut on macos.
 super + a
+    bspc desktop --layout next
+super + space
     bspc desktop --layout next
 
 # Focus desktop on this monitor.

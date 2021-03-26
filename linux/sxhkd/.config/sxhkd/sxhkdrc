@@ -18,8 +18,6 @@ super + Return
     export USE_TMUX=1; \
     terminal
 
-# TODO: Make this start tmux in the dir of the last focused pane.
-#   See .zshrc.
 super + shift + Return
     export USE_TMUX=1; \
     export USE_TMUX_DIR=1; \
