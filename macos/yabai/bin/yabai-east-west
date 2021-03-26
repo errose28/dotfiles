@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Focus a node in the current desktop regardless of stack mode.
+# Pass in 'east' or 'west'.
+
+direction="$1"
+
+# If windows are in stack mode, make window selection wrap to the beginning.
+if [ "$(yabai -m query --spaces --space | jq '.type')" = '"stack"' ]; then
+    if [ "$direction" = 'west' ]; then
+        yabai -m window --focus stack.prev 2> /dev/null || yabai -m window --focus stack.last
+    elif [ "$direction" = 'east' ]; then
+        yabai -m window --focus stack.next 2> /dev/null || yabai -m window --focus stack.first
+    fi
+else
+    yabai -m window --focus "$direction"
+fi
+

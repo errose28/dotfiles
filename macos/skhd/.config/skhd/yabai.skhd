@@ -3,14 +3,15 @@
 ### MOVE FOCUS ###
 
 # Swap window focus.
+# Use script to swap focus east/west regardless of stack mode.
 alt - h:
-    yabai -m window --focus west
+    yabai-east-west west
 alt - j:
     yabai -m window --focus south
 alt - k:
     yabai -m window --focus north
 alt - l:
-    yabai -m window --focus east
+    yabai-east-west east
 
 # Focus last window in current space.
 alt - tab:
