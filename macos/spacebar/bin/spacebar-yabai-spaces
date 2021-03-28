@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+# Should be good enough to trigger this on mission control, since no shortuct for creating/moving spaces rn.
+
+space_strip=''
+space_sep=' '
+
+indices="$(yabai -m query --spaces | jq -r 'map(.index) | join(" ")')"
+
+for index in $indices; do
+    entry="$index"
+
+    # Set label if space has one.
+    label="$(yabai -m query --spaces --space "$index" | jq -r '.label')"
+    if [ "$label" ]; then
+        entry="$label"
+    fi
+
+    # Append window info to space entry.
+    # Spacebar has a bug where it cannot handle whitespace in space names.
+    win_count="$(yabai -m query --windows --space "$index" | jq 'map(.id) | length')"
+    if [ "$win_count" != 0 ]; then
+        # TODO: Display stack index correctly.
+        # Yabai has no way of telling which window is on top for non-focused space.
+        # Therefore, must only recompute index for visible spaces.
+        # Must parse out index info from other spaces and reuse them.
+
+        # mode="$(yabai -m query --spaces --space "$index" | jq -r '.type')"
+        # if [ "$mode" = stack ]; then
+        #     stack_index="$(yabai -m query --windows --window | jq -r '."stack-index"')"
+        #     entry="$entry[$stack_index/$win_count]"
+        # else
+        #     entry="$entry[$win_count]"
+        # fi
+        entry="$entry[$win_count]"
+    fi
+
+    space_strip="$space_strip$space_sep$entry"
+done
+
+# Spaces for multiple displays are passed as one line.
+spacebar -m config space_icon_strip $space_strip
+

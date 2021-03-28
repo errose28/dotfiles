@@ -1,0 +1,14 @@
+### SPACEBAR SETTINGS FOR YABAI ###
+
+# Add padding to the top and bottom of all spaces regardless of the display they belong to.
+# TODO: Use something other than python for adding.
+bar_height="$(spacebar -m config height)"
+window_gap="$(yabai -m config window_gap)"
+yabai_spacing="$(python -c "print($bar_height + $window_gap)")"
+yabai -m config external_bar all:0:"$yabai_spacing"
+
+# Window crewate and destroy events do not seem to fire, so use application launched and deactivated events instead.
+spacebar_events='mission_control_exit window_minimized window_deminimized application_launched application_deactivated'
+for event in $spacebar_events; do
+    yabai -m signal --add event="$event" action='spacebar-yabai-spaces' label=spacebar-spaces-"$event"
+done
