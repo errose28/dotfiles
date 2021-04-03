@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Deminimize all minimized windows present in the space passed in.
+# Uses the current space if none is provided.
+
+space="$1"
+
+minimized_wins="$(yabai -m query --windows --space "$space" | jq -r 'map(select(.minimized == 1)) | map(.id) | join(" ")')"
+
+for win in $minimized_wins; do
+    echo "$win"
+    yabai -m window "$win" --deminimize
+done
+

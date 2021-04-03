@@ -1,34 +1,40 @@
 #!/usr/bin/env sh
 
-spacebar -m config position bottom
-spacebar -m config height 26
+spacebar -m config position top
+spacebar -m config height 22
 
-spacebar -m config title on
+spacebar -m config title off
 spacebar -m config spaces on
 spacebar -m config clock on
-spacebar -m config power off
+spacebar -m config power on
 
 spacebar -m config spacing_left 10
 spacebar -m config spacing_right 10
 
-# TODO: Find a font.
-spacebar -m config text_font "Sourec Code Pro:Bold:16"
-spacebar -m config icon_font "$(spacebar -m config text_font)"
+#spacebar -m config text_font "Source Code Pro:Bold:16"
+spacebar -m config icon_font "MesloLGS NF:Regular:16"
+spacebar -m config text_font "$(spacebar -m config icon_font)"
 
-# TODO: Set colors.
-spacebar -m config background_color 0xff202020
-spacebar -m config foreground_color 0xffa8a8a8
-spacebar -m config space_icon_color 0xff458588
-spacebar -m config power_icon_color 0xffcd950c
-spacebar -m config battery_icon_color 0xffd75f5f
-spacebar -m config dnd_icon_color 0xffa8a8a8
-spacebar -m config clock_icon_color 0xffa8a8a8
+spacebar -m config background_color 0xff19233c
+spacebar -m config foreground_color 0xffffffff
+
+spacebar -m config space_icon_color 0xffeb7a34
+spacebar -m config power_icon_color "$(spacebar -m config foreground_color)"
+spacebar -m config battery_icon_color "$(spacebar -m config foreground_color)"
+spacebar -m config dnd_icon_color "$(spacebar -m config foreground_color)"
+spacebar -m config clock_icon_color "$(spacebar -m config foreground_color)"
+
+spacebar -m config clock_format "%A %I:%M %p"
+spacebar -m config power_icon_strip  
 
 # Hack to make clock icon display arbitrary test.
 # Run `spacebar -m config clock_icon <text>`` to display.
-spacebar -m config clock_format ' '
+#spacebar -m config clock_format ' '
 # TODO: Verify cpu amd mem %.
 #spacebar-cpu-mem &
+
+# Load yabai space information
+spacebar-yabai-spaces
 
 echo "spacebar configuration loaded.."
 

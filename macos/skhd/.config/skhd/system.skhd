@@ -5,6 +5,9 @@
 alt - z:
     toggle-focus-follows-mouse
 
+alt - m:
+    show-menu-bar
+
 # Causes computer to freeze for some reason.
 #alt - c:
 #    clear-all-notifications

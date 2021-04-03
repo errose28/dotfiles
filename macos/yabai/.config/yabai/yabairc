@@ -54,7 +54,7 @@ yabai -m config window_gap                   5
 
 # yabai -m config insert_feedback_color        0xffd75f5f
 yabai -m config auto_balance                 off
-yabai -m config layout                       bsp
+yabai -m config layout                       stack
 
 . ~/.config/yabai/spacebar.yabai
 spacebar-yabai-spaces

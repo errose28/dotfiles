@@ -94,9 +94,11 @@ alt + shift - 0x18:
     yabai -m window --toggle native-fullscreen
 
 # Mimize focused window.
-# 0x1B is key code for minus.
+# 0x1B is key code for -.
 alt - 0x1B:
-    yabai -m window --minimize
+    yabai -m window --minimize && center-mouse-in-focused
+alt + shift - 0x1B:
+    yabai-deminimize-space && center-mouse-in-focused
 
 alt - r:
     yabai -m space --rotate 90 && center-mouse-in-focused
@@ -113,6 +115,7 @@ alt - x:
 alt - y:
     yabai -m space --mirror x-axis && center-mouse-in-focused
 
+# Must manually refresh spacebar since yabai has no signal for space layout change.
 alt - a:
-    toggle-stack-layout && center-mouse-in-focused
+    toggle-stack-layout && spacebar-yabai-spaces && center-mouse-in-focused
 
