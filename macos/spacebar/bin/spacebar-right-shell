@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+sep=' '
+bt="$(print-bluetooth)"
+vol="$(print-volume)"
+
+echo "$bt$sep$vol"

@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-while true; do
-    usage="$(ps -A -o %cpu,%mem | awk '{ cpu += $1; mem += $2} END {print "CPU "cpu"%   MEM "mem"%"}')"
-    spacebar -m config clock_icon "$usage"
-    sleep 2
-done
-
-

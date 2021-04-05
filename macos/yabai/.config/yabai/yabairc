@@ -56,7 +56,4 @@ yabai -m config window_gap                   5
 yabai -m config auto_balance                 off
 yabai -m config layout                       stack
 
-. ~/.config/yabai/spacebar.yabai
-spacebar-yabai-spaces
-
 echo "yabai configuration loaded..."

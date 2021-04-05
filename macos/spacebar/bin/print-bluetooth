@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+power="$(blueutil --power)"
+if [ "$power" = 1 ]; then
+    connected="$(blueutil --connected)"
+    if [ "$connected" ]; then
+        # On and connected.
+        echo 
+    else
+        # On but not connected.
+        echo 
+    fi
+else
+    # Off
+    echo 
+fi
+
