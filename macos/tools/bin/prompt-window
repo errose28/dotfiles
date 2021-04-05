@@ -1,0 +1,19 @@
+#!/usr/bin/env osascript
+
+on run argv
+    if (count of argv) < 1 then
+        tell me to error "Usage: prompt-window <title> [default answer]"
+    end if
+
+    set title to (item 1 of argv)
+
+    if (count of argv) > 1 then
+        set default_answer to (item 2 of argv)
+    else
+        set default_answer to ""
+    end if
+
+    set theResponse to display dialog title default answer default_answer with icon note buttons {"Cancel", "Continue"} default button "Continue"
+    set output to (text returned of theResponse)
+end run
+

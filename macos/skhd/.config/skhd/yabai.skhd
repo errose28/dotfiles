@@ -119,3 +119,6 @@ alt - y:
 alt - a:
     toggle-stack-layout && spacebar-yabai-spaces && center-mouse-in-focused
 
+# Key code for /
+alt + cmd - 0x2C:
+    yabai-rename-space
