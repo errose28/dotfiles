@@ -25,6 +25,7 @@ bspc config normal_border_color "$border_off_color"
 bspc config presel_feedback_color "$preselect_color"
 
 bspc config window_gap 5
+bspc config gapless_monocle true
 
 bspc config pointer_follows_focus true
 bspc config focus_follows_pointer true
