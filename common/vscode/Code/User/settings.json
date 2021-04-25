@@ -1,9 +1,8 @@
 {
-    "window.titleBarStyle": "native",
+    "window.titleBarStyle": "custom",
     "window.restoreWindows": "none",
     "window.zoomLevel": 0,
-    // show and hide menu by pressing Alt
-    "window.menuBarVisibility": "toggle",
+    "window.menuBarVisibility": "visible",
 
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
@@ -54,7 +53,8 @@
 
     "files.associations": {
         "*SConstruct*": "python",
-        "*SConscript*": "python"
+        "*SConscript*": "python",
+        "*.robot": "robot"
     },
     "files.exclude": {
         "**/.git": true,
