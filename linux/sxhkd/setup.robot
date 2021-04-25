@@ -4,7 +4,9 @@ Default Tags    linux
 
 *** Tasks ***
 Install
-    Emit    Install    sxhkd
+    Emit    Install
+    ...    sxhkd
+    ...    xorg.xdotool
 
 Link
     Deep Link    *
