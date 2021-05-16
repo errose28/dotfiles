@@ -13,9 +13,6 @@ preselect_color="#FF0000"
 # Initial desktops to create.
 bspc monitor --reset-desktops Files Web
 
-# Pass all files in sxhkd config directory as extra configs
-sxhkd ~/.config/sxhkd/* &
-
 bspc config border_width "$normal_border_width"
 
 bspc config focused_border_color "$border_on_color"

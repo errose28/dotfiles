@@ -9,11 +9,7 @@
 
 # General Commands:
 
-# Make capslock and extra escape key.
-Caps_Lock
-    xdotool key Escape
-
-# Issues with binding capslock to regular escape or shift + capslock.
+# For when setxkbmap remapped capslock to escape.
 shift + Escape
     xdotool key Caps_Lock; \
     check-caps-lock

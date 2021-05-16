@@ -7,6 +7,7 @@ Install
     Emit    Install
     ...    sxhkd
     ...    xorg.xdotool
+    ...    xorg.xkbcomp
 
 Link
     Deep Link    *

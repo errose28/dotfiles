@@ -4,6 +4,9 @@
     "window.zoomLevel": 0,
     "window.menuBarVisibility": "visible",
 
+    // Make vscode respect setxkbmap options in linux.
+    "keyboard.dispatch": "keyCode",
+
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
 
@@ -170,5 +173,11 @@
         "-e16",
         "-q",
         "-n46"
+    ],
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
     ],
 }
