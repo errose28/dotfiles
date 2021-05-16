@@ -13,7 +13,6 @@ Install
     ...    evince
     ...    gthumb
     ...    gnome_mplayer
-    ...    firefox
     ...    jre
     ...    jdk
 
