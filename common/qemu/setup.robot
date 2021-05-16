@@ -6,8 +6,7 @@ Default Tags    linux    macos
 Install
     Emit    Install
     ...    qemu
-    ...    OVMF
-
-Link
-    Deep Link    *
+    ...    libvirt
+    ...    virt-manager
+    ...    virt-viewer
 
