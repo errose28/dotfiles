@@ -46,3 +46,12 @@ helpless() {
 git-root() {
     cd "$(git rev-parse --show-toplevel)"
 }
+
+count-hard-links() {
+    path='.'
+    if [ "$1" ]; then
+        path="$1"
+    fi
+
+    find "$path" -type f -links +1 -printf 'indoe: %i numlinks: %n path: %p\n' 
+}
