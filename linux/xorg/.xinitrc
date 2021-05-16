@@ -22,9 +22,6 @@ dunst &
 # Force the change if the config was already loaded so the background image is set via the postswitch.
 autorandr --change --force &
 
-# Start gesture detection.
-libinput-gestures-setup start &
-
 # If unclutter is still running from the trackpad disabling script, kill it.
 pkill unclutter &
 # Enable natural (reversed) scrolling.
