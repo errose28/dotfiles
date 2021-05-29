@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -e
+
+default_section="$1"
+
+# 1st column is the section.
+# 2nd column is the value that should be used when selected.
+# Everything after is displayed in fzf.
+OPTIONS=(--with-nth \'3..\')
+COMMAND=()
+
+declare -A SECTION_TO_CMD
+
+launch_fzf() {
+    export FZF_DEFAULT_COMMAND="${COMMAND[@]}"
+    export FZF_DEFAULT_OPTS="${OPTIONS[@]}"
+
+    output="$(fzf-window)"
+
+    # Only proceed if output was selected.
+    [ "$output" ] || exit 1
+
+    # First word is type of search.
+    section="$(echo "$output" | awk '{print $1}')"
+    # Second word is selection.
+    selection="$(echo "$output" | awk '{print $2}')"
+
+    "${SECTION_TO_CMD["$section"]}" "$selection"
+}
+
+add_section() {
+    keybinding="$1"
+    prompt="$2"
+    command="$3"
+
+    # Put the prompt in front of each selection.
+    cmd_array=($command '|' ts "$prompt")
+
+    # Save command to be run so its output can be streamed to fzf.
+    OPTIONS+=(--bind="'$keybinding:change-prompt(${prompt}:)+reload(${cmd_array[@]})'")
+
+    SECTION_TO_CMD["$prompt"]="$command"
+
+    if [ "$prompt" = "$default_section" ]; then
+        COMMAND="${cmd_array[@]}"
+        OPTIONS+=(--prompt="${prompt}:")
+    fi
+}
+
+add_section 'ctrl-a' 'apps' 'fzf-launcher-apps'
+add_section 'ctrl-d' 'desktops' 'fzf-launcher-bspwm-desktop-switch'
+# add_section 'ctrl-/' 'rename desktop' 'fzf-launcher-bspwm-desktop-rename'
+# add_options 'ctrl-w' 'windows' 'fzf-launcher-wmctrl-window-switch'
+# add_options 'ctrl-p' 'action' 'fzf-launcher-session-menu'
+
+launch_fzf

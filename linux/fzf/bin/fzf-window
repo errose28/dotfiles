@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# set FZF_DEFAULT_COMMAND for the command to populate fzf.
+# set FZF_DEFAULT_OPTS for extra options passed to fzf.
+export FZF_DEFAULT_COMMAND
+export FZF_DEFAULT_OPTS
+
+output_file="/tmp/fzf_window_output"
+
+bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
+alacritty --command sh -c "fzf --layout=reverse --border=rounded > $output_file"
+
+cat "$output_file"
+rm "$output_file"
+

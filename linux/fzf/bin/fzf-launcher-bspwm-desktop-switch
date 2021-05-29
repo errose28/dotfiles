@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+desktop_id="$1"
+
+if [ "$desktop_id" ]; then
+    bspc desktop --focus "$desktop_id"
+else
+    paste <(bspc query --desktops) <(bspc query --desktops --names)
+fi
