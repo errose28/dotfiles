@@ -1,10 +1,9 @@
 #!/usr/bin/env sh
 
-desktop_file="$1"
 paths="$HOME/.nix-profile/share/applications /usr/share/applications"
 
-if [ "$desktop_file" ]; then
-    dex "$desktop_file"
+if [ "$SELECTION" ]; then
+    dex "$SELECTION"
 else
     # Gather all desktop files.
     for path in $paths; do
@@ -16,6 +15,6 @@ else
     # List names of all apps.
     for file in $(printf "$files"); do
         name="$(cat "$file" | grep -m1 ^Name= | sed -e 's/^Name=//')"
-        echo "$file $name: $(basename "$file")"
+        echo "$file $name ("$(basename "$file")")"
     done
 fi

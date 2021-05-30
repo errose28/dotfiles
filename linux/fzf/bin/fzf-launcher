@@ -4,10 +4,12 @@ set -e
 
 default_section="$1"
 
+section_file='/tmp/fzf_launcher_section'
+
 # 1st column is the section.
 # 2nd column is the value that should be used when selected.
 # Everything after is displayed in fzf.
-OPTIONS=(--with-nth \'3..\')
+OPTIONS=(--with-nth \'2..\')
 COMMAND=()
 
 declare -A SECTION_TO_CMD
@@ -15,18 +17,23 @@ declare -A SECTION_TO_CMD
 launch_fzf() {
     export FZF_DEFAULT_COMMAND="${COMMAND[@]}"
     export FZF_DEFAULT_OPTS="${OPTIONS[@]}"
+    echo "$FZF_DEFAULT_OPTS"
 
     output="$(fzf-window)"
+    # output="$(fzf)"
 
     # Only proceed if output was selected.
-    [ "$output" ] || exit 1
+    if [ "$output" ]; then
+        section="$(cat "$section_file")"
+        # First line query entered.
+        query="$(echo "$output" | awk 'FNR==1')"
+        # Second line is user selection. First word of that should be used to execute.
+        selection="$(echo "$output" | awk 'FNR==2 {print $1}')"
 
-    # First word is type of search.
-    section="$(echo "$output" | awk '{print $1}')"
-    # Second word is selection.
-    selection="$(echo "$output" | awk '{print $2}')"
+        QUERY="$query" SELECTION="$selection" ${SECTION_TO_CMD["$section"]}
+    fi
 
-    "${SECTION_TO_CMD["$section"]}" "$selection"
+    rm "$section_file"
 }
 
 add_section() {
@@ -35,23 +42,25 @@ add_section() {
     command="$3"
 
     # Put the prompt in front of each selection.
-    cmd_array=($command '|' ts "$prompt")
+    # cmd_array=($command '|' ts "$prompt")
 
     # Save command to be run so its output can be streamed to fzf.
-    OPTIONS+=(--bind="'$keybinding:change-prompt(${prompt}:)+reload(${cmd_array[@]})'")
+    OPTIONS+=(--bind="'$keybinding:change-prompt(${prompt}: )+reload("$command")+execute-silent(echo "$prompt" > "$section_file")'")
 
     SECTION_TO_CMD["$prompt"]="$command"
 
     if [ "$prompt" = "$default_section" ]; then
-        COMMAND="${cmd_array[@]}"
-        OPTIONS+=(--prompt="${prompt}:")
+        # COMMAND="${cmd_array[@]}"
+        COMMAND="$command"
+        OPTIONS+=(--prompt "'${prompt}: '")
+        echo "$prompt" > "$section_file"
     fi
 }
 
 add_section 'ctrl-a' 'apps' 'fzf-launcher-apps'
 add_section 'ctrl-d' 'desktops' 'fzf-launcher-bspwm-desktop-switch'
-# add_section 'ctrl-/' 'rename desktop' 'fzf-launcher-bspwm-desktop-rename'
-# add_options 'ctrl-w' 'windows' 'fzf-launcher-wmctrl-window-switch'
-# add_options 'ctrl-p' 'action' 'fzf-launcher-session-menu'
+add_section 'ctrl-/' 'rename desktop' 'fzf-launcher-bspwm-desktop-rename'
+add_section 'ctrl-w' 'windows' 'fzf-launcher-bspwm-window-switch'
+add_section 'ctrl-p' 'action' 'fzf-launcher-power-menu'
 
 launch_fzf

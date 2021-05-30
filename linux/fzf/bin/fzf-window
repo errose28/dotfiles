@@ -8,7 +8,23 @@ export FZF_DEFAULT_OPTS
 output_file="/tmp/fzf_window_output"
 
 bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
-alacritty --command sh -c "fzf --layout=reverse --border=rounded > $output_file"
+alacritty \
+    --title 'Fzf Launcher' \
+    --option 'window.dimensions.lines: 20' \
+    --option 'window.dimensions.columns: 100' \
+    --command sh -c "fzf --print-query --layout=reverse --border=rounded > $output_file"
+
+num_lines="$(cat "$output_file" | wc -l)"
+
+# Make sure that a line for the query, then a line for the selection is printed.
+# If any of them are blank, print a blank line.
+if [ "$num_lines" = 0 ]; then
+    echo >> "$output_file"
+fi
+
+if [ "$num_lines" -le 1 ]; then
+    echo >> "$output_file"
+fi
 
 cat "$output_file"
 rm "$output_file"

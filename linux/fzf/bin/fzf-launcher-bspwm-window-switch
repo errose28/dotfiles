@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$SELECTION" ]; then
+    wmctrl -ia "$SELECTION"
+else
+    # Window id class title
+    win_infos="$(wmctrl -l -x | awk '{$2=""; $4=""; $3=substr($3,index($3,".")+1); print $0}')"
+    win_count="$(echo "$win_infos" | wc -l)"
+    for line_num in $(seq 1 "$win_count"); do
+        id="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $1}')"
+        class="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $2}')"
+        title="$(echo "$win_infos" | awk -v idx="$line_num" '$1=""; $2=""; FNR==idx {print $0}')"
+
+        # Gives 0 based index.
+        desktop_index="$(xdotool get_desktop_for_window "$id")"
+        # Awk expects one based index.
+        desktop_name="$(bspc query --desktops --names | awk "FNR==$desktop_index+1")"
+        printf "$id $desktop_name: [$class] $title\n"
+    done
+fi
