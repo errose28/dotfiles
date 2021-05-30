@@ -6,6 +6,7 @@ SECTION_FILE='/tmp/fzf_launcher_section'
 # Everything after is displayed in fzf.
 OPTIONS=(--with-nth \'2..\')
 COMMAND='true'
+declare -A SECTION_TO_CMD
 
 launch_fzf() {
     export FZF_DEFAULT_COMMAND="$COMMAND"

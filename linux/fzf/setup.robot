@@ -6,6 +6,7 @@ Default Tags    linux
 Install
     Emit    Install
     ...    fzf
+    ...    dex
     ...    alacritty
     ...    wmutils-core
 
