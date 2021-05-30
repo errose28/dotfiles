@@ -18,12 +18,9 @@ super + alt + {j,k}
 super + alt + shift + {h,l}
     bspc desktop --bubble {prev,next}
 
-# Open Rofi to select a name for the new desktop.
 super + alt + equal
-    bspwm-new-desktop
-
-super + alt + slash
-    bspwm-rename-desktop
+    bspc monitor --add-desktops Desktop; \
+    bspc desktop --focus Desktop
 
 # Toggle monocle.
 super + s
