@@ -5,7 +5,7 @@
 # button6 = scroll right
 # button7 = scroll left
 
-# To make sxhkd reload its config file: pkill -USR1 -x sxhkd
+# To make sxhkd reload its config file send it SIGUSR1.
 
 # General Commands:
 
@@ -43,7 +43,7 @@ super + shift + m
     autorandr --change --force
 
 super + a
-    fzf-launcher apps
+    fzf-launcher Apps
 
 # Volume Controls:
 

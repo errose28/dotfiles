@@ -1,6 +1,0 @@
-# Contains bspwm keybindings not involving nodes or desktops.
-
-# Reload bspwm and sxhkd.
-super + shift + r
-    pkill sxhkd && sxhkd && bspc wm -r
-

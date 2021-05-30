@@ -17,10 +17,8 @@ declare -A SECTION_TO_CMD
 launch_fzf() {
     export FZF_DEFAULT_COMMAND="${COMMAND[@]}"
     export FZF_DEFAULT_OPTS="${OPTIONS[@]}"
-    echo "$FZF_DEFAULT_OPTS"
 
     output="$(fzf-window)"
-    # output="$(fzf)"
 
     # Only proceed if output was selected.
     if [ "$output" ]; then
@@ -57,10 +55,11 @@ add_section() {
     fi
 }
 
-add_section 'ctrl-a' 'apps' 'fzf-launcher-apps'
-add_section 'ctrl-d' 'desktops' 'fzf-launcher-bspwm-desktop-switch'
-add_section 'ctrl-/' 'rename desktop' 'fzf-launcher-bspwm-desktop-rename'
-add_section 'ctrl-w' 'windows' 'fzf-launcher-bspwm-window-switch'
-add_section 'ctrl-p' 'action' 'fzf-launcher-power-menu'
+add_section 'ctrl-a' 'Apps' 'fzf-launcher-apps'
+add_section 'ctrl-d' 'Desktops' 'fzf-launcher-bspwm-desktop-switch'
+add_section 'ctrl-/' 'Rename desktop' 'fzf-launcher-bspwm-desktop-rename'
+add_section 'ctrl-w' 'Windows' 'fzf-launcher-bspwm-window-switch'
+add_section 'ctrl-p' 'Action' 'fzf-launcher-power-menu'
+add_section 'ctrl-r' 'Reload' 'fzf-launcher-reload'
 
 launch_fzf
