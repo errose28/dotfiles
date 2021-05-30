@@ -1,59 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -e
+source fzf-launcher-lib "$@"
 
-default_section="$1"
-
-section_file='/tmp/fzf_launcher_section'
-
-# 1st column is the section.
-# 2nd column is the value that should be used when selected.
-# Everything after is displayed in fzf.
-OPTIONS=(--with-nth \'2..\')
-COMMAND=()
-
-declare -A SECTION_TO_CMD
-
-launch_fzf() {
-    export FZF_DEFAULT_COMMAND="${COMMAND[@]}"
-    export FZF_DEFAULT_OPTS="${OPTIONS[@]}"
-
-    output="$(fzf-window)"
-
-    # Only proceed if output was selected.
-    if [ "$output" ]; then
-        section="$(cat "$section_file")"
-        # First line query entered.
-        query="$(echo "$output" | awk 'FNR==1')"
-        # Second line is user selection. First word of that should be used to execute.
-        selection="$(echo "$output" | awk 'FNR==2 {print $1}')"
-
-        QUERY="$query" SELECTION="$selection" ${SECTION_TO_CMD["$section"]}
-    fi
-
-    rm "$section_file"
-}
-
-add_section() {
-    keybinding="$1"
-    prompt="$2"
-    command="$3"
-
-    # Put the prompt in front of each selection.
-    # cmd_array=($command '|' ts "$prompt")
-
-    # Save command to be run so its output can be streamed to fzf.
-    OPTIONS+=(--bind="'$keybinding:change-prompt(${prompt}: )+reload("$command")+execute-silent(echo "$prompt" > "$section_file")'")
-
-    SECTION_TO_CMD["$prompt"]="$command"
-
-    if [ "$prompt" = "$default_section" ]; then
-        # COMMAND="${cmd_array[@]}"
-        COMMAND="$command"
-        OPTIONS+=(--prompt "'${prompt}: '")
-        echo "$prompt" > "$section_file"
-    fi
-}
+bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
 
 add_section 'ctrl-a' 'Apps' 'fzf-launcher-apps'
 add_section 'ctrl-d' 'Desktops' 'fzf-launcher-bspwm-desktop-switch'

@@ -1,13 +1,12 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux
+Default Tags    linux    macos
 
 *** Tasks ***
 Install
     Emit    Install
     ...    fzf
     ...    alacritty
-    ...    wmutils-core
 
 Link
     Add Ignore    TODO.md
