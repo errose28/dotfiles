@@ -6,13 +6,15 @@ if [ "$SELECTION" ]; then
     action_to_cmd['bspwm']='bspc wm -r'
     action_to_cmd['polybar']='launch-polybars'
     action_to_cmd['autorandr']='autorandr --change --force'
+    action_to_cmd['background']="$HOME/.fehbg"
 
     ${action_to_cmd[$SELECTION]}
 else
     options='sxhkd
     bspwm
     polybar
-    autorandr'
+    autorandr
+    background'
 
     # Options to select and pass back in to this script are the same.
     paste <(echo "$options") <(echo "$options")
