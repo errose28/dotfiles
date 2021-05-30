@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# If selection was passed, it is the same name as the current desktop,
+# don't need to do anything.
+if [ "$QUERY" ]; then
+    # Trim whitespace.
+    new_name="$(bspwm-get-desktop-name "$QUERY")"
+    bspc desktop --rename "$new_name"
+elif [ ! "$SELECTION" ]; then
+    name="$(bspwm-get-desktop-name "$(bspc query --desktops --desktop --names)")"
+    echo "$name" "$name"
+fi

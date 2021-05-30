@@ -4,11 +4,12 @@ Default Tags    linux
 
 *** Tasks ***
 Install
-    # wmctrl to detect window manager for logout.
     Emit    Install
-    ...    rofi
-    ...    wmctrl
+    ...    fzf
+    ...    alacritty
+    ...    wmutils-core
 
 Link
+    Add Ignore    TODO.md
     Deep Link    *
 
