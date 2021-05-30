@@ -1,7 +1,6 @@
 # Contains bspwm keybindings not involving nodes or desktops.
 
 # Reload bspwm and sxhkd.
-# Note that sxhkd is restarted in the bspwmrc config.
 super + shift + r
-    pkill sxhkd && bspc wm -r
+    pkill sxhkd && sxhkd && bspc wm -r
 

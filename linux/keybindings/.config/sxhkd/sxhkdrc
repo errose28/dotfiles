@@ -42,15 +42,8 @@ super + t
 super + shift + m
     autorandr --change --force
 
-# Rofi Commands:
-super + x
-    power-menu
-
-super + d
-    rofi -no-show-match -modi drun -show drun -theme launcher_theme
-
-super + shift + w
-    rofi -no-show-match -show window -theme window_switcher_theme
+super + a
+    fzf-launcher apps
 
 # Volume Controls:
 
