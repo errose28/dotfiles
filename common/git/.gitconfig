@@ -28,3 +28,5 @@
     # Automatically add files whose conflicts are resolved by rerere.
     # Now after merging, you will see an output line 'Staged <file> using previous resolution'.
     autoupdate = true
+[core]
+	askPass = 
