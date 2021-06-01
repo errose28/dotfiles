@@ -56,4 +56,7 @@ yabai -m config window_gap                   5
 yabai -m config auto_balance                 off
 yabai -m config layout                       stack
 
+# TODO: Move this to separate file if uebersicht polybar is used.
+yabai -m signal --add event=space_changed action="osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "polybar-right-bar-coffee"'"
+
 echo "yabai configuration loaded..."

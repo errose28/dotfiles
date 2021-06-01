@@ -25,9 +25,9 @@ alt + cmd + shift - tab:
 
 # Swap display focus.
 alt + cmd - k:
-    yabai -m display --focus north
+    yabai -m display --focus east
 alt + cmd - j:
-    yabai -m display --focus south
+    yabai -m display --focus west
 
 ### MOVE WINDOWS ###
 
@@ -43,10 +43,10 @@ alt + shift - l:
 
 # Move windows to other screen.
 alt + cmd + shift - k:
-    yabai -m window --display north && center-mouse-in-focused
+    yabai -m window --display east && center-mouse-in-focused
 
 alt + cmd + shift - j:
-    yabai -m window --display south && center-mouse-in-focused
+    yabai -m window --display west && center-mouse-in-focused
 
 # Move window to other space and focus it.
 # Note that the only space options that work are specifying numbers.

@@ -5,8 +5,8 @@ spacebar -m config height 22
 
 spacebar -m config title off
 spacebar -m config spaces on
-spacebar -m config clock on
-spacebar -m config power on
+spacebar -m config clock off
+spacebar -m config power off
 
 spacebar -m config spacing_left 10
 spacebar -m config spacing_right 10
@@ -27,22 +27,20 @@ spacebar -m config clock_icon_color "$(spacebar -m config foreground_color)"
 spacebar -m config clock_format "%A %I:%M %p"
 spacebar -m config power_icon_strip  
 
-# Hack to make clock icon display arbitrary test.
-# Run `spacebar -m config clock_icon <text>`` to display.
-#spacebar -m config clock_format ' '
+spacebar -m config clock_icon ' '
 # TODO: Verify cpu amd mem %.
 #spacebar-cpu-mem &
 
 # Load yabai space information
 spacebar-yabai-spaces
 
-spacebar -m config right_shell_command 'spacebar-right-shell'
-spacebar -m config right_shell_icon ' '
-spacebar -m config right_shell on
+#spacebar -m config right_shell_command 'spacebar-right-shell'
+#spacebar -m config right_shell_icon ' '
+#spacebar -m config right_shell off
 
 ### SPACEBAR SETTINGS FOR YABAI ###
 
-# Add padding to the top and bottom of all spaces regardless of the display they belong to.
+# Add padding to the top or bottom of all spaces regardless of the display they belong to.
 bar_height="$(spacebar -m config height)"
 yabai -m config external_bar all:"$bar_height":0
 
@@ -52,5 +50,8 @@ for event in $spacebar_events; do
     yabai -m signal --add event="$event" action='spacebar-yabai-spaces' label=spacebar-spaces-"$event"
 done
 
-echo "spacebar configuration loaded.."
+yabai -m signal --add event='mission_control_enter' action='spacebar -m config position bottom'
+yabai -m signal --add event='mission_control_exit' action='spacebar -m config position top'
+
+echo "spacebar configuration loaded."
 
