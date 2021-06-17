@@ -1,0 +1,72 @@
+#!/usr/bin/env sh
+
+monitor="$1"
+if [ ! "$monitor" ]; then
+    monitor="$(bspc query --monitors --monitor .focused)"
+fi
+
+# TODO: Have this set when called.
+SYMBOL_FONT_INDEX=3
+SEP="%{T${SYMBOL_FONT_INDEX}}╱%{T-}"
+FOCUSED_BG='#ffffff'
+FOCUSED_FG='#19233c'
+ACTIVE_BG='#a6a6a6'
+ACTIVE_FG='#19233c'
+
+get_status() {
+    # Desktop name or ID.
+    local desktop="$1"
+
+    local window_count="$(bspc query --nodes --desktop "$desktop" --node '.window.!hidden' | wc -l)"
+    local hidden_count="$(bspc query --nodes --desktop "$desktop" --node .hidden | wc -l)"
+    local marked_count="$(bspc query --nodes --desktop "$desktop" --node .marked | wc -l)"
+    local name="$(bspc query --desktops --desktop "$desktop" --names)"
+
+    # Add new status
+    local desktop_status="$name "
+    if [ "$window_count" -gt 0 ]; then
+        # In monocle mode, show index of the current window as well.
+        if [ "$(bspc query --tree --desktop "$desktop" | jq -r '.layout')" = 'monocle' ]; then
+            # Get the focused node (or the node that would be focused if the desktop were active).
+            # Cannot use .focused to select node because the desktop may not be focused when this is run.
+            focused_node="$(bspc query --nodes --node @"$desktop": --node .window)"
+            index="$(bspc query --nodes --desktop "$desktop" --node .window | awk "/"$focused_node"/{print NR}")"
+            window_count="$index/$window_count"
+        fi
+        desktop_status="${desktop_status}[$window_count]"
+    fi
+
+    if [ "$hidden_count" -gt 0 ]; then
+        desktop_status="${desktop_status}($hidden_count)"
+    fi
+
+    if [ "$marked_count" -gt 0 ]; then
+        desktop_status="${desktop_status}*"
+    fi
+
+	echo "$desktop_status"
+}
+
+focused_desktops="$(bspc query --desktops --desktop .focused)"
+active_desktops="$(bspc query --desktops --desktop .active)"
+
+all_statuses=''
+for desktop in $(bspc query --desktops --monitor "$monitor"); do
+    if [ "$all_statuses" ]; then
+        all_statuses="${all_statuses}${SEP}"
+    fi
+
+    status="$(get_status "$desktop")"
+
+    if echo "$focused_desktops" | grep -q "$desktop"; then
+        status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$FOCUSED_FG}%{B$FOCUSED_BG}${status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+    elif echo "$active_desktops" | grep -q "$desktop"; then
+        status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+    else
+        status=" $status "
+    fi
+
+    all_statuses="${all_statuses}${status}"
+done
+
+echo "$all_statuses"

@@ -46,6 +46,13 @@ super + {h,j,k,l}
 super + shift + plus
     bspc node --state \~fullscreen
 
+# Hide/minimize node.
+super + minus
+    bspc node --flag hidden=on
+
+super + shift + minus
+    bspwm-restore-hidden
+
 # Focus the last used window in the current desktop.
 super + Tab
     bspc node last.local.leaf --focus
@@ -55,7 +62,7 @@ super + v
     bspc node --flag marked
 
 # Clear all marked nodes.
-super + Escape
+super + shift + v
     bspwm-clear-marks
 
 # Move all marked windows to the current desktop, and clear the window marks.

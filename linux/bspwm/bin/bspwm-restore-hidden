@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Unhide all windows in the specified desktop.
+# If no desktop specified, uses currently focused one.
+desktop="$1"
+if [ ! "$desktop" ]; then
+    desktop='.focused'
+fi
+
+for node_id in $(bspc query --nodes --desktop "$desktop" --node .hidden); do
+    bspc node "$node_id" --flag hidden=off
+done
+
