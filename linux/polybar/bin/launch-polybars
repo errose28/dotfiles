@@ -11,7 +11,7 @@ export WIFI_DEVICE="$(nmcli device status | grep -wi "\swifi\s" | head -n1 | awk
 export ETH_DEVICE="$(nmcli device status | grep -wi "\sethernet\s" | head -n1 | awk '{print $1}')"
 export BRIGHTNESS_CARD="$(ls /sys/class/backlight | head -n1)"
 
-for monitor in $(connected-monitors); do
+for monitor in $(polybar --list-all-monitors | awk '{print substr($1, 1, length($1)-1)}'); do
     export MONITOR="$monitor"
     polybar -c ~/.config/polybar/window_bar.ini window_bar &
     polybar -c ~/.config/polybar/status_bar.ini status_bar &
