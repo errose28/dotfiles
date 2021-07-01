@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-current_label="$(yabai -m query --spaces --space | jq -r '.label')"
-new_label="$(prompt-window 'Rename current space' "$current_label")"
-yabai -m space --label  "$new_label"
-

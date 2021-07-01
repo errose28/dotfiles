@@ -1,5 +1,0 @@
-#!/usr/bin/env osascript
-
-tell application "System Events" to tell process "Notification Center"
-    click button 1 in every window
-end tell
