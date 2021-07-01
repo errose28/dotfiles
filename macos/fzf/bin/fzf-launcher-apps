@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 paths="$HOME/Applications /Applications /System/Applications"
+#paths="/Applications /System/Applications"
 
 if [ "$SELECTION" ]; then
     open -na "$SELECTION"
@@ -8,13 +9,15 @@ else
     # Gather all app files.
     for path in $paths; do
         if [ -d "$path" ]; then
-            files="$(find "$path" -maxdepth 2 -name '*.app')\n$files"
+            if [ "$files" ]; then
+                files="$files"$'\n'
+            fi
+            files="${files}$(find "$path" -maxdepth 2 -name '*.app')"
         fi
     done
 
     # List names of all apps, which may contain spaces.
-    # TODO: Figure out why Slack and screensaver are parsed wrong.
-    while IFS= read -r file; do
+    while IFS='\n' read -r file; do
         name="$(basename --suffix='.app' "$file")"
         printf "$file\t$name\n"
     done <<< "$files"
