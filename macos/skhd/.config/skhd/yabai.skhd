@@ -72,7 +72,7 @@ alt - down:
     yabai -m window --insert south
 
 # Makes all vertical splits horizontal and vice versa.
-alt - s:
+alt - v:
     yabai -m window --toggle split && center-mouse-in-focused
 
 ### MAXIMIZE MINIMIZE FLOAT WINDOWS ###
@@ -116,9 +116,6 @@ alt - y:
     yabai -m space --mirror x-axis && center-mouse-in-focused
 
 # Must manually refresh spacebar since yabai has no signal for space layout change.
-alt - a:
+alt - s:
     toggle-stack-layout && spacebar-yabai-spaces && center-mouse-in-focused
 
-# Key code for /
-alt + cmd - 0x2C:
-    yabai-rename-space

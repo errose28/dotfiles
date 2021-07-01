@@ -56,5 +56,8 @@ alt + cmd - l:
 alt - d:
     open -na launchpad
 
+alt - a:
+    fzf-launcher Apps
+
 alt - space:
     open-mission-control
