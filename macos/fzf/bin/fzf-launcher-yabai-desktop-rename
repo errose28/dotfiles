@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# If selection was passed, it is the same name as the current desktop,
+# don't need to do anything.
+if [ "$QUERY" ]; then
+    yabai -m space --label "$QUERY"
+elif [ ! "$SELECTION" ]; then
+    name="$(yabai -m query --spaces --space | jq -r '.label')"
+    if [ "$name" ]; then
+        printf "$name\t$name"
+    fi
+fi

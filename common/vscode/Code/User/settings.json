@@ -26,7 +26,10 @@
     "editor.renderWhitespace": "boundary",
     "editor.suggestSelection": "first",
     "editor.largeFileOptimizations": false,
-    "editor.detectIndentation": false,
+    "editor.detectIndentation": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.lineNumbers": "on",
 
     // hide errors about using multi line cursor with vim
     "vim.debug.silent": true,
@@ -85,7 +88,7 @@
     /// MARKDOWN ///
     "[markdown]":
     {
-        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrap": "off",
         "editor.wordWrapColumn": 120,
     },
 
@@ -174,10 +177,7 @@
         "-q",
         "-n46"
     ],
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
 }

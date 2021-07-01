@@ -11,6 +11,8 @@ alacritty \
     --title 'Fzf Launcher' \
     --option 'window.dimensions.lines: 20' \
     --option 'window.dimensions.columns: 100' \
+    --option 'window.decorations: none' \
+    --option 'font.size: 16' \
     --command sh -c "fzf --print-query --layout=reverse --border=rounded > $output_file"
 
 num_lines="$(cat "$output_file" | wc -l)"
