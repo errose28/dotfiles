@@ -5,27 +5,8 @@
 alt - z:
     toggle-focus-follows-mouse
 
-alt - m:
-    show-menu-bar
-
-# Causes computer to freeze for some reason.
-#alt - c:
-#    clear-all-notifications
-
 alt - q:
     close-or-quit-focused
-
-alt + shift - q:
-    quit-all-apps
-
-cmd + alt + shift - s:
-    user-sleep
-
-cmd + alt + shift - g:
-    user-logout
-
-cmd + alt + shift - l:
-    user-lock
 
 # Open terminal apps.
 # Override linux font size in common config.

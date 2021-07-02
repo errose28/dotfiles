@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ "$SELECTION" ]; then
+    declare -A action_to_cmd
+
+    action_to_cmd['skhd']='launchctl stop skhd && launchctl start skhd'
+    action_to_cmd['yabai']='launchctl stop yabai && launchctl start yabai'
+
+    eval "${action_to_cmd[$SELECTION]}"
+else
+    options='skhd\nyabai'
+
+    # Options to select and pass back in to this script are the same.
+    # Paste separates with tab by default.
+    paste <(printf "$options") <(printf "$options")
+fi

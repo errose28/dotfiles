@@ -48,18 +48,6 @@ alt + cmd + shift - k:
 alt + cmd + shift - j:
     yabai -m window --display west && center-mouse-in-focused
 
-# Move window to other space and focus it.
-# Note that the only space options that work are specifying numbers.
-alt + cmd + shift - 1:
-    yabai -m window --space 1; \
-    skhd -k "ctrl - 1"
-alt + cmd + shift - 2:
-    yabai -m window --space 2; \
-    skhd -k "ctrl - 2"
-alt + cmd + shift - 3:
-    yabai -m window --space 3; \
-    skhd -k "ctrl - 3"
-
 # Move where next window is inserted.
 # Press again to turn off animation.
 alt - left:
