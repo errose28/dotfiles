@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+# Script for updating bspwm output in polybar using ipc.
 
 ### CONFIG ###
 
@@ -53,9 +54,6 @@ build_status_for_desktop() {
 # Gather all desktop output files for the current monitor, and construct polybar output.
 build_status_for_monitor() {
     monitor="$1"
-    if [ ! "$monitor" ]; then
-        monitor="$(bspc query --monitors --monitor .focused)"
-    fi
 
     local focused_desktops="$(bspc query --desktops --desktop .focused)"
     local active_desktops="$(bspc query --desktops --desktop .active)"
@@ -66,6 +64,11 @@ build_status_for_monitor() {
             all_statuses="${all_statuses}${SEP}"
         fi
         
+        # If there's no existing status for this desktop, create it now.
+        # Could happen if this daemon was started during an existing session with desktops.
+        if [ ! -f /tmp/"${monitor}_${desktop}_desktop" ]; then
+            build_status_for_desktop "$monitor" "$desktop"
+        fi
         desktop_status="$(cat /tmp/"${monitor}_${desktop}_desktop")"
 
         # Apply polybar formatting to mark focused or active.
@@ -81,15 +84,17 @@ build_status_for_monitor() {
         all_statuses="${all_statuses}${desktop_status}"
 
         # TODO: Garbage collect output files from deleted desktops.
-        #   Maybe remove them on the desktop remove command, but would need to handle monitor moves as well.
+        #    Make desktop or monitor the prefix for easier searching.
+        #    Make function to build output file names.
     done
 
-    echo "$all_statuses"
+    # Atomic update of output file using monitor name for polybar to read.
+    local monitor_name="$(bspc query --monitors --monitor "$monitor" --names)"
+    echo "$all_statuses" > /tmp/"${monitor_name}_tmp"
+    mv /tmp/"${monitor_name}_tmp" /tmp/"${monitor_name}_monitor"
 }
 
 ### EVENT REGISTRATION ###
-
-# TODO: Handle monitor add/remove events.
 
 desktop_add() {
     monitor_id="$1"
@@ -97,6 +102,7 @@ desktop_add() {
     desktop_name="$3"
 
     build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 desktop_rename() {
@@ -105,14 +111,15 @@ desktop_rename() {
     desktop_name="$3"
 
     build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
+# TODO: Once garbage collection is implemented, do not need this.
 desktop_remove() {
     monitor_id="$1"
     desktop_id="$2"
 
-    # Delete desktop file entry.
-    rm /tmp/"${monitor_id}_${desktop_id}"
+    rm /tmp/"${monitor_id}_${desktop_id}_desktop"
 }
 
 # TODO: check if desktop files need to be deleted here.
@@ -124,6 +131,10 @@ desktop_swap() {
 
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+    build_status_for_monitor "$src_monitor_id"
+    if [ "$src_monitor" != "$dst_monitor" ]; then
+        build_status_for_monitor "$dst_monitor_id"
+    fi
 }
 
 # TODO: check if desktop files need to be deleted here.
@@ -134,16 +145,35 @@ desktop_transfer() {
 
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$src_monitor_id" "$dst_desktop_id"
+
+    build_status_for_monitor "$src_monitor_id"
 }
 
-# desktop_layout <monitor_id> <desktop_id> tiled|monocle
+desktop_focus() {
+    monitor_id="$1"
+    desktop_id="$2"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
+}
+
+desktop_activate() {
+    monitor_id="$1"
+    desktop_id="$2"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
+}
+
+
 desktop_layout() {
     monitor_id="$1"
     desktop_id="$2"
     # 'tiled' or 'monocle'.
     layout="$3"
 
-    build_status_for_desktop "$src_monitor_id" "$src_desktop_id" "$layout"
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 node_add() {
@@ -152,7 +182,8 @@ node_add() {
     ip_id="$3"
     node_id="$4"
 
-    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 node_remove() {
@@ -160,7 +191,8 @@ node_remove() {
     desktop_id="$2"
     node_id="$3"
 
-    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 node_swap() {
@@ -173,6 +205,10 @@ node_swap() {
 
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+    build_status_for_monitor "$src_monitor_id"
+    if [ "$src_monitor" != "$dst_monitor" ]; then
+        build_status_for_monitor "$dst_monitor_id"
+    fi
 }
 
 node_transfer() {
@@ -185,6 +221,10 @@ node_transfer() {
 
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+    build_status_for_monitor "$src_monitor_id"
+    if [ "$src_monitor" != "$dst_monitor" ]; then
+        build_status_for_monitor "$dst_monitor_id"
+    fi
 }
 
 node_focus() {
@@ -193,6 +233,7 @@ node_focus() {
     node_id="$3"
 
     build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 node_activate() {
@@ -201,6 +242,7 @@ node_activate() {
     node_id="$3"
 
     build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 node_flag() {
@@ -212,6 +254,7 @@ node_flag() {
     flag_value="$5"
 
     build_status_for_desktop "$monitor_id" "$desktop_id"
+    build_status_for_monitor "$monitor_id"
 }
 
 ### MAIN ###
@@ -220,18 +263,9 @@ bspc subscribe all | while read report; do
     # First word is the event type, corresponding to a function name.
     # Everything after will be params to the function.
     if declare -f $(echo $report | awk '{print $1}') &> /dev/null; then
-        # Let the event update any relevant desktops output files.
+        # Let the event update any relevant desktop and monitor output files.
         $report
-        # Atomic update of output file for polybar to read.
-
-        # TODO: One file for each monitor's output.
-        # Each event puts monitor output in file using bspwm monitor id.
-        # Then move that to monitor name here for polybar.
-
-        # build_status_for_monitor > /tmp/"${monitor}_monitor_tmp"
-        # mv /tmp/"${monitor}_monitor_tmp" /tmp/"${monitor}_monitor"
-        build_status_for_monitor > /tmp/"monitor_tmp"
-        mv /tmp/"monitor_tmp" /tmp/"monitor"
+        # Update all polybars regardless of monitor for easier handling of cross monitor events.
         polybar-msg hook bspwm-custom 1 > /dev/null
     fi
 done
