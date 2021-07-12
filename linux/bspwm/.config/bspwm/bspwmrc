@@ -29,8 +29,8 @@ bspc config remove_disabled_monitors true
 
 ### SUBSCRIBE TO EVENTS ###
 
-bspc subscribe report | while read report; do
-    bspwm-desktop-status > /tmp/bspwm_desktop_status
-    polybar-msg hook bspwm-custom 1
-done &
+# bspc subscribe report | while read report; do
+#     bspwm-desktop-status > /tmp/bspwm_desktop_status
+#     polybar-msg hook bspwm-custom 1
+# done &
 

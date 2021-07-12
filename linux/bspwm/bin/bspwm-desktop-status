@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 
-monitor="$1"
-if [ ! "$monitor" ]; then
-    monitor="$(bspc query --monitors --monitor .focused)"
-fi
+
+### CONFIG ###
 
 # TODO: Have this set when called.
 SYMBOL_FONT_INDEX=3
@@ -13,20 +11,25 @@ FOCUSED_FG='#19233c'
 ACTIVE_BG='#a6a6a6'
 ACTIVE_FG='#19233c'
 
-get_status() {
-    # Desktop name or ID.
-    local desktop="$1"
+### OUTPUT CONSTRUCTION ###
+
+build_status_for_desktop() {
+    local monitor="$1"
+    local desktop="$2"
+    # Optional, will be computed if needed and not passed.
+    local layout="$3"
 
     local window_count="$(bspc query --nodes --desktop "$desktop" --node '.window.!hidden' | wc -l)"
-    local hidden_count="$(bspc query --nodes --desktop "$desktop" --node .hidden | wc -l)"
+    local hidden_count="$(bspc query --nodes --desktop "$desktop" --node .window.hidden | wc -l)"
     local marked_count="$(bspc query --nodes --desktop "$desktop" --node .marked | wc -l)"
     local name="$(bspc query --desktops --desktop "$desktop" --names)"
 
-    # Add new status
+    # Compute desktop status.
     local desktop_status="$name "
     if [ "$window_count" -gt 0 ]; then
         # In monocle mode, show index of the current window as well.
-        if [ "$(bspc query --tree --desktop "$desktop" | jq -r '.layout')" = 'monocle' ]; then
+        [ "$layout" ] || local layout="$(bspc query --tree --desktop "$desktop" | jq -r '.layout')"
+        if [ "$layout" = 'monocle' ]; then
             # Get the focused node (or the node that would be focused if the desktop were active).
             # Cannot use .focused to select node because the desktop may not be focused when this is run.
             focused_node="$(bspc query --nodes --node @"$desktop": --node .window)"
@@ -44,29 +47,191 @@ get_status() {
         desktop_status="${desktop_status}*"
     fi
 
-	echo "$desktop_status"
+    echo "$desktop_status" > /tmp/"${monitor}_${desktop}_desktop"
 }
 
-focused_desktops="$(bspc query --desktops --desktop .focused)"
-active_desktops="$(bspc query --desktops --desktop .active)"
-
-all_statuses=''
-for desktop in $(bspc query --desktops --monitor "$monitor"); do
-    if [ "$all_statuses" ]; then
-        all_statuses="${all_statuses}${SEP}"
+# Gather all desktop output files for the current monitor, and construct polybar output.
+build_status_for_monitor() {
+    monitor="$1"
+    if [ ! "$monitor" ]; then
+        monitor="$(bspc query --monitors --monitor .focused)"
     fi
 
-    status="$(get_status "$desktop")"
+    local focused_desktops="$(bspc query --desktops --desktop .focused)"
+    local active_desktops="$(bspc query --desktops --desktop .active)"
 
-    if echo "$focused_desktops" | grep -q "$desktop"; then
-        status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$FOCUSED_FG}%{B$FOCUSED_BG}${status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
-    elif echo "$active_desktops" | grep -q "$desktop"; then
-        status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
-    else
-        status=" $status "
+    all_statuses=''
+    for desktop in $(bspc query --desktops --monitor "$monitor"); do
+        if [ "$all_statuses" ]; then
+            all_statuses="${all_statuses}${SEP}"
+        fi
+        
+        desktop_status="$(cat /tmp/"${monitor}_${desktop}_desktop")"
+
+        # Apply polybar formatting to mark focused or active.
+        # Cannot be saved to the desktop file since there is no bspwm event to remove focus/active.
+        if echo "$focused_desktops" | grep -q "$desktop"; then
+            desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$FOCUSED_FG}%{B$FOCUSED_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+        elif echo "$active_desktops" | grep -q "$desktop"; then
+            desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+        else
+            desktop_status=" $desktop_status "
+        fi
+
+        all_statuses="${all_statuses}${desktop_status}"
+
+        # TODO: Garbage collect output files from deleted desktops.
+        #   Maybe remove them on the desktop remove command, but would need to handle monitor moves as well.
+    done
+
+    echo "$all_statuses"
+}
+
+### EVENT REGISTRATION ###
+
+# TODO: Handle monitor add/remove events.
+
+desktop_add() {
+    monitor_id="$1"
+    desktop_id="$2"
+    desktop_name="$3"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+}
+
+desktop_rename() {
+    monitor_id="$1"
+    desktop_id="$2"
+    desktop_name="$3"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+}
+
+desktop_remove() {
+    monitor_id="$1"
+    desktop_id="$2"
+
+    # Delete desktop file entry.
+    rm /tmp/"${monitor_id}_${desktop_id}"
+}
+
+# TODO: check if desktop files need to be deleted here.
+desktop_swap() {
+    src_monitor_id="$1"
+    src_desktop_id="$2"
+    dst_monitor_id="$3"
+    dst_desktop_id="$4"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+}
+
+# TODO: check if desktop files need to be deleted here.
+desktop_transfer() {
+    src_monitor_id="$1"
+    src_desktop_id="$2"
+    dst_monitor_id="$3"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$src_monitor_id" "$dst_desktop_id"
+}
+
+# desktop_layout <monitor_id> <desktop_id> tiled|monocle
+desktop_layout() {
+    monitor_id="$1"
+    desktop_id="$2"
+    # 'tiled' or 'monocle'.
+    layout="$3"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id" "$layout"
+}
+
+node_add() {
+    monitor_id="$1"
+    desktop_id="$2"
+    ip_id="$3"
+    node_id="$4"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+}
+
+node_remove() {
+    monitor_id="$1"
+    desktop_id="$2"
+    node_id="$3"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+}
+
+node_swap() {
+    src_monitor_id="$1"
+    src_desktop_id="$2"
+    src_node_id="$3"
+    dst_monitor_id="$4"
+    dst_desktop_id="$5"
+    dst_node_id="$6"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+}
+
+node_transfer() {
+    src_monitor_id="$1"
+    src_desktop_id="$2"
+    src_node_id="$3"
+    dst_monitor_id="$4"
+    dst_desktop_id="$5"
+    dst_node_id="$6"
+
+    build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
+    build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
+}
+
+node_focus() {
+    monitor_id="$1"
+    desktop_id="$2"
+    node_id="$3"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+}
+
+node_activate() {
+    monitor_id="$1"
+    desktop_id="$2"
+    node_id="$3"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+}
+
+node_flag() {
+    monitor_id="$1"
+    desktop_id="$2"
+    node_id="$3"
+    # hidden|sticky|private|locked|marked|urgent
+    flag_type="$4"
+    flag_value="$5"
+
+    build_status_for_desktop "$monitor_id" "$desktop_id"
+}
+
+### MAIN ###
+
+bspc subscribe all | while read report; do
+    # First word is the event type, corresponding to a function name.
+    # Everything after will be params to the function.
+    if declare -f $(echo $report | awk '{print $1}') &> /dev/null; then
+        # Let the event update any relevant desktops output files.
+        $report
+        # Atomic update of output file for polybar to read.
+
+        # TODO: One file for each monitor's output.
+        # Each event puts monitor output in file using bspwm monitor id.
+        # Then move that to monitor name here for polybar.
+
+        # build_status_for_monitor > /tmp/"${monitor}_monitor_tmp"
+        # mv /tmp/"${monitor}_monitor_tmp" /tmp/"${monitor}_monitor"
+        build_status_for_monitor > /tmp/"monitor_tmp"
+        mv /tmp/"monitor_tmp" /tmp/"monitor"
+        polybar-msg hook bspwm-custom 1 > /dev/null
     fi
-
-    all_statuses="${all_statuses}${status}"
 done
-
-echo "$all_statuses"
