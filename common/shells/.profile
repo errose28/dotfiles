@@ -16,11 +16,6 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # No output from direnv when turned on in a directory.
 export DIRENV_LOG_FORMAT=
 
-# Disable opengl hardware acceleration.
-# If this is not set and the laptop screen is turned off, opengl applications
-# slow to 1fps refresh rate.
-# export LIBGL_ALWAYS_SOFTWARE=1
-
 # VARIABLES I MADE
 export DOTFILES="${HOME}/.dotfiles"
 export WALLPAPER="${HOME}/.wallpapers/grey_mountain.jpg"

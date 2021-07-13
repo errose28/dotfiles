@@ -4,7 +4,6 @@
 
 ### CONFIG ###
 
-# TODO: Have this set when called.
 SYMBOL_FONT_INDEX=3
 SEP="%{T${SYMBOL_FONT_INDEX}}╱%{T-}"
 FOCUSED_BG='#ffffff'
@@ -26,7 +25,7 @@ build_status_for_desktop() {
     local name="$(bspc query --desktops --desktop "$desktop" --names)"
 
     # Compute desktop status.
-    local desktop_status="$name "
+    local desktop_status=" $name "
     if [ "$window_count" -gt 0 ]; then
         # In monocle mode, show index of the current window as well.
         [ "$layout" ] || local layout="$(bspc query --tree --desktop "$desktop" | jq -r '.layout')"
@@ -132,7 +131,7 @@ desktop_swap() {
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
     build_status_for_monitor "$src_monitor_id"
-    if [ "$src_monitor" != "$dst_monitor" ]; then
+    if [ "$src_monitor_id" != "$dst_monitor_id" ]; then
         build_status_for_monitor "$dst_monitor_id"
     fi
 }
@@ -206,7 +205,7 @@ node_swap() {
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
     build_status_for_monitor "$src_monitor_id"
-    if [ "$src_monitor" != "$dst_monitor" ]; then
+    if [ "$src_monitor_id" != "$dst_monitor_id" ]; then
         build_status_for_monitor "$dst_monitor_id"
     fi
 }
@@ -222,7 +221,7 @@ node_transfer() {
     build_status_for_desktop "$src_monitor_id" "$src_desktop_id"
     build_status_for_desktop "$dst_monitor_id" "$dst_desktop_id"
     build_status_for_monitor "$src_monitor_id"
-    if [ "$src_monitor" != "$dst_monitor" ]; then
+    if [ "$src_monitor_id" != "$dst_monitor_id" ]; then
         build_status_for_monitor "$dst_monitor_id"
     fi
 }
@@ -258,6 +257,12 @@ node_flag() {
 }
 
 ### MAIN ###
+
+# Generate initial output to show before any events are fired.
+# Building monitor status will build any missing desktop statuses too.
+for monitor_id in $(bspc query --monitors); do
+    build_status_for_monitor "$monitor_id"
+done
 
 bspc subscribe all | while read report; do
     # First word is the event type, corresponding to a function name.
