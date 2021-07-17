@@ -5,15 +5,15 @@ SECTION_FILE='/tmp/fzf_launcher_section'
 # 1st column is the value that should be used when selected, but not displayed to the user.
 # Everything after is displayed in fzf.
 SEP='\t'
-OPTIONS=(--with-nth \'2..\' --delimiter "'$SEP'")
+FZF_OPTIONS_ARRAY=(--with-nth \'2..\' --delimiter "'$SEP'")
 COMMAND='true'
 declare -A SECTION_TO_CMD
 
 launch_fzf() {
     export FZF_DEFAULT_COMMAND="$COMMAND"
-    export FZF_DEFAULT_OPTS="${OPTIONS[@]}"
+    export FZF_DEFAULT_OPTS="${FZF_OPTIONS_ARRAY[@]}"
 
-    output="$(fzf-window)"
+    output="$(fzf-window "$@")"
 
     # Only proceed if output was selected.
     if [ "$output" ]; then
@@ -34,18 +34,14 @@ add_section() {
     prompt="$2"
     command="$3"
 
-    # Put the prompt in front of each selection.
-    # cmd_array=($command '|' ts "$prompt")
-
     # Save command to be run so its output can be streamed to fzf.
-    OPTIONS+=(--bind="'$keybinding:change-prompt(${prompt}: )+reload("$command")+execute-silent(echo "$prompt" > "$SECTION_FILE")'")
+    FZF_OPTIONS_ARRAY+=(--bind="'$keybinding:change-prompt(${prompt}: )+reload("$command")+execute-silent(echo "$prompt" > "$SECTION_FILE")'")
 
     SECTION_TO_CMD["$prompt"]="$command"
 
     if [ "$prompt" = "$DEFAULT_SECTION" ]; then
-        # COMMAND="${cmd_array[@]}"
         COMMAND="$command"
-        OPTIONS+=(--prompt "'${prompt}: '")
+        FZF_OPTIONS_ARRAY+=(--prompt "'${prompt}: '")
         echo "$prompt" > "$SECTION_FILE"
     fi
 }

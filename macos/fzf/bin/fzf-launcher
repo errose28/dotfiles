@@ -11,5 +11,5 @@ add_section 'ctrl-w' 'Windows' 'fzf-launcher-yabai-window-switch'
 add_section 'ctrl-p' 'Action' 'fzf-launcher-power-menu'
 add_section 'ctrl-r' 'Reload' 'fzf-launcher-reload'
 
-launch_fzf
+launch_fzf --option 'font.size: 16'
 yabai -m rule --remove fzf

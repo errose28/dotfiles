@@ -1,19 +1,20 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-# set FZF_DEFAULT_COMMAND for the command to populate fzf.
-# set FZF_DEFAULT_OPTS for extra options passed to fzf.
+# All parameters passed in will be forwarded to alacritty.
+# Set for the command to populate fzf.
 export FZF_DEFAULT_COMMAND
+# Set for extra options passed to fzf.
 export FZF_DEFAULT_OPTS
 
 output_file="/tmp/fzf_window_output"
 
 alacritty \
-    --title 'Fzf Launcher' \
     --option 'window.dimensions.lines: 20' \
     --option 'window.dimensions.columns: 100' \
     --option 'window.decorations: none' \
-    --option 'font.size: 16' \
-    --command sh -c "fzf --print-query --layout=reverse --border=rounded > $output_file"
+    --title 'Fzf Launcher' \
+    "$@" \
+    --command sh -c "fzf --print-query --layout=reverse --border=rounded > $output_file" \
 
 num_lines="$(cat "$output_file" | wc -l)"
 
