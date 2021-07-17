@@ -10,12 +10,8 @@ if [ "$SELECTION" ]; then
 
     ${action_to_cmd[$SELECTION]}
 else
-    options='Lock
-    Sleep
-    Logout
-    Restart
-    Shutdown'
+    options='Lock\nSleep\nLogout\nRestart\nShutdown'
 
     # Options to select and pass back in to this script are the same.
-    paste <(echo "$options") <(echo "$options")
+    paste --delimiters='\t' <(printf "$options") <(printf "$options")
 fi

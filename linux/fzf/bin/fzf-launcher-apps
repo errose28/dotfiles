@@ -15,6 +15,6 @@ else
     # List names of all apps.
     for file in $(printf "$files"); do
         name="$(cat "$file" | grep -m1 ^Name= | sed -e 's/^Name=//')"
-        echo "$file $name ("$(basename "$file")")"
+        printf "${file}\t${name}\n"
     done
 fi

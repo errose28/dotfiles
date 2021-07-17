@@ -7,5 +7,5 @@ if [ "$QUERY" ]; then
     bspc desktop --rename "$QUERY"
 elif [ ! "$SELECTION" ]; then
     name="$(bspc query --desktops --desktop --names)"
-    echo "$name" "$name"
+    printf "${name}\t$name"
 fi

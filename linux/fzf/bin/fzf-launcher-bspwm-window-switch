@@ -16,6 +16,6 @@ else
         desktop_index="$(xdotool get_desktop_for_window "$id")"
         # Awk expects one based index.
         desktop_name="$(bspc query --desktops --names | awk "FNR==$desktop_index+1")"
-        printf "$id $desktop_name: [$class] $title\n"
+        printf "${id}\t$desktop_name: [$class] $title\n"
     done
 fi

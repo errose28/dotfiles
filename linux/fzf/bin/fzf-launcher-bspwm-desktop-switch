@@ -3,5 +3,5 @@
 if [ "$SELECTION" ]; then
     bspc desktop --focus "$SELECTION"
 else
-    paste <(bspc query --desktops) <(bspc query --desktops --names)
+    paste --delimiters='\t' <(bspc query --desktops) <(bspc query --desktops --names)
 fi

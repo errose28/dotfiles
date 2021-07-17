@@ -10,12 +10,8 @@ if [ "$SELECTION" ]; then
 
     ${action_to_cmd[$SELECTION]}
 else
-    options='sxhkd
-    bspwm
-    polybar
-    autorandr
-    background'
+    options='sxhkd\nbspwm\npolybar\nautorandr\nbackground'
 
     # Options to select and pass back in to this script are the same.
-    paste <(echo "$options") <(echo "$options")
+    paste --delimiters='\t' <(printf "$options") <(printf "$options")
 fi

@@ -11,4 +11,4 @@ add_section 'ctrl-w' 'Windows' 'fzf-launcher-bspwm-window-switch'
 add_section 'ctrl-p' 'Action' 'fzf-launcher-power-menu'
 add_section 'ctrl-r' 'Reload' 'fzf-launcher-reload'
 
-launch_fzf
+FONT=16 launch_fzf
