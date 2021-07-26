@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# for testing only.
+set -e
+
+EXTRA_PLUGINS="$@"
+
+### CONSTANTS ###
+
+DELIMITER='\\t'
+#PLUGIN_DIR="$HOME/.config/fzf-launcher"
+PLUGIN_DIR="$HOME"/.dotfiles/common/common/fzf/plugins
+WINDOW_LAUNCHER="$PLUGIN_DIR"/window
+
+QUERY_OUTPUT_FILE=/tmp/fzf_query
+SELECTION_OUTPUT_FILE=/tmp/fzf_selection
+
+# FZF_DEFAULT_OPTS="--with-nth 3.. --delimiter $DELIMITER"
+FZF_OPTIONS_ARRAY=(--with-nth 2.. --delimiter "$DELIMITER")
+
+### LOAD PLUGINS ###
+
+# TODO: Test with spaces in plugin names.
+# for plugin in "$PLUGIN_DIR"/* $EXTRA_PLUGINS; do
+for plugin in plugins/demo_plugin.sh; do
+    if [ "$plugin" != "$WINDOW_LAUNCHER" ]; then
+        keybinding="$("$plugin" keybinding)"
+        prompt="$("$plugin" prompt)"
+
+        # Make the plugin script the first column of all output lines, so we can call it from the user selection.
+        options_cmd=("$plugin" options "$DELIMITER")
+        # options_cmd=("$plugin" options "$DELIMITER" '|' awk -v plugin="$plugin" '{print plugin $0}')
+        FZF_OPTIONS_ARRAY+=( --bind="'${keybinding}:change-prompt(${prompt})+reload(${options_cmd[@]})'" )
+    fi
+done
+
+### LAUNCH FZF ###
+
+# TODO: Handle passing output redirect into window launcher.
+# Capture output from files.
+# FZF_DEFAULT_OPTS+="$FZF_DEFAULT_OPTS --bind=change:execute-silent(echo {q} > $QUERY_OUTPUT_FILE)"
+FZF_OPTIONS_ARRAY+=(--bind="'change:execute-silent(echo {q} > $QUERY_OUTPUT_FILE)'")
+# > $SELECTION_OUTPUT_FILE"
+
+# if [ -x "$WINDOW_LAUNCHER" ]; then
+#     "$WINDOW_LAUNCHER" ${FZF_OPTIONS_ARRAY[@]}
+# else
+export FZF_DEFAULT_OPTS="${FZF_OPTIONS_ARRAY[@]}"
+fzf > "$SELECTION_OUTPUT_FILE"
+# fi
+
+### PARSE OUTPUT ###
+
+query="$(cat "$QUERY_OUTPUT_FILE")"
+
+full_selection="$(cat "$SELECTION_OUTPUT_FILE")"
+plugin="$(echo "$full_selection" | awk -F "$DELIMITER" '{print $1}')"
+
+selection="$(echo "$full_selection" | awk -F "$DELIMITER" '{print $2}')"
+
+"$plugin" run "$query" "$selection"

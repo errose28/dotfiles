@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
+
+alacritty \
+    --option 'window.dimensions.lines: 20' \
+    --option 'window.dimensions.columns: 100' \
+    --option 'window.decorations: none' \
+    --option 'font.size: 16' \
+    --title 'Fzf Launcher' \
+    --command sh -c "$@"
