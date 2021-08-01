@@ -6,16 +6,21 @@ options() {
     # Window id class title
     local win_infos="$(wmctrl -l -x | awk '{$2=""; $4=""; $3=substr($3,index($3,".")+1); print $0}')"
     local win_count="$(echo "$win_infos" | wc -l)"
+    # Window ID of the launcher, which should not be displayed as an option.
+    local focused_id="$(bspc query --nodes --node)"
     for line_num in $(seq 1 "$win_count"); do
         local id="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $1}')"
-        local class="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $2}')"
-        local title="$(echo "$win_infos" | awk -v idx="$line_num" '$1=""; $2=""; FNR==idx {print $0}')"
-        local desktop_name="$(bspc query --desktops --node "$id" --names)"
 
-        if bspc query --nodes --node '.hidden' --node "$id" > /dev/null; then
-            printf "${id}${delimiter}$desktop_name: ($class) $title\n"
-        else
-            printf "${id}${delimiter}$desktop_name: [$class] $title\n"
+        if [ "$id" != "$focused_id" ]; then
+            local class="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $2}')"
+            local title="$(echo "$win_infos" | awk -v idx="$line_num" '$1=""; $2=""; FNR==idx {print $0}')"
+            local desktop_name="$(bspc query --desktops --node "$id" --names)"
+
+            if bspc query --nodes --node '.hidden' --node "$id" > /dev/null; then
+                printf "${id}${delimiter}$desktop_name: ($class) $title\n"
+            else
+                printf "${id}${delimiter}$desktop_name: [$class] $title\n"
+            fi
         fi
     done
 }
