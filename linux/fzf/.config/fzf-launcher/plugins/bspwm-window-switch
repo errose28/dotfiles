@@ -10,12 +10,13 @@ options() {
         local id="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $1}')"
         local class="$(echo "$win_infos" | awk -v idx="$line_num" 'FNR==idx {print $2}')"
         local title="$(echo "$win_infos" | awk -v idx="$line_num" '$1=""; $2=""; FNR==idx {print $0}')"
+        local desktop_name="$(bspc query --desktops --node "$id" --names)"
 
-        # Gives 0 based index.
-        local desktop_index="$(xdotool get_desktop_for_window "$id")"
-        # Awk expects 1 based index.
-        local desktop_name="$(bspc query --desktops --names | awk "FNR==$desktop_index+1")"
-        printf "${id}${delimiter}$desktop_name: [$class] $title\n"
+        if bspc query --nodes --node '.hidden' --node "$id" > /dev/null; then
+            printf "${id}${delimiter}$desktop_name: ($class) $title\n"
+        else
+            printf "${id}${delimiter}$desktop_name: [$class] $title\n"
+        fi
     done
 }
 
@@ -31,7 +32,10 @@ run() {
     local query="$1"
     local selection="$2"
 
-    wmctrl -ia "$selection"
+    #wmctrl -ia "$selection"
+    # Unhide the window if it was hidden.
+    bspc node "$selection" --flag hidden=off
+    bspc node "$selection" --focus
 }
 
 "$@"
