@@ -9,8 +9,6 @@ alt - q:
     close-or-quit-focused
 
 # Open terminal apps.
-# Override linux font size in common config.
-# --args tells open to pass the args to the program.
 alt - return:
     export USE_TMUX=1; \
     terminal
