@@ -36,7 +36,7 @@ alt - d:
     open -na launchpad
 
 alt - a:
-    fzf-launcher Apps
+    fzf-launcher apps
 
 alt - space:
     open-mission-control
