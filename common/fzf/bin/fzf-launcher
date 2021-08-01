@@ -33,7 +33,7 @@ for plugin in "$PLUGIN_DIR"/*; do
 
         if [ "$plugin" = "$default_plugin_abs_path" -o "$(basename "$plugin")" = "$default_plugin_name" ]; then
             echo "$plugin" > "$PLUGIN_OUTPUT_FILE"
-            FZF_OPTIONS_ARRAY+=(--prompt="$prompt")
+            FZF_OPTIONS_ARRAY+=(--prompt="'$prompt'")
             export FZF_DEFAULT_COMMAND="${options_cmd[@]}"
         fi
     fi

@@ -9,7 +9,7 @@ alacritty \
     --option 'window.dimensions.lines: 20' \
     --option 'window.dimensions.columns: 100' \
     --option 'window.decorations: none' \
-    --option 'window.title: Fzf Launcher'
+    --option 'window.title: Fzf Launcher' \
     --command sh -c "fzf --layout=reverse --border=rounded "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
 
 cat "$OUT_FILE"
