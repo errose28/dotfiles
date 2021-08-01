@@ -11,6 +11,5 @@ Install
     ...    wmutils-core
 
 Link
-    Add Ignore    TODO.md
     Deep Link    *
 

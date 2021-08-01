@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+options() {
+    local delimiter="$1"
+
+    local options='sxhkd\nbspwm\npolybar\nautorandr\nbackground'
+    # Options to select and pass back in to this script are the same.
+    paste --delimiters="$delimiter" <(printf "$options") <(printf "$options")
+}
+
+keybinding() {
+    echo 'ctrl-r'
+}
+
+prompt() {
+    echo 'Reload: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    declare -A action_to_cmd
+    action_to_cmd['sxhkd']="kill -s SIGUSR1 $(pidof sxhkd)"
+    action_to_cmd['bspwm']='bspc wm -r'
+    action_to_cmd['polybar']='launch-polybars'
+    action_to_cmd['autorandr']='autorandr --change --force'
+    action_to_cmd['background']="$HOME/.fehbg"
+
+    ${action_to_cmd[$selection]}
+}
+
+"$@"

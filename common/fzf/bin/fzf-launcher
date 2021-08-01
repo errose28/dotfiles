@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# This is the plugin that should be displayed when fzf starts.
+# Can give a path or name of the file in the plugins directory.
+default_plugin="$1"
+
+default_plugin_abs_path="$(realpath "$default_plugin" 2> /dev/null)"
+default_plugin_name="$(basename "$default_plugin" 2> /dev/null)"
+
+### CONSTANTS ###
+
+DELIMITER='\\t'
+PLUGIN_DIR="$HOME"/.config/fzf-launcher/plugins
+FZF_WRAPPER="$(realpath "$PLUGIN_DIR"/fzf-wrapper)"
+
+QUERY_OUTPUT_FILE=/tmp/fzf_query_$$
+SELECTION_OUTPUT_FILE=/tmp/fzf_selection_$$
+PLUGIN_OUTPUT_FILE=/tmp/fzf_plugin_$$
+
+FZF_OPTIONS_ARRAY=(--with-nth 2.. --delimiter "$DELIMITER")
+
+### LOAD PLUGINS ###
+
+for plugin in "$PLUGIN_DIR"/*; do
+    # Resolve symlinks.
+    plugin="$(realpath "$plugin")"
+    if [ "$plugin" != "$FZF_WRAPPER" ]; then
+        keybinding="$("$plugin" keybinding)"
+        prompt="$("$plugin" prompt)"
+
+        options_cmd=("$plugin" options "$DELIMITER")
+        FZF_OPTIONS_ARRAY+=( --bind="'${keybinding}:change-prompt(${prompt})+reload(${options_cmd[@]})+execute-silent(echo "$plugin" > "$PLUGIN_OUTPUT_FILE")'" )
+
+        if [ "$plugin" = "$default_plugin_abs_path" -o "$(basename "$plugin")" = "$default_plugin_name" ]; then
+            echo "$plugin" > "$PLUGIN_OUTPUT_FILE"
+            FZF_OPTIONS_ARRAY+=(--prompt="$prompt")
+            export FZF_DEFAULT_COMMAND="${options_cmd[@]}"
+        fi
+    fi
+done
+
+### LAUNCH FZF ###
+
+FZF_OPTIONS_ARRAY+=(--bind="'change:execute-silent(echo {q} > $QUERY_OUTPUT_FILE)'")
+
+export FZF_DEFAULT_OPTS="${FZF_OPTIONS_ARRAY[@]}"
+if [ -x "$FZF_WRAPPER" ]; then
+    "$FZF_WRAPPER" > "$SELECTION_OUTPUT_FILE"
+    fzf_rc="$?"
+else
+    fzf > "$SELECTION_OUTPUT_FILE"
+    fzf_rc="$?"
+fi
+
+### PARSE OUTPUT ###
+
+# If fzf was quit, 130 is returned.
+# If 1 is returned, there could still be query to process, just no matching selection.
+[ "$fzf_rc" = 130 ] && exit "$fzf_rc"
+
+if [ -f "$QUERY_OUTPUT_FILE" ]; then
+    query="$(cat "$QUERY_OUTPUT_FILE")"
+fi
+
+if [ -f "$SELECTION_OUTPUT_FILE" ]; then
+    selection="$(cat "$SELECTION_OUTPUT_FILE" | awk -F "$DELIMITER" '{print $1}')"
+fi
+
+if [ -f "$PLUGIN_OUTPUT_FILE" ]; then
+    plugin="$(cat "$PLUGIN_OUTPUT_FILE")"
+    "$plugin" run "$query" "$selection"
+
+    rm -f "$QUERY_OUTPUT_FILE"
+    rm -f "$SELECTION_OUTPUT_FILE"
+    rm -f "$PLUGIN_OUTPUT_FILE"
+fi
+
+exit "$fzf_rc"

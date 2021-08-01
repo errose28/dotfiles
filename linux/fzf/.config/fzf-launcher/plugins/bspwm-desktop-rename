@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+options() {
+    local delimiter="$1"
+
+    local name="$(bspc query --desktops --desktop --names)"
+    printf "${name}${delimiter}$name"
+}
+
+keybinding() {
+    echo 'ctrl-/'
+}
+
+prompt() {
+    echo 'Rename desktop: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    # If selection was passed, it is the same name as the current desktop.
+    # Don't need to do anything.
+    if [ "$query" ]; then
+        bspc desktop --rename "$query"
+    fi
+}
+
+"$@"
