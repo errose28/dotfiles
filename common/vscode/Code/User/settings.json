@@ -88,8 +88,9 @@
     /// MARKDOWN ///
     "[markdown]":
     {
-        "editor.wordWrap": "off",
+        "editor.wordWrap": "on",
         "editor.wordWrapColumn": 120,
+        "editor.rulers": [ ],
     },
 
     /// PYTHON ///
@@ -180,4 +181,7 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
     },
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.enabled": false,
 }
