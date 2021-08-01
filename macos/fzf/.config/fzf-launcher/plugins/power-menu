@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+options() {
+    local delimiter="$1"
+
+    local options='Lock\nSleep\nLogout\nRestart\nShutdown'
+    # Options to select and pass back in to this script are the same.
+    paste --delimiters="$delimiter" <(printf "$options") <(printf "$options")
+}
+
+keybinding() {
+    echo 'ctrl-p'
+}
+
+prompt() {
+    echo 'Action: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    declare -A action_to_cmd
+    # Requires lock on sleep setting to be on.
+    # Uses m-cli for most commands.
+    action_to_cmd['Lock']='m lock'
+    action_to_cmd['Sleep']='m sleep'
+    action_to_cmd['Logout']='osascript -e 'tell application "System Events" to log out''
+    action_to_cmd['Restart']='m restart'
+    action_to_cmd['Shutdown']='m shutdown'
+
+    eval "${action_to_cmd[$selection]}"
+}
+
+"$@"

@@ -1,11 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-paths="$HOME/Applications /Applications /System/Applications"
-#paths="/Applications /System/Applications"
+options() {
+    local delimiter="$1"
 
-if [ "$SELECTION" ]; then
-    open -na "$SELECTION"
-else
+    paths="$HOME/Applications /Applications /System/Applications"
+
     # Gather all app files.
     for path in $paths; do
         if [ -d "$path" ]; then
@@ -19,6 +18,23 @@ else
     # List names of all apps, which may contain spaces.
     while IFS='\n' read -r file; do
         name="$(basename --suffix='.app' "$file")"
-        printf "$file\t$name\n"
+        printf "${file}${delimiter}${name}\n"
     done <<< "$files"
-fi
+}
+
+keybinding() {
+    echo 'ctrl-a'
+}
+
+prompt() {
+    echo 'Apps: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    open -na "$selection"
+}
+
+"$@"
