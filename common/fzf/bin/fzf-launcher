@@ -54,9 +54,16 @@ fi
 
 ### PARSE OUTPUT ###
 
+cleanup_exit() {
+    rm -f "$QUERY_OUTPUT_FILE"
+    rm -f "$SELECTION_OUTPUT_FILE"
+    rm -f "$PLUGIN_OUTPUT_FILE"
+    exit "$fzf_rc"
+}
+
 # If fzf was quit, 130 is returned.
 # If 1 is returned, there could still be query to process, just no matching selection.
-[ "$fzf_rc" = 130 ] && exit "$fzf_rc"
+[ "$fzf_rc" = 130 ] && cleanup_exit
 
 if [ -f "$QUERY_OUTPUT_FILE" ]; then
     query="$(cat "$QUERY_OUTPUT_FILE")"
@@ -69,10 +76,6 @@ fi
 if [ -f "$PLUGIN_OUTPUT_FILE" ]; then
     plugin="$(cat "$PLUGIN_OUTPUT_FILE")"
     "$plugin" run "$query" "$selection"
-
-    rm -f "$QUERY_OUTPUT_FILE"
-    rm -f "$SELECTION_OUTPUT_FILE"
-    rm -f "$PLUGIN_OUTPUT_FILE"
 fi
 
-exit "$fzf_rc"
+cleanup_exit
