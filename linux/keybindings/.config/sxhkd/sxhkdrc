@@ -43,7 +43,7 @@ super + shift + m
     autorandr --change --force
 
 super + a
-    fzf-launcher Apps
+    fzf-launcher apps
 
 # Volume Controls:
 

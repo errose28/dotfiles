@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+options() {
+    local delimiter="$1"
+
+    local options='Lock\nSleep\nLogout\nRestart\nShutdown'
+    # Options to select and pass back in to this script are the same.
+    paste --delimiters="$delimiter" <(printf "$options") <(printf "$options")
+}
+
+keybinding() {
+    echo 'ctrl-p'
+}
+
+prompt() {
+    echo 'Action: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    declare -A action_to_cmd
+    action_to_cmd['Lock']='light-locker-command -l'
+    action_to_cmd['Sleep']='systemctl suspend'
+    action_to_cmd['Logout']='bspc quit'
+    action_to_cmd['Restart']='systemctl reboot'
+    action_to_cmd['Shutdown']='systemctl poweroff'
+
+    ${action_to_cmd[$selection]}
+}
+
+"$@"

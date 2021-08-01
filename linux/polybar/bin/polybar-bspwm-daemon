@@ -26,6 +26,7 @@ build_status_for_desktop() {
 
     # Compute desktop status.
     local desktop_status=" $name "
+    local space_added='true'
     if [ "$window_count" -gt 0 ]; then
         # In monocle mode, show index of the current window as well.
         [ "$layout" ] || local layout="$(bspc query --tree --desktop "$desktop" | jq -r '.layout')"
@@ -37,14 +38,21 @@ build_status_for_desktop() {
             window_count="$index/$window_count"
         fi
         desktop_status="${desktop_status}[$window_count]"
+        space_added='false'
     fi
 
     if [ "$hidden_count" -gt 0 ]; then
         desktop_status="${desktop_status}($hidden_count)"
+        space_added='false'
     fi
 
     if [ "$marked_count" -gt 0 ]; then
         desktop_status="${desktop_status}*"
+        space_added='false'
+    fi
+
+    if [ "$space_added" = 'false' ]; then
+        desktop_status="$desktop_status "
     fi
 
     echo "$desktop_status" > /tmp/"${monitor}_${desktop}_desktop"

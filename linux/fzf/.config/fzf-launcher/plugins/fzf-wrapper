@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
+
+OUT_FILE=/tmp/fzf_wrapper_$$
+RC_FILE=/tmp/fzf_wrapper_rc_$$
+
+alacritty \
+    --option 'window.dimensions.lines: 20' \
+    --option 'window.dimensions.columns: 100' \
+    --option 'window.decorations: none' \
+    --option 'window.title: Fzf Launcher'
+    --command sh -c "fzf --layout=reverse --border=rounded "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
+
+cat "$OUT_FILE"
+rc="$(cat "$RC_FILE")"
+
+rm -f "$OUT_FILE"
+rm -f "$RC_FILE"
+
+exit "$rc"

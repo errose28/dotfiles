@@ -9,6 +9,5 @@ Install
     ...    alacritty
 
 Link
-    Add Ignore    TODO.md
     Deep Link    *
 

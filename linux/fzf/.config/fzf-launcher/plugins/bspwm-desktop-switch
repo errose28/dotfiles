@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+options() {
+    local delimiter="$1"
+
+    paste --delimiters="$delimiter" <(bspc query --desktops) <(bspc query --desktops --names)
+}
+
+keybinding() {
+    echo 'ctrl-d'
+}
+
+prompt() {
+    echo 'Desktops: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    bspc desktop --focus "$selection"
+}
+
+"$@"
