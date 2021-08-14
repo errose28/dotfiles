@@ -7,6 +7,8 @@ Install
     Emit    Install
     ...    fzf
     ...    alacritty
+    ...    m-cli
+    ...    yabai
 
 Link
     Deep Link    *
