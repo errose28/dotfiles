@@ -5,5 +5,8 @@ Default Tags    macos
 *** Tasks ***
 Install
     Emit    Install
-    ...    coreutils-full
+    ...    google-chrome
+
+Link
+    Deep Link    *
 

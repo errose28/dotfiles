@@ -8,6 +8,8 @@ Install
     ...    yabai
     ...    skhd
     ...    cliclick
+    ...    coreutils-full
+    ...    google-chrome
 
 Link
     Deep Link    *

@@ -1,9 +1,5 @@
 #!/usr/bin/env sh
 
-# Logs:
-# stderr: /usr/local/var/log/yabai/yabai.err.log
-# stdout: /usr/local/var/log/yabai/yabai.out.log
-
 ### MOUSE SETTINGS ###
 
 yabai -m config mouse_modifier               alt
@@ -24,16 +20,10 @@ yabai -m config window_topmost               on
 
 yabai -m config window_shadow                off
 yabai -m config window_opacity               off
-# yabai -m config window_opacity_duration      0.0
-# yabai -m config active_window_opacity        1.0
-# yabai -m config normal_window_opacity        0.90
 
 ### WINDOW BORDERS ###
 
 yabai -m config window_border                off
-# yabai -m config window_border_width          6
-# yabai -m config active_window_border_color   0xff775759
-# yabai -m config normal_window_border_color   0xff555555
 
 ### GAPS AND PADDING ###
 
@@ -45,18 +35,10 @@ yabai -m config right_padding                0
 # Space between windows.
 yabai -m config window_gap                   5
 
-### RULES ###
-
-# TODO : If the workspace is already floating, this will tile it. want it to float always.
-# yabai -m signal --add event=application_launched app='System Preferences' action='toggle-float-focused'
-
 ### MISC SETTINGS ###
 
-# yabai -m config insert_feedback_color        0xffd75f5f
 yabai -m config auto_balance                 off
 yabai -m config layout                       stack
 
-# TODO: Move this to separate file if uebersicht polybar is used.
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "polybar-right-bar-coffee"'"
+echo "yabai configuration loaded."
 
-echo "yabai configuration loaded..."

@@ -6,6 +6,7 @@ Default Tags    macos
 Install
     Emit    Install
     ...    yabai
+    ...    cliclick
     ...    jq
 
 Link
