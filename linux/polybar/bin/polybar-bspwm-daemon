@@ -4,12 +4,9 @@
 
 ### CONFIG ###
 
-SYMBOL_FONT_INDEX=3
-SEP="%{T${SYMBOL_FONT_INDEX}}╱%{T-}"
-FOCUSED_BG='#ffffff'
-FOCUSED_FG='#19233c'
-ACTIVE_BG='#a6a6a6'
-ACTIVE_FG='#19233c'
+SEP='  '
+FOCUSED_COLOR='#ffffff'
+ACTIVE_COLOR='#bfbfbf'
 
 ### OUTPUT CONSTRUCTION ###
 
@@ -25,8 +22,9 @@ build_status_for_desktop() {
     local name="$(bspc query --desktops --desktop "$desktop" --names)"
 
     # Compute desktop status.
-    local desktop_status=" $name "
-    local space_added='true'
+    local desktop_status="$name"
+    # If more information is appended to the desktop status, this is the separator it should use before appending.
+    local next_sep=' '
     if [ "$window_count" -gt 0 ]; then
         # In monocle mode, show index of the current window as well.
         [ "$layout" ] || local layout="$(bspc query --tree --desktop "$desktop" | jq -r '.layout')"
@@ -37,22 +35,18 @@ build_status_for_desktop() {
             index="$(bspc query --nodes --desktop "$desktop" --node .window | awk "/"$focused_node"/{print NR}")"
             window_count="$index/$window_count"
         fi
-        desktop_status="${desktop_status}[$window_count]"
-        space_added='false'
+        desktop_status="${desktop_status}${next_sep}[$window_count]"
+        next_sep=''
     fi
 
     if [ "$hidden_count" -gt 0 ]; then
-        desktop_status="${desktop_status}($hidden_count)"
-        space_added='false'
+        desktop_status="${desktop_status}${next_sep}($hidden_count)"
+        next_sep=''
     fi
 
     if [ "$marked_count" -gt 0 ]; then
-        desktop_status="${desktop_status}*"
-        space_added='false'
-    fi
-
-    if [ "$space_added" = 'false' ]; then
-        desktop_status="$desktop_status "
+        desktop_status="${desktop_status}${next_sep}*"
+        next_sep=''
     fi
 
     echo "$desktop_status" > /tmp/"${monitor}_${desktop}_desktop"
@@ -81,11 +75,14 @@ build_status_for_monitor() {
         # Apply polybar formatting to mark focused or active.
         # Cannot be saved to the desktop file since there is no bspwm event to remove focus/active.
         if echo "$focused_desktops" | grep -q "$desktop"; then
-            desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$FOCUSED_FG}%{B$FOCUSED_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+            #desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$FOCUSED_FG}%{B$FOCUSED_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+            desktop_status="%{+u}%{u${FOCUSED_COLOR}}${desktop_status}%{-u}"
         elif echo "$active_desktops" | grep -q "$desktop"; then
-            desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+            # desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
+            desktop_status="%{+u}%{u${ACTIVE_COLOR}}${desktop_status}%{-u}"
         else
-            desktop_status=" $desktop_status "
+            #desktop_status="$desktop_status"
+            desktop_status="%{+u}%{u${ACTIVE_COLOR}}%{F${ACTIVE_COLOR}}${desktop_status}%{-u}%{F-}"
         fi
 
         all_statuses="${all_statuses}${desktop_status}"

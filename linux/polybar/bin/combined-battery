@@ -64,7 +64,7 @@ def warn_if_needed(percentage: int) -> None:
     is_warning_file = os.path.isfile(WARNING_FILE)
 
     if percentage <= WARNING_PERCENT and not is_warning_file:
-        cmd_output(['dunstify', '-u', 'critical', 'LOW BATTERY: ' + str(percentage) + '%'])
+        cmd_output(['notify-send', '-u', 'critical', 'LOW BATTERY: ' + str(percentage) + '%'])
         # Create, open, then close the file so no new notifications are posted
         #   until the battery crosses above then below the threshold.
         with open(WARNING_FILE, 'w') as _: pass
