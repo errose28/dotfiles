@@ -6,3 +6,7 @@ Default Tags    linux    macos
 Link
     Deep Link    *
 
+Install
+    # CLI disk usage checker.
+    Emit    Install    ncdu
+

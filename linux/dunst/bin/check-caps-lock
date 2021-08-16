@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 note_id=111
 
@@ -8,6 +8,7 @@ then
 elif [ "$(xset -q | grep "Caps Lock:   on")" ]
 then
     # If a notification with this ID already exists, this will replace it.
-    dunstify -u critical --replace="$note_id" 'CAPSLOCK ON'
+    # dunstify allows this, but notify-send does not.
+    dunstify --urgency=critical --replace="$note_id" --appname=system 'CAPSLOCK ON'
 fi
 

@@ -1,0 +1,5 @@
+super + shift + n
+    dunstctl close-all
+
+super + n
+    dunst-show-all-history

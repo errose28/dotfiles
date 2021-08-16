@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Displays the first argument if in a git repo.
-# Otherwise, displays the secodnd argument if it is given.
+# Otherwise, displays the second argument if it is given.
 
 git_on="$1"
 git_off="$2"
