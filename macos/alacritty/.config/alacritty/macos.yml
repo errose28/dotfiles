@@ -5,3 +5,8 @@
 font:
     size: 16
 
+# Window opacity as a floating point number from `0.0` to `1.0`.
+# The value `0.0` is completely transparent and `1.0` is opaque.
+# Set just below 1 due to MacOS OpenGL bug that makes opening mission control from Alacritty slow.
+#   See https://github.com/alacritty/alacritty/issues/4410
+background_opacity: 0.99

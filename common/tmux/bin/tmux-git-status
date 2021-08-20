@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+prefix="$1"
+suffix="$2"
+
+if git rev-parse --git-dir 2>/dev/null 1>/dev/null; then
+    echo "$prefix  "$(git rev-parse --abbrev-ref HEAD)" $suffix"
+fi
+

@@ -3,7 +3,7 @@
 # Install with `nix-env -iA nixos.polybar-extra-support`
 self: super:
 {
-    polybar-extra-support = super.polybar.override {
+    polybar = super.polybar.override {
         alsaSupport = true;
         githubSupport = true;
         mpdSupport = true;

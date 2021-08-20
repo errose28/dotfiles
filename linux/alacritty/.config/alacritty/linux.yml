@@ -1,7 +1,10 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
-# Linux specific overrides for common alacirtty config.
+# Linux specific overrides for common alacritty config.
 
 font:
     size: 10
 
+# Intended to be used with picom blur.
+# Blur here instead of picom so the foreground does not also get blurred.
+background_opacity: 0.5

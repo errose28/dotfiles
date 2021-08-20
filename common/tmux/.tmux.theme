@@ -2,35 +2,44 @@
 
 # Note: Use set -F if you want to reference another config value.
 
-set -g @bg colour0
+# Core colors.
 
-set -g @session-no-prefix-bg colour255
-set -gF @session-no-prefix-fg "#{@bg}"
-set -g @session-prefix-bg colour1
-set -g @session-prefix-fg colour255
+# Use terminal as the color for clear background.
+set -g @light colour255
+set -g @medium colour243
+set -g @dark colour0
+set -g @alert colour1
+
+# Specify formatting of components using core colors.
+set -gF @bg "#{@dark}"
+
+set -gF @session-no-prefix-bg "#{@light}"
+set -gF @session-no-prefix-fg "#{@dark}"
+set -gF @session-prefix-bg "#{@alert}"
+set -gF @session-prefix-fg "#{@light}"
 
 # Background of non-current window is the same as bar background.
-set -g @window-fg colour255
-set -g @current-window-bg colour31
-set -gF @current-window-fg "#{@bg}"
-set -gF @last-window-fg "#{@current-window-bg}"
+set -gF @window-fg "#{@light}"
+set -gF @current-window-bg "#{@medium}"
+set -gF @current-window-fg "#{@light}"
+set -gF @last-window-fg "#{@medium}"
 
-set -g @attached-no-prefix-bg colour255
-set -gF @attached-no-prefix-fg "#{@bg}"
-set -g @attached-prefix-bg colour1
-set -g @attached-prefix-fg colour255
+set -gF @attached-no-prefix-bg "#{@light}"
+set -gF @attached-no-prefix-fg "#{@dark}"
+set -gF @attached-prefix-bg "#{@alert}"
+set -gF @attached-prefix-fg "#{@light}"
 
-set -g @user-host-bg colour31
-set -gF @user-host-fg "#{@bg}"
+set -gF @user-host-bg "#{@medium}"
+set -gF @user-host-fg "#{@light}"
 
-set -g @git-bg colour245
-set -g @git-fg colour255
+set -gF @git-bg "#{@medium}"
+set -gF @git-fg "#{@light}"
 
 set -gF @message-bg "#{@bg}"
-set -g @message-fg default
+set -gF @message-fg "#{@light}"
 
 set -gF @command-bg "#{@bg}"
-set -g @command-fg default
+set -gF @command-fg "#{@light}"
 
 ### END CONFIG ###
 
@@ -62,16 +71,16 @@ set -ga status-left "#{?client_prefix,#{@session-prefix-suffix},#{@session-no-pr
 ### WINDOW STATUS ###
 # TODO: Draw arrow when tabs are cut off.
 
-set -g window-status-separator ""
-set -g status-justify left
-
 # Normal window status.
 set -gF @window-style "#[fg=#{@window-fg}]#[bg=#{@bg}]"
 set -gF @last-window-style "#[fg=#{@last-window-fg}]#[bg=#{@bg}]"
+
+set -gF window-status-separator "#{@window-style}"
+set -g status-justify left
+
 # #F for window flag, #I for window index.
-# Extra space in beginning keeps name from moving when its the current window,
-# which has an extra > before it.
-set -g @window-format "  #W "
+# Use 2 spaces around normal window, and 1 space + separator char around focused window.
+set -g @window-format "  #W  "
 
 set -g window-status-format "#{?window_last_flag,#{@last-window-style},#{@window-style}}"
 set -gaF window-status-format "#{@window-format}"
@@ -89,27 +98,24 @@ set -gF window-status-current-format "#{@current-window-prefix}#{@current-window
 
 set -g status-right-length 1000
 
+# TODO: Fix git display.
 set -gF @git-prefix "#[bg=#{@bg}]#[fg=#{@git-bg}]"
+set -gF @git-suffix "#[bg=#{@git-bg}]#[fg=#{@bg}]"
 set -gF @git-style "#[fg=#{@git-fg}]#[bg=#{@git-bg}]"
-# Do not use -F or this will not be re-evaluated.
-set -g @git-format "  #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) "
-set -gF @git "#{@git-prefix}#{@git-style}#{@git-format}"
-# Only use formatting if we are in a git repo.
-set -gF @git-on-suffix "#[bg=#{@git-bg}]#[fg=#{@user-host-bg}]"
-set -gF @git-off-suffix "#[bg=#{@bg}]#[fg=#{@user-host-bg}]"
-set -g @git-conditional "#(cd #{pane_current_path}; is-git-dir.sh \"#{@git}#{@git-on-suffix}\" \"#{@git-off-suffix}\")"
+# Do not use -F or content will not be reevaluated after conf loads.
+set -g @git "#(cd \"#{pane_current_path}\"; tmux-git-status  \"#{@git-prefix}#{@git-style}\" \"#{@git-suffix}\" )"
 
+set -gF @user-host-prefix "#[bg=#{@bg}]#[fg=#{@user-host-bg}]"
+set -gF @user-host-suffix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]"
 set -gF @user-host-style "#[fg=#{@user-host-fg}]#[bg=#{@user-host-bg}]#[bold]"
 set -gF @user-host-format " $USER@#H "
-set -g @user-host "#{@user-host-style}#{@user-host-format}"
-
-set -gF @attached-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-bg}]"
+set -g @user-host "#{@user-host-prefix}#{@user-host-style}#{@user-host-format}#{@user-host-suffix}"
 
 set -gF @attached-style-prefix "#[fg=#{@attached-prefix-fg}]#[bg=#{@attached-prefix-bg}]#[bold]"
 set -gF @attached-style-no-prefix "#[fg=#{@attached-no-prefix-fg}]#[bg=#{@attached-no-prefix-bg}]#[bold]"
 
-set -gF @attached-prefix-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-prefix-bg}]"
-set -gF @attached-prefix-no-prefix "#[bg=#{@user-host-bg}]#[fg=#{@bg}]#[bg=#{@bg}]#[fg=#{@attached-no-prefix-bg}]"
+set -gF @attached-prefix-prefix "#[bg=#{@bg}]#[fg=#{@attached-prefix-bg}]"
+set -gF @attached-prefix-no-prefix "#[bg=#{@bg}]#[fg=#{@attached-no-prefix-bg}]"
 
 # Do not use -F option or will not be evaulated each time.
 set -g @attached-format "  #{session_attached} "
@@ -117,7 +123,7 @@ set -g @attached-format "  #{session_attached} "
 set -gF @attached-no-prefix "#{@attached-prefix-no-prefix}#{@attached-style-no-prefix}"
 set -gF @attached-prefix "#{@attached-prefix-prefix}#{@attached-style-prefix}"
 
-set -gF status-right "#{@git-conditional}#{@user-host}"
+set -gF status-right "#{@git}#{@user-host}"
 set -ga status-right "#{?client_prefix,#{@attached-prefix},#{@attached-no-prefix}}"
 set -gaF status-right "#{@attached-format}"
 
@@ -137,3 +143,4 @@ set -gF message-command-style "fg=#{@command-fg} bg=#{@command-bg}"
 # Pane number indicator
 #set -g display-panes-colour colour233
 #set -g display-panes-active-colour colour245
+
