@@ -1,0 +1,8 @@
+# For all options see:
+# https://github.com/betterlockscreen/betterlockscreen/blob/master/examples/betterlockscreenrc
+
+time_format="%H:%M"
+locktext="Type password to unlock"
+lock_timeout=5
+# Updates image cache faster since no effects are being used.
+fx_list=()

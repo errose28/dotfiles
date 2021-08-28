@@ -5,10 +5,9 @@ Default Tags    linux
 *** Tasks ***
 Install
     Emit    Install
-        ...    xorg.xinput
-        ...    xdotool
-        ...    unclutter
-        ...    capitaine-cursors
+    ...    betterlockscreen
+    ...    xorg.xset
+    ...    xss-lock
 
 Link
     Deep Link    *

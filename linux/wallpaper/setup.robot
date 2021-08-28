@@ -4,9 +4,7 @@ Default Tags    linux
 
 *** Tasks ***
 Install
-    Emit    Install
-    ...    xorg.xinput
-    ...    udisks
+    Emit    Install    feh
 
 Link
     Deep Link    *

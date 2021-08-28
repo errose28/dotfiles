@@ -28,9 +28,5 @@ bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
 
 # Start daemons that must run after window manager.
-if [ -d ~/.bspwm.d ]; then
-    for script in ~/.bspwm.d/*; do
-        "$script" &
-    done
-fi
+"$STARTUP_DIR"/bspwm/load.sh &
 

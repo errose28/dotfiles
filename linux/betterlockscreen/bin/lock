@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+# For some reason the timeout does not work unless this line is here.
+#   Only a problem when invoked with xss-lock, not manually.
+xset dpms force on
+# Timeout (seconds) to blank screen.
+xset s 5
+betterlockscreen --lock
+# Restore original screen timeout settings.
+xset s off -dpms
+

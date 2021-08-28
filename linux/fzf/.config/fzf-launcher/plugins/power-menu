@@ -21,7 +21,7 @@ run() {
     local selection="$2"
 
     declare -A action_to_cmd
-    action_to_cmd['Lock']='light-locker-command -l'
+    action_to_cmd['Lock']='loginctl lock-session'
     action_to_cmd['Sleep']='systemctl suspend'
     action_to_cmd['Logout']='bspc quit'
     action_to_cmd['Restart']='systemctl reboot'

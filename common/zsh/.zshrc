@@ -25,9 +25,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Source startup scripts.
-for file in $(~/.shell.d/init-scripts.sh zsh); do
-    source "$file"
-done
+source "$STARTUP_DIR"/shell/load.sh zsh
 
 # Enable colors.
 autoload -U colors && colors

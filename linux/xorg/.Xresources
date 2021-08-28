@@ -1,2 +1,3 @@
 ! Fix the cursor size so it does not change on external monitors.
-Xcursor.size: 16
+Xcursor.size: 32
+Xcursor.theme: capitaine-cursors

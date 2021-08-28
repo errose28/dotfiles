@@ -3,7 +3,7 @@
 options() {
     local delimiter="$1"
 
-    local options='sxhkd\nbspwm\npolybar\nautorandr\nbackground'
+    local options='sxhkd\nbspwm\npolybar\nautorandr\nwallpaper'
     # Options to select and pass back in to this script are the same.
     paste --delimiters="$delimiter" <(printf "$options") <(printf "$options")
 }
@@ -25,7 +25,7 @@ run() {
     action_to_cmd['bspwm']='bspc wm -r'
     action_to_cmd['polybar']='launch-polybars'
     action_to_cmd['autorandr']='autorandr --change --force'
-    action_to_cmd['background']="$HOME/.fehbg"
+    action_to_cmd['wallpaper']='set-wallpaper && betterlockscreen --update "$WALLPAPER"'
 
     ${action_to_cmd[$selection]}
 }

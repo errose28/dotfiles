@@ -3,11 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    xorg.xinput
-    ...    udisks
-
+# Only needed if nix is being used as the package manager,
+# But does not hurt otherwise.
 Link
     Deep Link    *
 
