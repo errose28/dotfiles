@@ -5,13 +5,14 @@ bspc rule --add Alacritty --one-shot state=floating center=on sticky=on border=o
 OUT_FILE=/tmp/fzf_wrapper_$$
 RC_FILE=/tmp/fzf_wrapper_rc_$$
 
-# Use the currently focused window's title as the title for the launcher.
+# Use the currently focused window's title as the title for the launcher,
+# With a fallback title if there is no focused window.
 alacritty \
     --option 'window.dimensions.lines: 20' \
     --option 'window.dimensions.columns: 100' \
     --option 'window.decorations: none' \
     --option 'background_opacity: 1' \
-    --option "window.title: $(xtitle)" \
+    --option "window.title: $(xdotool getactivewindow getwindowname || echo Fzf Launcher)" \
     --command sh -c "fzf --layout=reverse --margin='1,1' "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
 
 cat "$OUT_FILE"

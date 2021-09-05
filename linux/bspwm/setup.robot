@@ -8,6 +8,7 @@ Install
     ...    bspwm
     ...    sxhkd
     ...    jq
+    ...    wmutils-core
 
 Link
     Deep Link    *

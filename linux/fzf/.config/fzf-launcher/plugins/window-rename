@@ -2,9 +2,11 @@
 
 options() {
     local delimiter="$1"
-    # Cannot use `xdotool getactivewindow getwindowname` because that will give
-    # the name of the launcher, not the window focused before that.
-    name="$(xtitle "$(bspc query --nodes --node last.window)")"
+
+    # Depends on the name of the launcher matching the name of the last focused window.
+    # If this is not the case, some combo of xtitle and window manager commands
+    # to get the last focused window are needed.
+    name="$(xdotool getactivewindow getwindowname)"
 
     printf "${name}${delimiter}$name"
 }

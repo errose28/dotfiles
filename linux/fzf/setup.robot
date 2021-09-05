@@ -8,8 +8,7 @@ Install
     ...    fzf
     ...    dex
     ...    alacritty
-    ...    wmutils-core
-    ...    xtitle
+    ...    xdotool
 
 Link
     Deep Link    *

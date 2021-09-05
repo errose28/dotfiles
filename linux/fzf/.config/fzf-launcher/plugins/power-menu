@@ -23,7 +23,7 @@ run() {
     declare -A action_to_cmd
     action_to_cmd['Lock']='loginctl lock-session'
     action_to_cmd['Sleep']='systemctl suspend'
-    action_to_cmd['Logout']='bspc quit'
+    action_to_cmd['Logout']="loginctl terminate-session "$(loginctl session-status | head -n 1 | awk '{print $1}')""
     action_to_cmd['Restart']='systemctl reboot'
     action_to_cmd['Shutdown']='systemctl poweroff'
 
