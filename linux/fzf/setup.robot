@@ -9,6 +9,7 @@ Install
     ...    dex
     ...    alacritty
     ...    wmutils-core
+    ...    xtitle
 
 Link
     Deep Link    *

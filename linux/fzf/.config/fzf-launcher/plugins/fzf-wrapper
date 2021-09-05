@@ -1,16 +1,18 @@
 #!/usr/bin/env sh
 
-bspc rule --add Alacritty --one-shot state=floating border=off center=on sticky=on
+bspc rule --add Alacritty --one-shot state=floating center=on sticky=on border=on locked=on
 
 OUT_FILE=/tmp/fzf_wrapper_$$
 RC_FILE=/tmp/fzf_wrapper_rc_$$
 
+# Use the currently focused window's title as the title for the launcher.
 alacritty \
     --option 'window.dimensions.lines: 20' \
     --option 'window.dimensions.columns: 100' \
     --option 'window.decorations: none' \
-    --option 'window.title: Fzf Launcher' \
-    --command sh -c "fzf --layout=reverse --border=rounded "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
+    --option 'background_opacity: 1' \
+    --option "window.title: $(xtitle)" \
+    --command sh -c "fzf --layout=reverse --margin='1,1' "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
 
 cat "$OUT_FILE"
 rc="$(cat "$RC_FILE")"

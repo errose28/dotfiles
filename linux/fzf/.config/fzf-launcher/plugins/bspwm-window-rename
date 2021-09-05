@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+options() {
+    local delimiter="$1"
+    # Cannot use `xdotool getactivewindow getwindowname` because that will give
+    # the name of the launcher, not the window focused before that.
+    name="$(xtitle "$(bspc query --nodes --node last.window)")"
+
+    printf "${name}${delimiter}$name"
+}
+
+keybinding() {
+    echo 'ctrl-t'
+}
+
+prompt() {
+    echo 'Rename window: '
+}
+
+run() {
+    local query="$1"
+    local selection="$2"
+
+    # If selection was passed, it is the same name as the current window.
+    # Don't need to do anything.
+    if [ "$query" ]; then
+        xdotool getactivewindow set_window --name "$query"
+    fi
+}
+
+"$@"
