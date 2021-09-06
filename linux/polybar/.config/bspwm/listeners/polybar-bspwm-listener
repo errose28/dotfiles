@@ -75,10 +75,8 @@ build_status_for_monitor() {
         # Apply polybar formatting to mark focused or active.
         # Cannot be saved to the desktop file since there is no bspwm event to remove focus/active.
         if echo "$focused_desktops" | grep -q "$desktop"; then
-            #desktop_status="%{+u}%{u${FOCUSED_COLOR}}${desktop_status}%{-u}"
             desktop_status="%{B#ffffff}%{F#000000}${desktop_status}%{F-}%{B-}"
         elif echo "$active_desktops" | grep -q "$desktop"; then
-            # desktop_status="%{T${SYMBOL_FONT_INDEX}}%{T-}%{F$ACTIVE_FG}%{B$ACTIVE_BG}${desktop_status}%{F-}%{B-}%{T${SYMBOL_FONT_INDEX}}%{T-}"
             desktop_status="%{+u}%{u${ACTIVE_COLOR}}${desktop_status}%{-u}"
         else
             desktop_status="%{+u}%{u${ACTIVE_COLOR}}%{F${ACTIVE_COLOR}}${desktop_status}%{-u}%{F-}"
@@ -95,6 +93,9 @@ build_status_for_monitor() {
     local monitor_name="$(bspc query --monitors --monitor "$monitor" --names)"
     echo "$all_statuses" > /tmp/"${monitor_name}_tmp"
     mv /tmp/"${monitor_name}_tmp" /tmp/"${monitor_name}_monitor"
+
+    # Push updated monitor format to polybar.
+    polybar-msg hook bspwm-custom 1 > /dev/null
 }
 
 ### EVENT REGISTRATION ###
@@ -260,21 +261,15 @@ node_flag() {
     build_status_for_monitor "$monitor_id"
 }
 
-### MAIN ###
+init() {
+    # Generate initial output to show before any events are fired.
+    for monitor_id in $(bspc query --monitors); do
+        for desktop_id in $(bspc query --desktops --monitor "$monitor_id"); do
+            build_status_for_desktop "$monitor_id" "$desktop_id"
+        done
+        build_status_for_monitor "$monitor_id"
+    done
+}
 
-# Generate initial output to show before any events are fired.
-# Building monitor status will build any missing desktop statuses too.
-for monitor_id in $(bspc query --monitors); do
-    build_status_for_monitor "$monitor_id"
-done
+declare -f "$1" &> /dev/null && $@
 
-bspc subscribe all | while read report; do
-    # First word is the event type, corresponding to a function name.
-    # Everything after will be params to the function.
-    if declare -f $(echo $report | awk '{print $1}') &> /dev/null; then
-        # Let the event update any relevant desktop and monitor output files.
-        $report
-        # Update all polybars regardless of monitor for easier handling of cross monitor events.
-        polybar-msg hook bspwm-custom 1 > /dev/null
-    fi
-done

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Write pid to lock file atomically with mv.
+# If another listener is started we will use this to temrinate this instance.
+pid_file=~/.cache/bspwm/listener.pid
+tmp_pid_file="$pid_file".tmp
+mkdir -p "$(dirname "$pid_file")"
+
+pid=$$
+echo "$pid" > "$tmp_pid_file"
+mv "$tmp_pid_file" "$pid_file"
+
+# Listeners are saved before the main loop.
+# If new listeners are added, this must be restarted.
+listeners=()
+for listener in ~/.config/bspwm/listeners/*; do
+    listeners+=("$listener")
+    # Startup function for each listener.
+    "$listener" init
+done
+
+bspc subscribe all | while read report; do
+    # If another listener has started, terminate this one.
+    [ "$(cat "$pid_file")" = "$pid" ] || exit 1
+
+    for listener in ${listeners[@]}; do
+        "$listener" $report &
+    done
+done
+

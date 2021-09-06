@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+### HELPER FUNCTIONS ###
+
+draw_focus_bar() {
+    # Gives X, Y, WIDTH, HEIGHT for focused window.
+    eval "$(xdotool getwindowgeometry --shell "$(bspc query --nodes --node)")"
+
+    widget_width=$(( $WIDTH / 2 ))
+    widget_height=3
+    widget_x=$(( $X + $WIDTH / 2 - $widget_width / 2 ))
+    widget_y=$(( $Y - $widget_height / 2 ))
+
+    # Outputs a blank line for some reason.
+    eww open --pos="${widget_x}x${widget_y}" --size="${widget_width}x${widget_height}" --anchor='top left' focus-bar > /dev/null
+}
+
+close_focus_bar() {
+    eww close focus-bar > /dev/null
+}
+
+### LISTENER FUNCTIONS ###
+
+node_focus() {
+    draw_focus_bar
+}
+
+node_geometry() {
+    draw_focus_bar
+}
+
+# Handling for empty desktops that are focused.
+# Only run if there are no focused nodes.
+desktop_focus() {
+    if ! bspc query --nodes --node > /dev/null; then
+        close_focus_bar
+    fi
+}
+
+node_remove() {
+    if ! bspc query --nodes --node > /dev/null; then
+        close_focus_bar
+    fi
+}
+
+declare -f "$1" &> /dev/null && $@
+

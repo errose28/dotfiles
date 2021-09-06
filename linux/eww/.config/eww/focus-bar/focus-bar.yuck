@@ -1,0 +1,13 @@
+(defwindow focus-bar
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore true
+    :geometry (geometry
+        :x "0px"
+        :y "0px"
+        :width "0px"
+        :height "0px"
+    )
+    ""
+)
+

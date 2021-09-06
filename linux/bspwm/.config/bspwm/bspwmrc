@@ -30,6 +30,5 @@ bspc config focus_follows_pointer true
 bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
 
-# Start daemons that must run after window manager.
-"$STARTUP_DIR"/bspwm/load.sh &
+bspwm-listener-daemon
 
