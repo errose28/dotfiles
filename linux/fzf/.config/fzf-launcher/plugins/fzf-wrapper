@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 
-bspc rule --add Alacritty --one-shot state=floating center=on sticky=on border=on locked=on
+CACHE_DIR=~/.cache/fzf-launcher
+OUT_FILE="$CACHE_DIR/fzf_wrapper_$$"
+RC_FILE="$CACHE_DIR/fzf_wrapper_rc_$$"
 
-OUT_FILE=/tmp/fzf_wrapper_$$
-RC_FILE=/tmp/fzf_wrapper_rc_$$
+mkdir -p "$CACHE_DIR"
+bspc rule --add Alacritty --one-shot state=floating center=on sticky=on border=on locked=on
 
 # Use the currently focused window's title as the title for the launcher,
 # With a fallback title if there is no focused window.

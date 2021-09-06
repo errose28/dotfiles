@@ -10,16 +10,19 @@ default_plugin_name="$(basename "$default_plugin" 2> /dev/null)"
 ### CONSTANTS ###
 
 DELIMITER='\\t'
-PLUGIN_DIR="$HOME"/.config/fzf-launcher/plugins
+PLUGIN_DIR=~/.config/fzf-launcher/plugins
 FZF_WRAPPER="$(realpath "$PLUGIN_DIR"/fzf-wrapper)"
 
-QUERY_OUTPUT_FILE=/tmp/fzf_query_$$
-SELECTION_OUTPUT_FILE=/tmp/fzf_selection_$$
-PLUGIN_OUTPUT_FILE=/tmp/fzf_plugin_$$
+CACHE_DIR=~/.cache/fzf-launcher
+QUERY_OUTPUT_FILE="$CACHE_DIR"/fzf_query_$$
+SELECTION_OUTPUT_FILE="$CACHE_DIR"/fzf_selection_$$
+PLUGIN_OUTPUT_FILE="$CACHE_DIR"/fzf_plugin_$$
 
 FZF_OPTIONS_ARRAY=(--with-nth 2.. --delimiter "$DELIMITER")
 
 ### LOAD PLUGINS ###
+
+mkdir -p "$CACHE_DIR"
 
 for plugin in "$PLUGIN_DIR"/*; do
     # Resolve symlinks.
@@ -65,16 +68,21 @@ cleanup_exit() {
 # If 1 is returned, there could still be query to process, just no matching selection.
 [ "$fzf_rc" = 130 ] && cleanup_exit
 
+# Delete output files as we go, so that if the action involves log out or
+# shutdown, the files are removed before it is invoked.
 if [ -f "$QUERY_OUTPUT_FILE" ]; then
     query="$(cat "$QUERY_OUTPUT_FILE")"
+    rm -f "$QUERY_OUTPUT_FILE"
 fi
 
 if [ -f "$SELECTION_OUTPUT_FILE" ]; then
     selection="$(cat "$SELECTION_OUTPUT_FILE" | awk -F "$DELIMITER" '{print $1}')"
+    rm -f "$SELECTION_OUTPUT_FILE"
 fi
 
 if [ -f "$PLUGIN_OUTPUT_FILE" ]; then
     plugin="$(cat "$PLUGIN_OUTPUT_FILE")"
+    rm -f "$PLUGIN_OUTPUT_FILE"
     "$plugin" run "$query" "$selection"
 fi
 

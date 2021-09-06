@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+
+CACHE_DIR=~/.cache/fzf-launcher
+OUT_FILE="$CACHE_DIR/fzf_wrapper_$$"
+RC_FILE="$CACHE_DIR/fzf_wrapper_rc_$$"
+
+mkdir -p "$CACHE_DIR"
+
 window_title='Fzf Launcher'
 
 # Sticky for yabai requires SIP disabled.
 yabai -m rule --add label=fzf app=alacritty title="$window_title" sticky=on manage=off border=off grid='4:4:1:1:2:2'
-
-OUT_FILE=/tmp/fzf_wrapper_$$
-RC_FILE=/tmp/fzf_wrapper_rc_$$
 
 alacritty \
     --option 'window.dimensions.lines: 20' \

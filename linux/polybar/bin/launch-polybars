@@ -13,7 +13,7 @@ export BRIGHTNESS_CARD="$(ls /sys/class/backlight | head -n1)"
 
 for monitor in $(polybar --list-all-monitors | awk '{print substr($1, 1, length($1)-1)}'); do
     export MONITOR="$monitor"
-    export BSPWM_MONITOR_CMD="cat '/tmp/${monitor}_monitor'"
+    export BSPWM_MONITOR_CMD="cat ~/.cache/polybar-desktops/${monitor}_monitor"
     polybar -c ~/.config/polybar/window_bar.ini window_bar &
     polybar -c ~/.config/polybar/status_bar.ini status_bar &
 done

@@ -3,7 +3,8 @@
 
 # Launch ranger, and go to its last directory in shell when it exits.
 r() {
-    local dir_file="/tmp/rangerdir$$"
+    local dir_file=~/.cache/rangerdir/rangerdir$$
+    mkdir -p "$(dirname "$dir_file")"
     ranger --choosedir="$dir_file"
     cd "$(cat "$dir_file")"
     rm "$dir_file"

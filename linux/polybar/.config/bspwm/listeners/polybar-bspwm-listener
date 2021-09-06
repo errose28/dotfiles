@@ -7,6 +7,7 @@
 SEP='  '
 FOCUSED_COLOR='#ffffff'
 ACTIVE_COLOR='#bfbfbf'
+CACHE_DIR=~/.cache/polybar-desktops
 
 ### OUTPUT CONSTRUCTION ###
 
@@ -49,7 +50,7 @@ build_status_for_desktop() {
         next_sep=''
     fi
 
-    echo "$desktop_status" > /tmp/"${monitor}_${desktop}_desktop"
+    echo "$desktop_status" > "$CACHE_DIR/${monitor}_${desktop}_desktop"
 }
 
 # Gather all desktop output files for the current monitor, and construct polybar output.
@@ -67,10 +68,10 @@ build_status_for_monitor() {
         
         # If there's no existing status for this desktop, create it now.
         # Could happen if this daemon was started during an existing session with desktops.
-        if [ ! -f /tmp/"${monitor}_${desktop}_desktop" ]; then
+        if [ ! -f "$CACHE_DIR/${monitor}_${desktop}_desktop" ]; then
             build_status_for_desktop "$monitor" "$desktop"
         fi
-        desktop_status="$(cat /tmp/"${monitor}_${desktop}_desktop")"
+        desktop_status="$(cat "$CACHE_DIR/${monitor}_${desktop}_desktop")"
 
         # Apply polybar formatting to mark focused or active.
         # Cannot be saved to the desktop file since there is no bspwm event to remove focus/active.
@@ -91,8 +92,8 @@ build_status_for_monitor() {
 
     # Atomic update of output file using monitor name for polybar to read.
     local monitor_name="$(bspc query --monitors --monitor "$monitor" --names)"
-    echo "$all_statuses" > /tmp/"${monitor_name}_tmp"
-    mv /tmp/"${monitor_name}_tmp" /tmp/"${monitor_name}_monitor"
+    echo "$all_statuses" > "$CACHE_DIR/${monitor_name}_tmp"
+    mv "$CACHE_DIR/${monitor_name}_tmp" "$CACHE_DIR/${monitor_name}_monitor"
 
     # Push updated monitor format to polybar.
     polybar-msg hook bspwm-custom 1 > /dev/null
@@ -123,7 +124,7 @@ desktop_remove() {
     monitor_id="$1"
     desktop_id="$2"
 
-    rm /tmp/"${monitor_id}_${desktop_id}_desktop"
+    rm "$CACHE_DIR/${monitor_id}_${desktop_id}_desktop"
 }
 
 # TODO: check if desktop files need to be deleted here.
@@ -262,6 +263,9 @@ node_flag() {
 }
 
 init() {
+    rm -f "$CACHE_DIR"/*
+    mkdir -p "$CACHE_DIR"
+
     # Generate initial output to show before any events are fired.
     for monitor_id in $(bspc query --monitors); do
         for desktop_id in $(bspc query --desktops --monitor "$monitor_id"); do
