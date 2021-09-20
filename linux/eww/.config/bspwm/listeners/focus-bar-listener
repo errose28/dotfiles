@@ -19,28 +19,36 @@ close_focus_bar() {
     eww close focus-bar > /dev/null
 }
 
+check_state() {
+    if ! bspc query --nodes --node > /dev/null; then
+        # Don't show focus bar when there is no focused window.
+        close_focus_bar
+    elif bspc query --nodes --node .fullscreen > /dev/null; then
+        # Don't show focus bar when window is fullscreen.
+        close_focus_bar
+    else
+        draw_focus_bar
+    fi
+}
+
 ### LISTENER FUNCTIONS ###
 
 node_focus() {
-    draw_focus_bar
+    check_state
 }
 
 node_geometry() {
-    draw_focus_bar
+    check_state
 }
 
 # Handling for empty desktops that are focused.
 # Only run if there are no focused nodes.
 desktop_focus() {
-    if ! bspc query --nodes --node > /dev/null; then
-        close_focus_bar
-    fi
+    check_state
 }
 
 node_remove() {
-    if ! bspc query --nodes --node > /dev/null; then
-        close_focus_bar
-    fi
+    check_state
 }
 
 declare -f "$1" &> /dev/null && $@
