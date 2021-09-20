@@ -1,5 +1,4 @@
 cschlosser.doxdocgen
-DavidAnson.vscode-markdownlint
 DotJoshJohnson.xml
 eamodio.gitlens
 fabiospampinato.vscode-diff
@@ -20,4 +19,3 @@ vscjava.vscode-java-pack
 vscjava.vscode-java-test
 vscjava.vscode-maven
 vscodevim.vim
-yzane.markdown-pdf
