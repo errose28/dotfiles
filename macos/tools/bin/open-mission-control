@@ -1,8 +1,3 @@
 #!/usr/bin/env bash
+yabai -m space --toggle mission-control
 
-mouse_pos="$(cliclick p)"
-cliclick m:0,0
-# Under heavy load yabai can be slow, but issuing the built in macos keyboard
-#   shortcut to open mission control is faster.
-skhd -k 'ctrl - up'
-cliclick m:"$mouse_pos"

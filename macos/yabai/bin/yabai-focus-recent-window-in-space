@@ -12,5 +12,6 @@ if [ "$space" ]; then
     index=0
 fi
 
-win_id="$(yabai -m query --windows --space "$space" | jq ".[$index].id")"
+# Skip floating windows.
+win_id="$(yabai -m query --windows --space "$space" | jq "[.[] | select(.floating==0)] | .[$index].id")"
 yabai -m window --focus "$win_id"

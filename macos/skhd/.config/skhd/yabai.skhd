@@ -61,13 +61,13 @@ alt - down:
 
 # Makes all vertical splits horizontal and vice versa.
 alt - v:
-    yabai -m window --toggle split && center-mouse-in-focused
+    yabai -m window --toggle split && yabai-center-mouse-in-focused
 
 ### CONTROL WINDOWS ###
 
 # Toggle floating window to center of screen.
 alt - f:
-    toggle-float-focused && center-mouse-in-focused
+    yabai-toggle-float-focused && yabai-center-mouse-in-focused
 
 # Maximize focused window.
 # 0x18 is key code for +.
