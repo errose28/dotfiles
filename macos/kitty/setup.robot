@@ -4,7 +4,7 @@ Default Tags    macos
 
 *** Tasks ***
 Install
-    Emit    Install    alacritty
+    Emit    Install    kitty
 
 Link
     Deep Link    *

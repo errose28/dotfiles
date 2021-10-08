@@ -5,17 +5,18 @@ OUT_FILE="$CACHE_DIR/fzf_wrapper_$$"
 RC_FILE="$CACHE_DIR/fzf_wrapper_rc_$$"
 
 mkdir -p "$CACHE_DIR"
-bspc rule --add Alacritty --one-shot state=floating center=on sticky=on border=on locked=on
+bspc rule --add kitty --one-shot state=floating center=on sticky=on border=on locked=on
 
 # Use the currently focused window's title as the title for the launcher,
 # With a fallback title if there is no focused window.
-alacritty \
-    --option 'window.dimensions.lines: 20' \
-    --option 'window.dimensions.columns: 100' \
-    --option 'window.decorations: none' \
-    --option 'background_opacity: 1' \
-    --option "window.title: $(xdotool getactivewindow getwindowname || echo Fzf Launcher)" \
-    --command sh -c "fzf --layout=reverse --margin='1,1' "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
+kitty \
+    --override remember_window_size=no \
+    --override initial_window_width=100c \
+    --override initial_window_height=20c \
+    --override hide_window_decorations=yes \
+    --override background_image=none \
+    --title "$(xdotool getactivewindow getwindowname || echo Fzf Launcher)" \
+    sh -c "fzf --layout=reverse --margin='1,1' "$@" > "$OUT_FILE"; echo \$? > "$RC_FILE""
 
 cat "$OUT_FILE"
 rc="$(cat "$RC_FILE")"

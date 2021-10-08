@@ -7,7 +7,7 @@ Install
     Emit    Install
     ...    fzf
     ...    dex
-    ...    alacritty
+    ...    kitty
     ...    xdotool
 
 Link
