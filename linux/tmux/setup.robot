@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux
 
 *** Tasks ***
 Install
