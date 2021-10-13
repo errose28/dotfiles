@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# TODO: Add support for non-text files.
+file="$1"
+num_lines="$2"
+
+if [ "$num_lines" ]; then
+    bat "$file" --line-range :"$num_lines"
+else
+    bat "$file"
+fi
+

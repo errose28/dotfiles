@@ -79,9 +79,6 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Quick launch of Ranger function.
-bindkey -s '^h' 'r^M'
-
 # Enable zsh in direnv if available.
 if command -v direnv > /dev/null; then
     eval "$(direnv hook zsh)"
@@ -92,3 +89,4 @@ RPROMPT=''
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

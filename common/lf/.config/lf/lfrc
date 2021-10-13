@@ -1,0 +1,233 @@
+# Remove all default bindings.
+source ~/.config/lf/lfrc.unmap
+
+### CONFIG ###
+
+set info 'size'
+set dircounts on
+# Files in $fx and $fs are separated by this char.
+set filesep "\n"
+set ifs "\n"
+# For shell commands, fail on error or undefined variables.
+set shellopts '-eu'
+set mouse on
+# How frequently to check for external updates (seconds).
+set period 1
+# Only show directory path in prompt.
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+set ratios '1:1'
+set tabstop 4
+# Custom preview script.
+set previewer ~/bin/preview
+
+### MOUSE BINDINGS ###
+
+# Left click.
+map <m-1> open
+# Right click.
+map <m-2> open
+# Middle click.
+map <m-3> toggle
+
+map <m-up>    up
+map <m-down>  down
+map <m-left>  updir
+# Don't want to accidentally open things with a trackpad.
+map <m-right>
+
+### COMMAND KEYBINDINGS ###
+
+# Misc
+map q quit
+map <c-l> redraw
+map . set hidden!
+# Return to last directory.
+map "'" mark-load
+map x setexec
+map dD trashput
+map fzf fzf
+
+# Enter shell (lf defaults).
+map ":" read
+map "$" shell
+map "%" shell-pipe
+map "!" shell-wait
+map "&" shell-async
+# Default to use.
+map s shell-pipe
+
+# Search (vim like).
+map / search
+map ? search-back
+map n search-next
+map N search-prev
+
+# Relative navigation (vim like).
+map k up
+map <up> up
+map j down
+map <down> down
+map h updir
+map <left> updir
+map l open
+map <right> open
+map gg top
+map G bottom
+
+# Absolute navigation (g).
+map g. cddotfiles
+map gh cd ~
+map ge cd /etc
+map g/ cd /
+map gu /usr
+map gd /dev
+map go /opt
+map gt /tmp
+map gv /var
+
+# Selection (v).
+map <space> :toggle; down
+map vv toggle
+map vi invert
+map vc unselect
+map <esc> unselect
+
+# Copy/paste (c).
+# lf always uses global buffer to copy between instances.
+map cy copy
+map cd cut
+map cc clear
+map cp paste
+map cl pastelinkrel
+map cL pastelinkabs
+map ch pastehardlink
+
+# Rename (r)
+map ri :rename; cmd-home
+map ra :rename; cmd-end
+map rc :rename; cmd-delete-home
+
+# Text editors (e).
+map ee $"$EDITOR" "$f" 
+map eE tmuxeditor
+map ec &code "$f" 
+map ei &idea "$f" 
+
+map L &opener $fx
+
+# Create new (o).
+map od mkdir
+map of mkfile
+map op mkfifo
+
+### COMMAND LINE KEYBINDINGS ###
+
+cmap <esc> cmd-escape
+cmap <enter> cmd-enter
+cmap <c-c> cmd-interrupt
+cmap <up> cmd-history-prev
+cmap <down> cmd-history-next
+cmap <left> cmd-left
+cmap <right> cmd-right
+
+### COMMANDS ###
+
+cmd mkdir %{{
+    printf 'create directory: '
+    read name
+    mkdir "$name"
+
+    lf -remote "send $id reload"
+}}
+
+cmd mkfile %{{
+    printf 'create file: '
+    read name
+    touch "$name"
+
+    lf -remote "send $id reload"
+}}
+
+cmd mkfifo %{{
+    printf 'create pipe: '
+    read name
+    mkfifo "$name"
+
+    lf -remote "send $id reload"
+}}
+
+cmd setexec %{{
+    for f in $fx; do
+        if [ -x "$f" ]; then
+            chmod -x "$f";
+        else
+            chmod +x "$f";
+        fi
+    done
+
+    lf -remote "send $id reload"
+}}
+
+cmd trashput %{{
+    trash-put $fx
+
+    lf -remote "send $id reload"
+}}
+
+cmd pastelinkrel %{{
+    load=$(cat ~/.local/share/lf/files)
+    list=$(echo "$load" | sed '1d')
+
+    ln --relative --symbolic $list .
+
+    rm ~/.local/share/lf/files
+
+    lf -remote "send $id clear"
+    lf -remote "send $id reload"
+}}
+
+cmd pastelinkabs %{{
+    load=$(cat ~/.local/share/lf/files)
+    list=$(echo "$load" | sed '1d')
+
+    ln --symbolic $list .
+
+    rm ~/.local/share/lf/files
+
+    lf -remote "send $id clear"
+    lf -remote "send $id reload"
+}}
+
+cmd pastehardlink %{{
+    load=$(cat ~/.local/share/lf/files)
+    list=$(echo "$load" | sed '1d')
+
+    ln $list .
+
+    rm ~/.local/share/lf/files
+
+    lf -remote "send $id clear"
+    lf -remote "send $id reload"
+}}
+
+cmd fzf ${{
+    selection="$(fzf)"
+    lf -remote "send $id select '$selection'"
+}}
+
+cmd cddotfiles ${{
+    lf -remote "send $id cd '$DOTFILES'"
+}}
+
+cmd open &{{
+    # open will always enter directories.
+    # This makes it a no-op for files to they will not be opened with just l.
+    true
+}}
+
+cmd tmuxeditor &{{
+    if [ -n "$TMUX" ]; then
+        tmux new-window -a -n "$EDITOR: $(basename $f)" "$EDITOR" "$f"
+    fi
+}}
+
