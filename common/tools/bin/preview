@@ -4,9 +4,30 @@
 file="$1"
 num_lines="$2"
 
-if [ "$num_lines" ]; then
-    bat "$file" --line-range :"$num_lines"
-else
-    bat "$file"
-fi
+### PREVIEW FUNCTIONS ###
+# All should take a file and optionally a number of lines to show.
+
+preview_text() {
+    local file="$1"
+    local num_lines="$2"
+
+    # Bat will automatically hide formatting when used in some contexts.
+    # Explicitly enable it here.
+    line_arg=""
+    if [ "$num_lines" ]; then
+        line_arg="--line-range :$num_lines"
+    fi
+
+    bat \
+        --file-name="$(basename "$file")" \
+        --decorations=always \
+        --color=always \
+        --italic-text=always \
+        --style=full \
+        --pager=never \
+        $line_arg \
+        "$file"
+}
+
+preview_text "$file" "$num_lines"
 
