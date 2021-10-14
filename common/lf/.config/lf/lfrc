@@ -85,12 +85,15 @@ map go /opt
 map gt /tmp
 map gv /var
 
+# Selection (vim like).
+map J :toggle; down
+map K :toggle; up
+map <esc> unselect
+
 # Selection (v).
-map <space> :toggle; down
 map vv toggle
 map vi invert
 map vc unselect
-map <esc> unselect
 
 # Copy/paste (c).
 # lf always uses global buffer to copy between instances.
