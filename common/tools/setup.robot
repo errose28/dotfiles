@@ -17,4 +17,5 @@ Install
     ...    xpdf # For pdftotext
     ...    w3m
     ...    bat
+    ...    krb5
 
