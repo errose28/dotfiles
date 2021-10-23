@@ -80,11 +80,12 @@ map g. cddotfiles
 map gh cd ~
 map ge cd /etc
 map g/ cd /
-map gu /usr
-map gd /dev
-map go /opt
-map gt /tmp
-map gv /var
+map gu cd /usr
+map gd cd /dev
+map go cd /opt
+map gt cd /tmp
+map gv cd /var
+map gcd goto
 
 # Selection (vim like).
 map J :toggle; down
@@ -135,6 +136,12 @@ cmap <left> cmd-left
 cmap <right> cmd-right
 
 ### COMMANDS ###
+
+cmd goto %{{
+    printf 'goto: '
+    read name
+    lf -remote "send $id cd '$name'"
+}}
 
 cmd mkdir %{{
     printf 'create directory: '

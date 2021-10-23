@@ -7,7 +7,6 @@ Install
     Emit    Install
     ...    lf
     ...    trash-cli
-    ...    bat
 
 Link
     Deep Link    *
