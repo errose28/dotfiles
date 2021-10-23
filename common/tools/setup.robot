@@ -12,4 +12,9 @@ Install
     ...    atool
     ...    zip
     ...    unzip
+    # For previews:
+    ...    exiftool
+    ...    xpdf # For pdftotext
+    ...    w3m
+    ...    bat
 

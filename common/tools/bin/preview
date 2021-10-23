@@ -1,33 +1,103 @@
 #!/usr/bin/env sh
 
-# TODO: Add support for non-text files.
-file="$1"
-num_lines="$2"
+FILE="$1"
+NUM_LINES="$2"
+
+### HELPER FUNCTIONS ###
+
+mime_type() {
+    # `file --mime-type --brief --dereference` can also get mime type but has
+    # issues with mp3 files with images.
+    echo "$(exiftool -json "$FILE" | jq -r '.[0].MIMEType')"
+}
+
+mime_encoding() {
+    echo "$(file --dereference --mime-encoding --brief "$FILE")"
+}
 
 ### PREVIEW FUNCTIONS ###
-# All should take a file and optionally a number of lines to show.
 
 preview_text() {
-    local file="$1"
-    local num_lines="$2"
+    local encoding="$(mime_encoding '$FILE')"
+    local type="$(mime_type '$FILE')"
+
+    if [ "$encoding" != 'us-ascii' -a \
+        "$encoding" != 'utf-8' -a \
+        "$type" != 'text/plain' ] || \
+        [ "$type" = 'image/svg+xml' ]; then
+        false
+        return
+    fi
+
+    # Prevent rendering more text than necessary.
+    local line_arg=""
+    if [ "$NUM_LINES" ]; then
+        line_arg="--line-range :$NUM_LINES"
+    fi
 
     # Bat will automatically hide formatting when used in some contexts.
     # Explicitly enable it here.
-    line_arg=""
-    if [ "$num_lines" ]; then
-        line_arg="--line-range :$num_lines"
-    fi
-
     bat \
-        --file-name="$(basename "$file")" \
+        --file-name="$(basename "$FILE")" \
         --decorations=always \
         --color=always \
         --italic-text=always \
         --style=full \
         --pager=never \
         $line_arg \
-        "$file"
+        "$FILE"
 }
 
-preview_text "$file" "$num_lines"
+preview_archive() {
+    output="$(als "$FILE" 2> /dev/null)"
+    if [ "$output" ]; then
+        echo "$output"
+    else
+        false
+    fi
+}
+
+preview_html() {
+    if [ "$(mime_type)" != 'text/html' ]; then
+        false
+    else
+        w3m -dump "$FILE"
+    fi
+}
+
+preview_pdf() {
+    if [ "$(mime_type)" != 'application/pdf' ]; then
+        false
+    else
+        mkdir -p ~/.cache/lf
+        out="$(mktemp --tmpdir="$HOME"/.cache/lf)"
+        # Only preview first page.
+        pdftotext -layout -f 1 -l 1 "$FILE" "$out"
+        word_count="$(exiftool -json "$out" | jq -r '.[0].WordCount')"
+        if [ "$word_count" -ge 1 ]; then
+            # Only print text preview if words were found.
+            cat "$out"
+        else
+            preview_fallback
+        fi
+        rm "$out"
+    fi
+}
+
+preview_fallback() {
+    exiftool "$FILE"
+}
+
+# html will have ascii encoding so must be checked before text.
+preview_html || \
+preview_text || \
+preview_archive || \
+preview_pdf || \
+preview_fallback
+
+# Other file types to identify for reference:
+# video: mime type = video/*
+# image: mime type = image/*
+# audio: mime type = audio/*
+# binary: mime encoding = charset=binary
 
