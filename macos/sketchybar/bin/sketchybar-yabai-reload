@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+# TODO: Fix bug where deleting or swapping a space and exiting mission control
+# causes the bar to show the wrong focused space until the space is switched.
+
+UNFOCUSED_BACKGROUND='0xff888888'
+FOCUSED_BACKGROUND='0xffffffff'
+
+for item in $(sketchybar -m --query bar | jq -r '.items[]'); do
+    args="$args --remove '$item'"
+done
+
+args="$args $(yabai -m query --spaces | jq -r \
+--arg focused "$FOCUSED_BACKGROUND" \
+--arg unfocused "$UNFOCUSED_BACKGROUND" \
+$'map(.index) as $indices | map(. as $current | "
+--default
+label=\'\\(if $current.label != "" then $current.label else $current.index end) \\(if $current.windows | length > 0 then "◉" else "∅" end)\'
+associated_display=\\($current.display)
+label.font=\'Hack Nerd Font:Bold:15.0\'
+--add item \\($current.id)-focused left
+--set \\($current.id)-focused
+background.color=\\($focused)
+associated_space=\\($current.index)
+--add item \\($current.id)-unfocused left
+--set \\($current.id)-unfocused
+background.color=\\($unfocused)
+associated_space=\\([$indices[] | select(. != $current.index)] | join(","))
+click_script=\'yabai -m config mouse_follows_focus off;
+    yabai-focus-recent-window-in-space \\($current.index);
+    yabai -m config mouse_follows_focus on\'
+") | .[]')"
+
+
+eval sketchybar -m --default \
+ background.color="$focused_background" \
+ label.padding_left=5 \
+ label.padding_right=5 \
+ label.color=0xff000000 \
+ background.corner_radius=5 \
+ background.height=22 \
+ background.padding_right=10 \
+ $args
+

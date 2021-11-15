@@ -4,14 +4,44 @@
 # Use `yabai -m window --focus recent` to focus last used window regardless of space.
 # Use `yabai -m space --focus recent` to do the same as this script, but requires yabai's scripting addition.
 
-space="$1"
+target_index="$1"
 
-# Windows are listed in order used, with current window first.
-index=1
-if [ "$space" ]; then
-    index=0
+# Set variables with info about the target space.
+eval $(yabai -m query --spaces --space "$target_index" | jq -r '"
+target_index=\(.index);
+target_display=\(.display);
+target_focused=\(if .focused == 1 then "true" else "false" end)
+target_win_count=\(.windows | length)
+"')
+
+# If the space has no windows, we must get to it by triggering swipes through
+# the spaces in between. This is slower than focusing a window if the space had one.
+if [ "$target_win_count" = 0 ]; then
+    # Set variables with info about how to get to the target space from the
+    # visible space on its display.
+    eval $(yabai -m query --spaces | jq -r \
+    --argjson target_index "$target_index" \
+    --argjson target_display "$target_display" '
+    .[] | select(.display == $target_display and .visible == 1) |
+    ($target_index - .index) as $diff  | "
+    iters=\($diff | length)
+    direction=\(if $diff > 0 then "right" else "left" end)
+    "')
+
+    yabai -m display --focus "$target_display"
+
+    for i in $(seq $iters); do
+        skhd -k "ctrl - $direction"
+    done
+else
+    win_index=0
+    if [ "$target_focused" = 'true' ]; then
+        win_index=1
+    fi
+
+    # Windows are listed in order used, with current window first.
+    # Skip floating windows.
+    win_id="$(yabai -m query --windows --space "$target_index" | jq -r "[.[] | select(.floating==0)] | .[$win_index].id")"
+    yabai -m window --focus "$win_id"
 fi
 
-# Skip floating windows.
-win_id="$(yabai -m query --windows --space "$space" | jq "[.[] | select(.floating==0)] | .[$index].id")"
-yabai -m window --focus "$win_id"

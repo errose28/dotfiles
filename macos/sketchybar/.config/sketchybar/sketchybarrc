@@ -1,0 +1,6 @@
+sketchybar -m --bar position=bottom \
+height=30 \
+color=0xff000000 \
+padding_left=5 \
+--update
+

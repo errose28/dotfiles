@@ -4,7 +4,7 @@
 <dict>
   <key>Label</key>
   <!-- Set Label -->
-  <string>yabai</string>
+  <string>sketchybar</string>
   <key>EnableGlobbing</key>
   <true/>
   <key>ProgramArguments</key>
@@ -16,7 +16,7 @@
     <string>sh</string>
     <string>--login</string>
     <string>-c</string>
-    <string>yabai</string>
+    <string>sketchybar</string>
   </array>
 
   <!-- Whether to run the program on login. -->
@@ -24,13 +24,13 @@
   <true/>
   <!-- Whether to restart the program if it crashes or terminates successfully. -->
   <key>KeepAlive</key>
-  <true/>
+  <false/>
 
   <!-- Where to place stdout and stderr logs. -->
   <!-- Can also use /usr/local/var/log directory. -->
   <key>StandardErrorPath</key>
-  <string>/tmp/yabai.error.log</string>
+  <string>/tmp/sketchybar.err.log</string>
   <key>StandardOutPath</key>
-  <string>/tmp/yabai.out.log</string>
+  <string>/tmp/sketchybar.out.log</string>
 </dict>
 </plist>

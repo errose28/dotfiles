@@ -3,7 +3,7 @@
 options() {
     local delimiter="$1"
 
-    local options='skhd\nyabai'
+    local options='skhd\nyabai\nsketchybar'
     # Options to select and pass back in to this script are the same.
     paste --delimiters="$delimiter" <(printf "$options") <(printf "$options")
 }
@@ -23,6 +23,7 @@ run() {
     declare -A action_to_cmd
     action_to_cmd['skhd']='launchctl stop skhd && launchctl start skhd'
     action_to_cmd['yabai']='launchctl stop yabai && launchctl start yabai'
+    action_to_cmd['sketchybar']='launchctl stop sketchybar && launchctl start sketchybar'
 
     eval "${action_to_cmd[$selection]}"
 }

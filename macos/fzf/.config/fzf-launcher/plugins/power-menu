@@ -25,7 +25,7 @@ run() {
     # Uses m-cli for most commands.
     action_to_cmd['Lock']='m lock'
     action_to_cmd['Sleep']='m sleep'
-    action_to_cmd['Logout']='osascript -e 'tell application "System Events" to log out''
+    action_to_cmd['Logout']=$'osascript -e \'tell application "System Events" to log out\''
     action_to_cmd['Restart']='m restart'
     action_to_cmd['Shutdown']='m shutdown'
 

@@ -40,5 +40,9 @@ yabai -m config window_gap                   5
 yabai -m config auto_balance                 off
 yabai -m config layout                       stack
 
+# Load startup scripts.
+startup_script="$STARTUP_DIR"/yabai/load.sh
+[ -x "$startup_script" ] && "$startup_script"
+
 echo "yabai configuration loaded."
 
