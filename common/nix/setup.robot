@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
 # Only needed if nix is being used as the package manager,
@@ -8,11 +8,10 @@ Default Tags    linux    macos
 Link
     Deep Link    *
 
-Install
-    Emit    Insall
-    ...    nix-zsh-completions
-    ...    nix-bash-completions
+Install Packages
+    Install    nix=nix-zsh-completions
+    Install    nix=nix-bash-completions
     # direnv used to automatically enable nix-shells and lorri.
-    ...    direnv
-    ...    lorri
+    Install    direnv
+    Install    lorri
 

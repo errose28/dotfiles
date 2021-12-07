@@ -1,11 +1,11 @@
 *** Settings ***
 Library    OperatingSystem
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
-Install
-    Emit    Install    bash
+Install Packages
+    Install    bash
 
 Link
     Deep Link    *

@@ -2,7 +2,7 @@ cschlosser.doxdocgen
 DotJoshJohnson.xml
 eamodio.gitlens
 fabiospampinato.vscode-diff
-James-Yu.latex-workshop
+keith.robotframework
 malmaud.tmux
 mhutchie.git-graph
 ms-python.python

@@ -1,12 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
 Link
     Deep Link    *
 
-Install
-    Emit    Insall
-    ...    direnv
+Install Packages
+    Install    direnv
 

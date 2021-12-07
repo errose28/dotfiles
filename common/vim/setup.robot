@@ -1,10 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
-Install
-    Emit    Install    vim
+Install Packages
+    Install    nvim
 
 Link
     Deep Link    *

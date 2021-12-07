@@ -1,21 +1,23 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
+Install Misc Packages
+    Install    ncdu
+
+Install Compression and Archive Packages
+    Install    atool
+    Install    zip
+    Install    unzip
+
+Install Preview Packages
+    Install    exiftool
+    # For pdftotext command:
+    Install    xpdf
+    Install    w3m
+    Install    bat
+    Install    krb5
+
 Link
     Deep Link    *
-
-Install
-    Emit    Install
-    ...    ncdu
-    ...    atool
-    ...    zip
-    ...    unzip
-    # For previews:
-    ...    exiftool
-    ...    xpdf # For pdftotext
-    ...    w3m
-    ...    bat
-    ...    krb5
-

@@ -9,7 +9,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # VARIABLES I SET
-export EDITOR='vim'
+export EDITOR='nvim'
 export VISUAL="$EDITOR"
 # Do not have homebrew update on every install.
 export HOMEBREW_NO_AUTO_UPDATE=1

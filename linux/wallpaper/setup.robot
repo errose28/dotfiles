@@ -3,8 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install    feh
+Install Packages
+    Install    feh
 
 Link
     Deep Link    *

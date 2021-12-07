@@ -3,9 +3,8 @@ Library    DotfilesLibrary
 Default Tags    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    skhd
+Install Packages
+    Install    skhd
 
 Link
     Deep Link    *

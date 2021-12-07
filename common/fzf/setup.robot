@@ -4,9 +4,8 @@ Default Tags    linux    macos
 
 *** Tasks ***
 Install
-    Emit    Install
-    ...    fzf
-    ...    alacritty
+    Install    fzf
+    Install    kitty
 
 Link
     Deep Link    *

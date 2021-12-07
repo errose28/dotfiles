@@ -3,12 +3,11 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    bspwm
-    ...    sxhkd
-    ...    jq
-    ...    wmutils-core
+Install Packages
+    Install    bspwm
+    Install    sxhkd
+    Install    jq
+    Install    wmutils-core
 
 Link
     Deep Link    *

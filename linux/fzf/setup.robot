@@ -3,12 +3,11 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    fzf
-    ...    dex
-    ...    kitty
-    ...    xdotool
+Install Packages
+    Install    fzf
+    Install    dex
+    Install    kitty
+    Install    xdotool
 
 Link
     Deep Link    *

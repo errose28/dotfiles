@@ -3,8 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit   Install    tmux
+Install Packages
+    Install    tmux
 
 Link
     Deep Link    *
