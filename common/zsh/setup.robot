@@ -3,14 +3,13 @@ Library    DotfilesLibrary
 Default Tags    linux    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    zsh
-    ...    zsh-autosuggestions
-    ...    zsh-syntax-highlighting
-    ...    zsh-powerlevel10k
-    # NerdFonts for powerlevel10k.
-    ...    meslo-lgs-nf
+Install Packages
+    Install    zsh
+    Install    zsh-autosuggestions
+    Install    zsh-syntax-highlighting
+    Install    zsh-powerlevel10k
+    # NerdFonts for powerlevel10k:
+    Install    meslo-lgs-nf
 
 Link
     Deep Link    *

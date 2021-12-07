@@ -3,11 +3,11 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    betterlockscreen
-    ...    xorg.xset
-    ...    xss-lock
+Install Packages
+    Install    betterlockscreen
+    Install    xorg-xset
+    ...    nix=xorg.xset
+    Install    xss-lock
 
 Link
     Deep Link    *

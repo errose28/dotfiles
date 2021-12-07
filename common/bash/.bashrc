@@ -9,9 +9,7 @@ case $- in
 esac
 
 # Source startup scripts.
-for file in $(~/.shell.d/init-scripts.sh bash); do
-    source "$file"
-done
+source "$STARTUP_DIR"/shells/load.sh bash
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

@@ -3,9 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    polybar
+Install Packages
+    Install    polybar
 
 Link
     Deep Link    *

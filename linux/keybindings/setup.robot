@@ -3,11 +3,12 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    sxhkd
-    ...    xorg.xdotool
-    ...    xorg.xkbcomp
+Install Packages
+    Install    sxhkd
+    Install    xdotool
+    ...    nix=xorg.xdotool
+    Install    xorg-xkbcomp
+    ...    nix=xorg.xkbcomp
 
 Link
     Deep Link    *

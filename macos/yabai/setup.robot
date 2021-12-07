@@ -3,11 +3,10 @@ Library    DotfilesLibrary
 Default Tags    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    yabai
-    ...    cliclick
-    ...    jq
+Install Packages
+    Install    yabai
+    Install    cliclick
+    Install    jq
 
 Link
     Deep Link    *

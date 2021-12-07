@@ -3,10 +3,11 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    xorg.xinput
-    ...    udisks
+Install Packages
+    Install    xorg-xinput
+    ...    nix=xorg.xinput
+    Install    udisks2
+    ...    nix=udisks
 
 Link
     Deep Link    *

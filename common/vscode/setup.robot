@@ -5,8 +5,8 @@ Library    String
 Default Tags    linux    macos
 
 *** Tasks ***
-Install
-    Emit    Install    vscode
+Install Packages
+    Install    vscode
 
 Linux Link
     [Tags]    linux
@@ -24,6 +24,6 @@ Install Extensions
 
     # vscode will skip extensions already installed.
     FOR     ${extension}    IN    @{extensions}
-        DotfilesLibrary.Interactive    code     --install-extension=${extension}
+        Interactive    code     --install-extension=${extension}
     END
 

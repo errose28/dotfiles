@@ -1,12 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    lf
-    ...    trash-cli
+Install Packages
+    Install    lf
+    Install    trash-cli
 
 Link
     Deep Link    *

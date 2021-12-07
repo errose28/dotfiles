@@ -3,13 +3,14 @@ Library    DotfilesLibrary
 Default Tags    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    yabai
-    ...    skhd
-    ...    cliclick
-    ...    coreutils-full
-    ...    google-chrome
+Install Packages
+    Install    yabai
+    Install    cliclick
+    Install    coreutils
+    ...    nix=coreutils-full
+    # Homebrew splits coreutils into some other packages, and requires
+    # additional path edits.
+    ...    brew=${NONE}
 
 Link
     Deep Link    *

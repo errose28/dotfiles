@@ -1,11 +1,11 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
-Install
+Install Packages
     # May need extra steps for tab completion depending on the platform.
-    Emit    Install    git
+    Install    git
 
 Link
     Deep Link    *

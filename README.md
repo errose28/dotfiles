@@ -31,18 +31,12 @@
     1. Configure your python environment as desired
     2. Run `python -m pip install -r requirements.txt`
 
-- Note: If both lorri and pyenv are present on the system, lorri will be preferred.
+- Note: If both lorri and pyenv are present on the system, pyenv will be preferred.
 
 ### Robot Framework
 
 - Deploying dotfiles is handled using [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
     - Each package contains a *.robot* file with commands for linking dotfiles, installing programs, and other general setup for that program.
-
-- Installation of programs is done by registering a robot framework listener to the `Emit` keyword of the DotfilesLibrary, which the robot files will forward installation instructions to.
-
-    - Listeners I use for installation are kept at [DotfilesLibraryListeners](https://github.com/errose28/DotfilesLibraryListeners)
-
-    - Installation of programs can be skipped by not registering a listener.
 
 - All *.robot* setup files are idempotent.
 
@@ -54,3 +48,4 @@
 
     - This will only run commands from the *linux* and *common* directories that have been tagged as being for Linux.
 
+    - direnv will try to determine whether you are on Linux or Macos and set robot's `--include` flag accordingly with an environment variable.

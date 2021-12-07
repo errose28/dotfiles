@@ -3,12 +3,13 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-        ...    xorg.xinput
-        ...    xdotool
-        ...    unclutter
-        ...    capitaine-cursors
+Install Packages
+    Install    xorg-xinput
+    ...    nix=xorg.xinput
+    Install    xdotool
+    ...    nix=xorg.xdotool
+    Install    unclutter
+    Install    capitaine-cursors
 
 Link
     Deep Link    *

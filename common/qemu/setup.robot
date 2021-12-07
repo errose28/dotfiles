@@ -3,10 +3,9 @@ Library    DotfilesLibrary
 Default Tags    linux    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    qemu
-    ...    libvirt
-    ...    virt-manager
-    ...    virt-viewer
+Install Packages
+    Install    qemu
+    Install    libvirt
+    Install    virt-manager
+    Install    virt-viewer
 

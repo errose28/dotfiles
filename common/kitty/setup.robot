@@ -3,8 +3,8 @@ Library    DotfilesLibrary
 Default Tags    linux    macos
 
 *** Tasks ***
-Install
-    Emit    Install    kitty
+Install Packages
+    Install    kitty
 
 Link
     Deep Link    *

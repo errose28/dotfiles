@@ -1,10 +1,10 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
-Install
-    Emit   Install    tmux
+Install Packages
+    Install    tmux
 
 Link
     Deep Link    *

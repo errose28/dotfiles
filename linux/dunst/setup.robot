@@ -3,10 +3,9 @@ Library    DotfilesLibrary
 Default Tags    linux
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    dunst
-    ...    libnotify
+Install Packages
+    Install    dunst
+    Install    libnotify
 
 Link
     Deep Link    *

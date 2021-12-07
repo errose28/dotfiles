@@ -3,12 +3,10 @@ Library    DotfilesLibrary
 Default Tags    macos
 
 *** Tasks ***
-Install
-    Emit    Install
-    ...    fzf
-    ...    alacritty
-    ...    m-cli
-    ...    yabai
+Install Packages
+    Install    fzf
+    Install    kitty
+    Install    m-cli
 
 Link
     Deep Link    *
