@@ -1,6 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux
+Default Tags    linux    no-de    xorg
 
 *** Tasks ***
 Install Packages

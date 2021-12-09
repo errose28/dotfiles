@@ -24,4 +24,4 @@ xsetroot -cursor_name left_ptr &
 "$STARTUP_DIR"/xinit/load.sh &
 
 # session should be a custom script in the path specified by the current window manager.
-exec session
+command -v session > /dev/null && exec session

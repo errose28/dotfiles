@@ -5,6 +5,7 @@ Default Tags    linux    macos    headless
 *** Tasks ***
 Install Misc Packages
     Install    ncdu
+    Install    brave
 
 Install Compression and Archive Packages
     Install    atool
