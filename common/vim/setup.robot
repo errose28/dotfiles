@@ -4,7 +4,8 @@ Default Tags    linux    macos    headless
 
 *** Tasks ***
 Install Packages
-    Install    nvim
+    Install    neovim
+    Install    vim
 
 Link
     Deep Link    *
