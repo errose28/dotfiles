@@ -1,13 +1,9 @@
 *** Settings ***
 Library    DotfilesLibrary
-Default Tags    linux
+Default Tags    linux    xorg
 
 *** Tasks ***
 Install Packages
-    Install    xorg-xinput
-    ...    nix=xorg.xinput
-    Install    xdotool
-    Install    unclutter
     Install    capitaine-cursors
 
 Link

@@ -1,0 +1,42 @@
+# Contains extra sxhkd keybindings to use when there is no desktop environment.
+
+# Kills all polybars and relaunches them.
+super + shift + p
+    launch-polybars
+
+# Generic autorandr refresh.
+# --force triggers the refresh even if the setup hasn't changed.
+super + shift + m
+    autorandr --change --force
+
+super + a
+    fzf-launcher apps
+
+# Volume Controls:
+
+# @DEFAULT_SINK@ tells pactl to use the default sink instead of specifying a name/index.
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86Audio{Raise,Lower}Volume
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+# Scroll for volume.
+super + {button5,button4}
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+super + {button6,button7}
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+# Screen Brightness Commands:
+
+XF86MonBrightness{Up,Down}
+   xbacklight {-inc,-dec} 5
+
+# Scroll for screen brightness.
+super + shift + {button5,button4}
+   xbacklight {-inc,-dec} 5
+
+super + shift + {button6,button7}
+   xbacklight {-inc,-dec} 5
+
