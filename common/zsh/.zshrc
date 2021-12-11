@@ -1,20 +1,9 @@
-# Do not start tmux in linux login shells. 
-# MacOS (Darwin) starts every shell as login shell.
-if command -v tmux &> /dev/null && [[ -z "$TMUX" ]] && [[ ( ! -o login || $(uname -s) == 'Darwin' ) ]] && [[ -o interactive ]]; then
-    if [ -n "$USE_TMUX_DIR" ]; then
-        # Use working dir of last tmux pane.
-        cd "$(tmux display -p "#{pane_current_path}")"
-   fi
+# Source startup scripts.
+source "$STARTUP_DIR"/shell/load.sh zsh
 
-    if [ -n "$USE_TMUX_SESSION" ]; then
-        # Start new session connected to last tmux session.
-        tmux new-session -t "$(tmux display -p "#S")"
-    elif [ -n "$USE_TMUX" ]; then
-        tmux
-    fi
-fi
+### LOAD PLUGINS ###
 
-# Instant prompt before entering tmux seems to cause issues, so enter tmux session first.
+# Instant prompt before entering tmux seems to cause issues, so load startup scripts (including tmux) first.
 # Instant prompt will be activated within the tmux session.
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -24,8 +13,27 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Source startup scripts.
-source "$STARTUP_DIR"/shell/load.sh zsh
+load_plugin() {
+    plugin="$1"
+    [ -f "$plugin" ] && source "$plugin"
+}
+
+load_plugin "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
+load_plugin "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+load_plugin "$ZSH_PLUGIN_DIR/zsh-powerlevel10k/powerlevel10k.zsh-theme"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+load_plugin ~/.p10k.zsh
+
+### PLUGINS SETTINGS ###
+
+# First check history for command completion, then check tab complete.
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# Makes tab completion history search not lag typing.
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+# Accept suggestion (don't run command) with ctrl+space.
+bindkey '^ ' autosuggest-accept
+
+### END PLUGINS ###
 
 # Enable colors.
 autoload -U colors && colors
@@ -79,14 +87,6 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# Enable zsh in direnv if available.
-if command -v direnv > /dev/null; then
-    eval "$(direnv hook zsh)"
-fi
-
 # zsh variable to disable right side prompt.
 RPROMPT=''
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

@@ -9,7 +9,7 @@ case $- in
 esac
 
 # Source startup scripts.
-source "$STARTUP_DIR"/shells/load.sh bash
+source "$STARTUP_DIR"/shell/load.sh bash
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -123,3 +123,35 @@ fi
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
+
+
+### PROMPT ###
+
+# Show last 5 directories, then elipsis.
+PROMPT_DIRTRIM=5
+
+exit_code() {
+    local code="$?"
+
+    if [ "$code" != 0 ]; then
+        code_result="$code! "
+    else
+        code_result=''
+    fi
+}
+
+timer_start() {
+  timer="${timer:-$SECONDS}"
+}
+
+timer_stop() {
+  timer_result="$(($SECONDS - $timer))s "
+  unset timer
+}
+
+trap 'timer_start' DEBUG
+
+PROMPT_COMMAND="exit_code; timer_stop"
+
+PS1='${code_result}${timer_result}\w > '
+

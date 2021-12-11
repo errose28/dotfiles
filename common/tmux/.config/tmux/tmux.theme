@@ -96,7 +96,6 @@ set -gF window-status-current-format "#{@current-window-prefix}#{@current-window
 
 set -g status-right-length 1000
 
-# TODO: Fix git display.
 set -gF @git-prefix "#[bg=#{@bg}]#[fg=#{@git-bg}]"
 set -gF @git-suffix "#[bg=#{@git-bg}]#[fg=#{@bg}]"
 set -gF @git-style "#[fg=#{@git-fg}]#[bg=#{@git-bg}]"
