@@ -1,6 +1,12 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
-zsh_plugin_dirs=("$HOME/.nix-profile/share" '/usr/share/zsh/plugins')
+# Even though this is only used by zsh, it may be run under a different login
+# shell as part of .profile, so use sh.
+
+zsh_plugin_dirs="$HOME/.nix-profile/share":'/usr/share/zsh/plugins'
+
+old_ifs="$IFS"
+IFS=':'
 
 for plugin_dir in $zsh_plugin_dirs; do
     if [ -d "$plugin_dir" ]; then
@@ -9,4 +15,5 @@ for plugin_dir in $zsh_plugin_dirs; do
     fi
 done
 
+IFS="$old_ifs"
 

@@ -33,7 +33,7 @@ build_status_for_desktop() {
             # Get the focused node (or the node that would be focused if the desktop were active).
             # Cannot use .focused to select node because the desktop may not be focused when this is run.
             focused_node="$(bspc query --nodes --node @"$desktop": --node .window)"
-            index="$(bspc query --nodes --desktop "$desktop" --node .window | awk "/"$focused_node"/{print NR}")"
+            index="$(bspc query --nodes --desktop "$desktop" --node '.window.!hidden' | awk "/"$focused_node"/{print NR}")"
             window_count="$index/$window_count"
         fi
         desktop_status="${desktop_status}${next_sep}[$window_count]"

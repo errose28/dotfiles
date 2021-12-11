@@ -7,6 +7,10 @@ Install Misc Packages
     Install    ncdu
     Install    brave
 
+Install Language Tools
+    Install    pyenv
+    ...    nix=${NONE}
+
 Install Compression and Archive Packages
     Install    atool
     Install    zip
