@@ -130,6 +130,14 @@ fi
 # Show last 5 directories, then elipsis.
 PROMPT_DIRTRIM=5
 
+git_branch() {
+    if git status &> /dev/null; then
+        git_result="[$(git branch --show-current)] "
+    else
+        git_result=''
+    fi
+}
+
 exit_code() {
     local code="$?"
 
@@ -151,7 +159,7 @@ timer_stop() {
 
 trap 'timer_start' DEBUG
 
-PROMPT_COMMAND="exit_code; timer_stop"
+PROMPT_COMMAND="exit_code; git_branch; timer_stop"
 
-PS1='${code_result}${timer_result}\w > '
+PS1='${code_result}${timer_result}${git_result}\w > '
 

@@ -13,9 +13,11 @@ Dotfiles for Linux and MacOS.
 
 ## Deployment
 
-- Deploying dotfiles is handled using [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
+### Deploying With Robot
 
-### Setting Up Robot
+- The most robust way to deploy the dotfiles is with [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
+
+#### Setting Up Robot
 
 - These steps will set up a python virtual environment within the project directory to install Robot and required libraries.
 
@@ -23,16 +25,21 @@ Dotfiles for Linux and MacOS.
     - Manually install python (not recommended).
     - Install [lorri](https://github.com/target/lorri) if using [nix](https://nixos.org/manual/nix/stable/).
     - Install [pyenv](https://github.com/pyenv/pyenv) otherwise.
+
 2. Install [direnv](https://direnv.net/)
 
 3. Hook direnv into your current shell: `eval "$(direnv hook <shell>)"`
     - After deploying the dotfiles, this will happen automatically.
 
-4. Enter the dotfiles directory. Direnv should prompt you to allow it to run. Run `direnv allow` to approve.
+4. Enter the dotfiles directory. direnv should prompt you to allow it to run. Run `direnv allow` to approve. The following operations will be performed:
+    1. Either pyenv or lorri will be used to install python.
+    2. A python virtual environment will be created and loaded.
+    3. Pip packages in *requirements.txt* will be installed.
+    4. Default options for invoking robot will be set.
 
-5. Install dependencies with `python -m pip install -r requirements.txt`
+    - The installation steps will be skipped on future runs.
 
-### Using Robot
+#### Invoking Robot
 
 - Each parcel contains a *.robot* file with commands for linking dotfiles, installing programs, and other general setup for that parcel.
 
@@ -54,3 +61,12 @@ Dotfiles for Linux and MacOS.
 
 - To additionally install required programs, run `robot -v INSTALL_WITH:<package manager> .`
     - `<package manager>` must be one of the functions defined in *installers.sh* corresponding to a package manager to use.
+
+### Manual Deployment
+
+- In some cases, like sshing to a server, installing new packages may not be desired or permitted.
+
+- The *headless.sh* script can be run from the top level directory to only symlink configs for headless dotfiles without installing anything.
+    - This is a pure shell script with no dependencies.
+
+- This is useful to configure common programs like bash and vim that most machines already have, even if you cannot or do not want to install anything new.

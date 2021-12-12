@@ -8,6 +8,8 @@ Install Packages
     Install    sxhkd
     Install    jq
     Install    wmutils-core
+    ...    pacman=${NONE}
+    ...    aur=wmutils-git
 
 Link
     Deep Link    *
