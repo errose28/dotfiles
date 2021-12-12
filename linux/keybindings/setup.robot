@@ -11,8 +11,9 @@ Install Packages
 
 Base Link
     Deep Link    .config/sxhkd/sxhkdrc
+    Deep Link    .startup
 
 No DE Link
-    [Tags]    no-de
+    [Tags]    no-de    linux    xorg
     Deep Link    .config/sxhkd/sxhkdrc.no-de
 
