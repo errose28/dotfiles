@@ -12,6 +12,6 @@ Install Packages
     Install    nix=nix-zsh-completions
     Install    nix=nix-bash-completions
     # direnv used to automatically enable nix-shells and lorri.
-    Install    direnv
-    Install    lorri
+    Install    nix=direnv
+    Install    nix=lorri
 

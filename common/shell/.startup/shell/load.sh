@@ -1,5 +1,6 @@
 # Shell to have scripts sourced, in addition to common scripts.
 shell="$1"
+shell_dir="$STARTUP_DIR"/shell
 
 if [ "$shell" ] && [ -d  "$shell_dir"/"$shell" ]; then
     for file in  "$shell_dir"/"$shell"/*; do

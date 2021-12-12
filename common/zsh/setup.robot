@@ -8,8 +8,10 @@ Install Packages
     Install    zsh-autosuggestions
     Install    zsh-syntax-highlighting
     Install    zsh-powerlevel10k
+    ...    pacman=zsh-theme-powerlevel10k
     # NerdFonts for powerlevel10k:
     Install    meslo-lgs-nf
+    ...    pacman=powerline-fonts
 
 Link
     Deep Link    *
