@@ -1,7 +1,6 @@
 {
     "window.titleBarStyle": "custom",
     "window.restoreWindows": "none",
-    "window.zoomLevel": 0,
     "window.menuBarVisibility": "visible",
 
     // Make vscode respect setxkbmap options in linux.
@@ -184,4 +183,5 @@
     "security.workspace.trust.untrustedFiles": "open",
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.enabled": false,
+    "workbench.editor.untitled.hint": "hidden",
 }

@@ -23,6 +23,7 @@ export STARTUP_DIR="${HOME}/.startup"
 # Load system specific env variables from my custom directory.
 . "$STARTUP_DIR"/profile/load.sh
 
+# Launch X automatically from tty1 if on linux.
 if command -v startx > /dev/null && [ "$(tty)" = /dev/tty1 ]; then
     exec startx
 fi
