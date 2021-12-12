@@ -22,8 +22,8 @@ git-tracked() {
 
 # Kill and Remove any docker containers.
 rm-containers() {
-    docker stop "$(docker ps -aq)"
-    docker rm "$(docker ps -aq)"
+    docker stop $(docker ps -aq)
+    docker rm $(docker ps -aq)
 }
 
 # Remove dead symlinks in the provided directory and its subdirectoires.
