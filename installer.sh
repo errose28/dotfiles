@@ -1,10 +1,9 @@
 #!/usr/bin/env sh
 
 brew() {
+    # homebrew will automatically skip packages that are already installed.
     pkg="$1"
-    if ! command brew list "$pkg" > /dev/null 2>&1; then
-        command brew install "$pkg"
-    fi
+    command brew install "$pkg"
 }
 
 nix() {

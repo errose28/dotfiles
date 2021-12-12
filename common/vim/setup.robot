@@ -6,6 +6,7 @@ Default Tags    linux    macos    headless
 Install Packages
     Install    neovim
     Install    vim
+    ...    brew=macvim
 
 Link
     Deep Link    *

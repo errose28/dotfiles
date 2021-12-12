@@ -7,6 +7,7 @@ Default Tags    linux    macos
 *** Tasks ***
 Install Packages
     Install    vscode
+    ...    brew=visual-studio-code
 
 Linux Link
     [Tags]    linux
