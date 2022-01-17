@@ -3,7 +3,7 @@
 # Even though this is only used by zsh, it may be run under a different login
 # shell as part of .profile, so use sh.
 
-zsh_plugin_dirs="$HOME/.nix-profile/share":'/usr/share/zsh/plugins'
+zsh_plugin_dirs="$HOME/.nix-profile/share":'/usr/share/zsh/plugins':'/opt/homebrew/share'
 
 old_ifs="$IFS"
 IFS=':'

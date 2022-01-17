@@ -28,3 +28,6 @@ if command -v startx > /dev/null && [ "$(tty)" = /dev/tty1 ]; then
     exec startx
 fi
 
+# TODO: Install nix and remove this.
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+

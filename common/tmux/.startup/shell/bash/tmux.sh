@@ -9,4 +9,3 @@ case $- in
     *i*) IS_INTERACTIVE=1;;
 esac
 
-THIS_SHELL=bash

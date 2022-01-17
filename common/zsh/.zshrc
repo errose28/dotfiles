@@ -15,16 +15,27 @@ fi
 
 load_plugin() {
     plugin="$1"
-    [ -f "$plugin" ] && source "$plugin"
+    if [ -f "$plugin" ]; then
+        source "$plugin"
+    else
+        echo "failed to find plugin $plugin"
+    fi
 }
 
 load_plugin "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
 load_plugin "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-load_plugin "$ZSH_PLUGIN_DIR/zsh-powerlevel10k/powerlevel10k.zsh-theme"
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-load_plugin ~/.p10k.zsh
+# Homebrew installs p10k at a different location than other zsh plugins.
+brew_p10k_file='/opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme'
+if [ -f "$brew_p10k_file" ]; then
+    source "$brew_p10k_file"
+else
+    load_plugin "$ZSH_PLUGIN_DIR/zsh-powerlevel10k/powerlevel10k.zsh-theme"
+fi
 
 ### PLUGINS SETTINGS ###
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+load_plugin ~/.p10k.zsh
 
 # First check history for command completion, then check tab complete.
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)

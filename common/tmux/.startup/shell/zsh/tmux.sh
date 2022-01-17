@@ -9,4 +9,3 @@ if [[ -o interactive ]]; then
     IS_INTERACTIVE=1
 fi
 
-THIS_SHELL=zsh

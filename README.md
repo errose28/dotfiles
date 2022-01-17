@@ -15,7 +15,7 @@ Dotfiles for Linux and MacOS.
 
 ### Deploying With Robot
 
-- The most robust way to deploy the dotfiles is with [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
+- The easiest way to deploy the dotfiles is with [Robot Framework](https://robotframework.org) with my custom [Dotfiles Library](https://github.com/errose28/DotfilesLibrary).
 
 #### Setting Up Robot
 
@@ -60,7 +60,9 @@ Dotfiles for Linux and MacOS.
 - To deploy all dotfiles for the current OS with symlinks, run `robot .` from the top level directory.
 
 - To additionally install required programs, run `robot -v INSTALL_WITH:<package manager> .`
-    - `<package manager>` must be one of the functions defined in *installers.sh* corresponding to a package manager to use.
+    - `<package manager>` must be one of the functions defined in *installer.sh* corresponding to a package manager to use.
+
+- After installing, some configurations will require logging out and back in to take effect.
 
 ### Manual Deployment
 

@@ -4,7 +4,7 @@
 # MacOS (Darwin) starts every shell as login shell.
 if command -v tmux &> /dev/null && \
     [ -z "$TMUX" ] && \
-    [ "$(uname --kernel-name)" = Darwin -o -z "$IS_LOGIN" ] && \
+    [ "$(uname -s)" = Darwin -o -z "$IS_LOGIN" ] && \
     [ -n "$IS_INTERACTIVE" ]; then
 
     if [ -n "$USE_TMUX_DIR" ]; then

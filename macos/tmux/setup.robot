@@ -3,8 +3,8 @@ Library    DotfilesLibrary
 Default Tags    macos
 
 *** Tasks ***
-Install
-    Install    FelixKratz/formulae/sketchybar
+Install Packages
+    Install    tmux
 
 Link
     Deep Link    *

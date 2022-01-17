@@ -1,5 +1,6 @@
 *** Settings ***
 Library    DotfilesLibrary
+Library    OperatingSystem
 Default Tags    linux    macos
 
 *** Tasks ***
@@ -9,15 +10,18 @@ Install Packages
     Install    zsh-syntax-highlighting
     Install    zsh-powerlevel10k
     ...    pacman=zsh-theme-powerlevel10k
-    # Homebrew tap: https://github.com/romkatv/homebrew-powerlevel10k
     ...    brew=romkatv/powerlevel10k/powerlevel10k
 
-    # NerdFonts for powerlevel10k.
-    # TODO: Save the ttf files from here instead: https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k
-    # Most package managers will not have the patched fonts.
-    Install    meslo-lgs-nf
-    ...    pacman=powerline-fonts
-
-Link
+Common Link
+    Add Ignore    *.ttf
     Deep Link    *
 
+MacOS Link
+    [Tags]    macos
+    # Fonts do not work if symlinked on MacOS.
+    Copy Files    *.ttf    %{HOME}/Library/Fonts
+
+Linux Link
+    [Tags]    linux
+    Set Target    %{HOME}/.local/share/fonts
+    Deep Link    *.ttf
