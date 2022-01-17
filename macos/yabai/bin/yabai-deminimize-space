@@ -5,10 +5,9 @@
 
 space="$1"
 
-minimized_wins="$(yabai -m query --windows --space "$space" | jq -r 'map(select(.minimized == 1)) | map(.id) | join(" ")')"
+minimized_wins="$(yabai -m query --windows --space "$space" | jq -r 'map(select(."is-minimized" == true)) | map(.id) | join(" ")')"
 
 for win in $minimized_wins; do
-    echo "$win"
-    yabai -m window "$win" --deminimize
+    yabai -m window --deminimize "$win"
 done
 

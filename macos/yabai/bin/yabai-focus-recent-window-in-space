@@ -10,7 +10,7 @@ target_index="$1"
 eval $(yabai -m query --spaces --space "$target_index" | jq -r '"
 target_index=\(.index);
 target_display=\(.display);
-target_focused=\(if .focused == 1 then "true" else "false" end)
+target_focused=\(."has-focus")
 target_win_count=\(.windows | length)
 "')
 
@@ -21,8 +21,8 @@ if [ "$target_win_count" = 0 ]; then
     # visible space on its display.
     eval $(yabai -m query --spaces | jq -r \
     --argjson target_index "$target_index" \
-    --argjson target_display "$target_display" '
-    .[] | select(.display == $target_display and .visible == 1) |
+    --argjson target_display "$target_display" '"
+    .[] | select(.display == $target_display and ."is-visible" == 1) |
     ($target_index - .index) as $diff  | "
     iters=\($diff | length)
     direction=\(if $diff > 0 then "right" else "left" end)
@@ -41,7 +41,7 @@ else
 
     # Windows are listed in order used, with current window first.
     # Skip floating windows.
-    win_id="$(yabai -m query --windows --space "$target_index" | jq -r "[.[] | select(.floating==0)] | .[$win_index].id")"
+    win_id="$(yabai -m query --windows --space "$target_index" | jq -r --argjson win_index "$win_index" '[.[] | select(."is-floating"==false)] | .[$win_index].id')"
     yabai -m window --focus "$win_id"
 fi
 

@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-yabai -m window --layer above
 yabai -m window --toggle float
 
-# JSON uses 1 as true, shell uses 1 as false.
-floating_value="$(yabai -m query --windows --window | jq '.floating')"
-if [ "$floating_value" = 1 ]; then
+floating_value="$(yabai -m query --windows --window | jq -r '."is-floating"')"
+if [ "$floating_value" = true ]; then
     yabai -m window --grid 4:4:1:1:2:2
 fi
