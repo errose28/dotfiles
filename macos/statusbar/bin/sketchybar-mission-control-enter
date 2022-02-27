@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+sketchybar \
+--bar position=bottom \
+--remove '/Control Center,*/' \
+--remove '/Stats,*/'
+

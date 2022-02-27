@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# If an m1 pro internal display is detected, assume it is notched.
+m1_display_count="$(system_profiler -json SPDisplaysDataType | jq -r '.SPDisplaysDataType[] | select(._name == "Apple M1 Pro") | .spdisplays_ndrvs[]' | jq -s 'length')"
+m1_internal_display_count="$(system_profiler -json SPDisplaysDataType | jq -r '.SPDisplaysDataType[] | select(._name == "Apple M1 Pro") | .spdisplays_ndrvs[] | select(.spdisplays_connection_type == "spdisplays_internal")' | jq -s 'length')"
+
+if [ "$m1_display_count" == 1 -a "$m1_internal_display_count" == 1 ]; then
+    # Set bar for one notched display.
+    yabai -m config external_bar all:5:0
+    sketchybar --bar height=37
+else
+    # If a mix of notched and unnotched displays are being used, use this
+    # configuration as if none have notches so nothing is covered.
+    # Will leave a gap between the bar and window on the notched display.
+    sketchybar --bar height=24
+    yabai -m config external_bar all:24:0
+fi
+

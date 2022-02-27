@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: Fix this to work by skipping multiple spaces, and focusing empty spaces.
+
 # Focuses the last used window in the specified space. If no space is specified, uses the current space.
 # Use `yabai -m window --focus recent` to focus last used window regardless of space.
 # Use `yabai -m space --focus recent` to do the same as this script, but requires yabai's scripting addition.
@@ -22,7 +24,7 @@ if [ "$target_win_count" = 0 ]; then
     eval $(yabai -m query --spaces | jq -r \
     --argjson target_index "$target_index" \
     --argjson target_display "$target_display" '"
-    .[] | select(.display == $target_display and ."is-visible" == 1) |
+    .[] | select(.display == $target_display and ."is-visible") |
     ($target_index - .index) as $diff  | "
     iters=\($diff | length)
     direction=\(if $diff > 0 then "right" else "left" end)
