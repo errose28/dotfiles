@@ -2,6 +2,6 @@
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    python39
+    python310
   ];
 }
