@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Add fstab entries to not automount drives.
+# Will only add entries that are not already present.
+# Requirements:
+#   - Run with sudo.
+#   - Labels (or other diskutil compatible identifiers) of drives to not automount are passed in.
+#   - Drives must currently be mounted (to learn their properties).
+
+make_fstab_line() {
+    label="$1"
+
+    plist="$(diskutil info -plist "$label")"
+    uuid="$(echo "$plist" | plutil -extract VolumeUUID raw -)"
+    fs_type="$(echo "$plist" | plutil -extract FilesystemType raw -)"
+    echo UUID="$uuid" none "$fs_type" rw,noauto
+}
+
+# Make a backup of fstab, but do not overwrite one if it is already there.
+if [ -f /etc/fstab.save ]; then
+    echo Remove backup fstab /etc/fstab.save before proceeeding.
+    exit 1
+else
+    cp /etc/fstab /etc/fstab.save
+    echo /etc/fstab backed up to /etc/fstab.save
+fi
+
+for drive in "$@"; do
+    fstab_line="$(make_fstab_line "$drive")"
+    # Do not add duplicate lines to fstab.
+    grep -q "$fstab_line" /etc/fstab || "$fstab_line" >> /etc/fstab
+done
+
