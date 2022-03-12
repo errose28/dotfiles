@@ -1,0 +1,47 @@
+#!/usr/bin/env sh
+
+percent=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
+
+if pmset -g batt | grep -q 'AC Power'; then
+    # Charging
+    icon_font_size=20
+    # Available sizes:       
+    case "$percent" in
+        100) icon="" ;;
+        9[0-9]) icon="" ;;
+        8[0-9]) icon="" ;;
+        7[0-9]) icon="" ;;
+        6[0-9]) icon="" ;;
+        5[0-9]) icon="" ;;
+        4[0-9]) icon="" ;;
+        3[0-9]) icon="" ;;
+        2[0-9]) icon="" ;;
+        1[0-9]) icon="" ;;
+        *) icon=""
+    esac
+else
+    # Not charging
+    icon_font_size=15
+    case "$percent" in
+        100) icon="" ;;
+        9[0-9]) icon="" ;;
+        8[0-9]) icon="" ;;
+        7[0-9]) icon="" ;;
+        6[0-9]) icon="" ;;
+        5[0-9]) icon="" ;;
+        4[0-9]) icon="" ;;
+        3[0-9]) icon="" ;;
+        2[0-9]) icon="" ;;
+        1[0-9]) icon="" ;;
+        *) icon=""
+    esac
+fi
+
+NAME=battery \
+SCRIPT='sketchybar-item-battery' \
+UPDATE_FREQ=5 \
+LABEL="$percent%" \
+ICON_FONT_SIZE="$icon_font_size" \
+ICON="$icon" \
+sketchybar-add-item
+

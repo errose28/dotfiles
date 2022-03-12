@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+is_mute="$(m volume ismute)"
+icon_font_size=20
+
+if m volume ismute | grep -q true; then
+    label=""
+    icon=ﱝ
+else
+    label="$(m volume | awk '{print $2}')%"
+    icon=墳
+    # Todo: lower level icon: icon=奔
+fi
+
+NAME=volume \
+SCRIPT='sketchybar-item-volume' \
+UPDATE_FREQ=1 \
+LABEL="$label" \
+ICON_FONT_SIZE="$icon_font_size" \
+ICON="$icon" \
+sketchybar-add-item
+

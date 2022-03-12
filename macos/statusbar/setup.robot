@@ -5,7 +5,6 @@ Default Tags    macos
 *** Tasks ***
 Install
     Install    FelixKratz/formulae/sketchybar
-    Install    stats
     Install    yabai
     Install    jq
 

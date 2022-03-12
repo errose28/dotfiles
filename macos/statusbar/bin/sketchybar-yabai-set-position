@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+# top or bottom.
+position="$1"
+
+if [ "$position" = 'bottom' ]; then
+    sketchybar --bar position=bottom topmost=true height=24
+    yabai -m config external_bar all:0:24
+elif [ "$position" = 'top' ]; then
+    # If an m1 pro internal display is detected, assume it is notched.
+    m1_internal_display_count="$(system_profiler -json SPDisplaysDataType | jq -r \
+    '.SPDisplaysDataType[] | select(._name == "Apple M1 Pro") |
+        .spdisplays_ndrvs[] | select(.spdisplays_connection_type ==
+            "spdisplays_internal")' | jq -s 'length')"
+    
+    if [ "$m1_internal_display_count" == 1 ]; then
+        # Set bar for one notched display.
+        window_offset=5
+        bar_height=37
+    else
+        # If a mix of notched and unnotched displays are being used. Use this
+        # configuration as if none have notches so nothing is covered.
+        # This will leave a gap between the bar and window on the notched display.
+        window_offset=24
+        bar_height=24
+    fi
+
+    yabai -m config external_bar all:"$window_offset":0
+    sketchybar --bar position=top topmost=false height="$bar_height"
+else
+    echo "Invalid position: $position" >&2
+    exit 1
+fi
+

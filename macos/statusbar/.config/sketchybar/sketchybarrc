@@ -1,14 +1,16 @@
 # topmost=false allows mouse over to reveal default menu bar when on top of screen.
 sketchybar --bar \
-position=top \
 color=0xff000000 \
 padding_left=15 \
 padding_right=-10 \
-topmost=false \
 --update
 
-# Set the bar height.
-sketchybar-yabai-set-height
-# Loads yabai space information and menu bar aliases.
-sketchybar-yabai-reload
+sketchybar-yabai-set-position top
+# Load items
+sketchybar-item-yabai-spaces
+sketchybar-item-clock
+sketchybar-item-battery
+sketchybar-item-bluetooth
+sketchybar-item-volume
+sketchybar-item-wifi
 

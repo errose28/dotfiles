@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+# TODO: Determine if using wifi or ethernet.
+#   Use `networksetup -listnetworkserviceorder` to find devices and
+#   `networksetup -getinfo <device>` to see if it is active by counting the
+#   number of fields displayed.
+
+wifi_info="$(m wifi status)"
+wifi_state="$(echo "$wifi_info" | grep state | awk '{print $2}')"
+label="$(echo "$wifi_info" | grep SSID | awk '{print $2}')"
+icon_font_size=20
+
+
+if [ "$wifi_state" = 'running' ]; then
+    icon=直
+else
+    icon=睊
+fi
+
+NAME=wifi \
+SCRIPT='sketchybar-item-wifi' \
+UPDATE_FREQ=3 \
+LABEL="$label" \
+ICON_FONT_SIZE="$icon_font_size" \
+ICON="$icon" \
+sketchybar-add-item
+

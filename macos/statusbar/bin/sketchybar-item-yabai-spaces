@@ -33,8 +33,7 @@ click_script=\'yabai -m config mouse_follows_focus off;
     yabai -m config mouse_follows_focus on\'
 ") | .[]')"
 
-# Add aliases for default macos menu bar items here too.
-eval sketchybar -m --default \
+eval sketchybar -m "$@" --default \
     background.color="$focused_background" \
     label.padding_left=5 \
     label.padding_right=5 \
@@ -42,18 +41,7 @@ eval sketchybar -m --default \
     background.corner_radius=5 \
     background.height=20 \
     background.padding_right=10 \
+    script='sketchybar-item-yabai-spaces' \
     $args \
     --default reset \
-    --default position=right label.padding_left=-1000 associated_display=1,2 \
-    --add alias 'Control\ Center,Clock' right \
-    --add alias 'Control\ Center,Bluetooth' right \
-    --add alias 'Control\ Center,Sound' right \
-    --add alias 'Control\ Center,WiFi' right \
-    --add alias 'Control\ Center,Battery' right \
-    --add alias "Stats,CPU_Mini" right \
-    --add alias "Stats,GPU_Mini" right \
-    --add alias "Stats,RAM_Mini" right \
-    --add alias "Stats,Sensors_Text" right \
-    --bar position=top \
-    --default reset
 
