@@ -5,7 +5,7 @@ Default Tags    macos
 *** Tasks ***
 Install
     Install    FelixKratz/formulae/sketchybar
-    Install    yabai
+    Install    koekeishiya/formulae/yabai
     Install    jq
 
 Link

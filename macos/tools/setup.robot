@@ -4,7 +4,7 @@ Default Tags    macos
 
 *** Tasks ***
 Install Packages
-    Install    yabai
+    Install    koekeishiya/formulae/yabai
     Install    cliclick
     Install    coreutils
     ...    nix=coreutils-full
