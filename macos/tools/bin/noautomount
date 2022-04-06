@@ -28,6 +28,6 @@ fi
 for drive in "$@"; do
     fstab_line="$(make_fstab_line "$drive")"
     # Do not add duplicate lines to fstab.
-    grep -q "$fstab_line" /etc/fstab || "$fstab_line" >> /etc/fstab
+    grep -q "$fstab_line" /etc/fstab || echo "$fstab_line" >> /etc/fstab
 done
 
