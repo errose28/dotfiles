@@ -24,7 +24,8 @@ run() {
     # Requires lock on sleep setting to be on.
     # Uses m-cli for most commands.
     action_to_cmd['Lock']='m lock'
-    action_to_cmd['Sleep']='m sleep'
+    # Turn off bluetooth when sleeping, so devices do not connect.
+    action_to_cmd['Sleep']='blueutil --power 0; m sleep'
     action_to_cmd['Logout']=$'osascript -e \'tell application "System Events" to log out\''
     action_to_cmd['Restart']='m restart'
     action_to_cmd['Shutdown']='m shutdown'

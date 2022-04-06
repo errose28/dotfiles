@@ -7,6 +7,7 @@ Install Packages
     Install    fzf
     Install    kitty
     Install    m-cli
+    Install    blueutil
 
 Link
     Deep Link    *
