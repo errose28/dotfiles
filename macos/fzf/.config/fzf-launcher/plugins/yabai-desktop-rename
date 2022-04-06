@@ -25,7 +25,7 @@ run() {
     # don't need to do anything.
     yabai -m space --label "$query"
     # Reload sketchybar to show the new space label.
-    sketchybar-yabai-reload
+    sketchybar-item-yabai-spaces
 }
 
 "$@"

@@ -23,4 +23,5 @@ script="$SCRIPT" \
 update_freq="$UPDATE_FREQ" \
 label="$LABEL" \
 icon="$ICON" \
+"$@"
 

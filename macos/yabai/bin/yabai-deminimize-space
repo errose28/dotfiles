@@ -8,6 +8,8 @@ space="$1"
 minimized_wins="$(yabai -m query --windows --space "$space" | jq -r 'map(select(."is-minimized" == true)) | map(.id) | join(" ")')"
 
 for win in $minimized_wins; do
+    # TODO: For some reason if there is no currently focused window, this
+    #   command fails and exits 1 with no output.
     yabai -m window --deminimize "$win"
 done
 
