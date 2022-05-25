@@ -125,6 +125,11 @@ map od mkdir
 map of mkfile
 map op mkfifo
 
+# Archives (a)
+map au %aunpack --each $fx
+map ap apack
+map ar arepack
+
 ### COMMAND LINE KEYBINDINGS ###
 
 cmap <esc> cmd-escape
@@ -242,3 +247,15 @@ cmd tmuxeditor &{{
     fi
 }}
 
+cmd apack %{{
+    printf 'archive name: '
+    read name
+    apack -f "$name" $(realpath --relative-to="$(pwd)" $fx)
+}}
+
+cmd arepack %{{
+    # repack (change archive type) only works well with one archive at a time.
+    printf "new archive name for $(realpath --relative-to="$(pwd)" $f): "
+    read name
+    arepack $(realpath --relative-to="$(pwd)" $f) "$name"
+}}
