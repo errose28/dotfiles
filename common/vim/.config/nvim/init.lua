@@ -14,3 +14,8 @@ vim.api.nvim_set_keymap('i', '<S-Tab>', '<C-d>', { noremap = true, silent = true
 vim.opt.list = true
 vim.opt.listchars = 'nbsp:␣,lead:·,trail:·,tab:→ ,extends:❯,precedes:❮'
 
+-- MISC --
+-- Do case insensitive search unless the search contains capitals.
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+

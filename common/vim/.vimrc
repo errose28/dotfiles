@@ -46,3 +46,8 @@ set autoindent
 nnoremap <S-Tab> <<
 " for insert mode
 inoremap <S-Tab> <C-d>
+
+" Do case insensitive search unless search has capitals.
+set ignorecase
+set smartcase
+
