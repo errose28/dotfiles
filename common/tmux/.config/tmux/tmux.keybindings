@@ -3,18 +3,13 @@ unbind C-b
 set-option -g prefix C-a
 # Make pressing prefix key while in prefix mode do nothing.
 bind-key C-a switch-client -T prefix
-# Restore focus to this tmux session if another one was focused.
-# Only needed for alacritty tmux key bindings.
-# Runs a no-op when pressed.
-bind-key -n C-M-j run-shell 'true'
 
 # Reload config file.
 bind-key r source-file ~/.tmux.conf
 
 bind-key / command-prompt "rename-window '%%'"
-# M is the alt modifier.
-# Cannot use Shift because that makes ? which is mapped to help.
-bind-key M-/ command-prompt "rename-session '%%'"
+# This is actually `shift + /`. It remaps the default help key.
+bind-key ? command-prompt "rename-session '%%'";
 
 # Things after \; allow more keys to be entered without leaving prefix mode.
 bind-key h previous-window \; switch-client -T prefix
