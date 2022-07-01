@@ -61,7 +61,7 @@
     "files.associations": {
         "*SConstruct*": "python",
         "*SConscript*": "python",
-        "*.robot": "robot"
+        "*.robot": "robotframework"
     },
     "files.exclude": {
         "**/.git": true,

@@ -2,6 +2,7 @@
 Library    DotfilesLibrary    ignore=vscode_extensions.txt
 Library    OperatingSystem
 Library    String
+Library    Process
 Default Tags    linux    macos
 
 *** Tasks ***
@@ -23,8 +24,11 @@ Install Extensions
     ${contents} =    Get File    vscode_extensions.txt
     @{extensions} =    Split To Lines    ${contents}
 
-    # vscode will skip extensions already installed.
-    FOR     ${extension}    IN    @{extensions}
-        Interactive    code     --install-extension=${extension}
-    END
+    ${installed_extensions_result} =    Run Process    code    --list-extensions
 
+    FOR     ${extension}    IN    @{extensions}
+        ${is_installed} =    Get Lines Containing String    ${installed_extensions_result.stdout}    ${extension}
+        IF    "${is_installed}" == "${EMPTY}"
+            Interactive    code     --install-extension=${extension}
+        END
+    END
