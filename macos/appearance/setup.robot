@@ -13,7 +13,8 @@ Defaults Write
 *** Tasks ***
 Global Settings
     # Make long press repeating instead of showing alt char.
-    Defaults Write    -g    NSGlobalDomain    ApplePressAndHoldEnabled    -bool    false
+    # Does not work with -g option.
+    Defaults Write    NSGlobalDomain    ApplePressAndHoldEnabled    -bool    false
     # Speed up window animations.
     Defaults Write    -g    NSWindowResizeTime    -float    0.0001
     Defaults Write    -g    InitialKeyRepeat    -int    10
