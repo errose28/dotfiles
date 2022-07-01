@@ -1,7 +1,7 @@
 *** Settings ***
 Library    DotfilesLibrary
 Library    OperatingSystem
-Default Tags    linux    macos
+Default Tags    linux    macos    headless
 
 *** Tasks ***
 Install Packages
