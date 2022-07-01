@@ -22,13 +22,14 @@ Global Settings
     Defaults Write    -g    AppleAccentColor    1
 
 Dock Settings
-    Defaults Write    com.apple.Dock    orientation    -string    left
-    Defaults Write    com.apple.Dock    autohide    -bool    TRUE
+    Defaults Write    com.apple.dock    orientation    -string    left
+    Defaults Write    com.apple.dock    autohide    -bool    true
     Defaults Write    com.apple.dock    tilesize    -integer    45
     # Only show open apps in the dock.
     Defaults Write    com.apple.dock    static-only    -bool    true
     # Fastest animation for minimizing windows.
     Defaults Write    com.apple.dock    mineffect    -string    scale
+    Defaults Write    com.apple.dock    no-bouncing    -bool    true
 
 Menu Bar Settings
     ### These do not seem to take effect and may need to be set manually. ###

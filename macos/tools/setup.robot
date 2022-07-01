@@ -6,6 +6,7 @@ Default Tags    macos
 Install Packages
     Install    koekeishiya/formulae/yabai
     Install    cliclick
+    Install    watch
     Install    coreutils
     ...    nix=coreutils-full
     # Homebrew splits coreutils into some other packages, and requires
