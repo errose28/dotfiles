@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Provides package manager commands for the robot DotfilesLibrary Install
+# keyword.
+
 brew() {
     # homebrew will automatically skip packages that are already installed.
     pkg="$1"
@@ -31,9 +34,9 @@ apt() {
     # apt will automatically skip packages that are already installed.
     pkg="$1"
     if command -v sudo &> /dev/null; then
-        sudo apt install "$pkg"
+        sudo apt install -y "$pkg"
     else
-        apt install "$pkg"
+        apt install -y "$pkg"
     fi
 }
 

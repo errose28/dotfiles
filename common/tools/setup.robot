@@ -18,7 +18,9 @@ Install Preview Packages
     Install    xpdf
     Install    w3m
     Install    bat
+    # TODO: Find a way to mark installs as optional.
     Install    krb5
+    ...    apt=krb5-user
 
 Link
     Deep Link    *

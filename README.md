@@ -19,25 +19,25 @@ Dotfiles for Linux and MacOS.
 
 #### Setting Up Robot
 
-- These steps will set up a python virtual environment within the project directory to install Robot and required libraries.
+- Install dependencies and bring them into the current shell's PATH.
+    - Option 1: Run the following in your shell:
+    ```shell
+    DOTFILES=<path to git root directory of this repo>
+    source bootstrap.sh
+    ```
 
-1. Choose how to manage python.
-    - Manually install python (not recommended).
-    - Install [lorri](https://github.com/target/lorri) if using [nix](https://nixos.org/manual/nix/stable/).
-    - Install [pyenv](https://github.com/pyenv/pyenv) otherwise.
+    - Option 2: If you are already using [direnv](https://direnv.net/), you can enable the repo's *.envrc* file to automatically load and unload the dependencies from your PATH when you enter and leave the directory.
 
-2. Install [direnv](https://direnv.net/)
+        - The dotfiles contain a parcel to set up direnv once they are deployed.
 
-3. Hook direnv into your current shell: `eval "$(direnv hook <shell>)"`
-    - After deploying the dotfiles, this will happen automatically.
+- Both options will run the following steps:
+    1. Install [asdf](https://asdf-vm.com/) from source to *~/.asdf*.
+    2. Use asdf to install the latest version of python.
+    3. Create and load a python virtual environment.
+    4. Install pip packages from *requirements.txt* to the virtual environment.
+    5. Set default options for the `robot` command when invoked.
 
-4. Enter the dotfiles directory. direnv should prompt you to allow it to run. Run `direnv allow` to approve. The following operations will be performed:
-    1. Either pyenv or lorri will be used to install python.
-    2. A python virtual environment will be created and loaded.
-    3. Pip packages in *requirements.txt* will be installed.
-    4. Default options for invoking robot will be set.
-
-    - The installation steps will be skipped on future runs.
+    - On future runs, the installation steps will be skipped. Only the dependencies will be added to the PATH.
 
 #### Invoking Robot
 
@@ -52,8 +52,8 @@ Dotfiles for Linux and MacOS.
         - `no-de`: Intended for use only on a Linux installation without a desktop environment.
     - `headless`: only requires a shell to work.
 
-- Default options for Robot are set automatically in *.envrc*, but more options can be added when Robot is run.
-    - The `linux` or `macos` tag will be included automatically based on the result of `uname --kernel-name`.
+- Default options for Robot are set automatically in *.envrc* and *bootstrap.sh*, but more options can be added when Robot is run.
+    - The `linux` or `macos` tag will be included automatically based on the result of `uname -s`.
     - The output directory for Robot logs is set to *.logs*.
     - Variables will be set to configure execution of the DotfilesLibrary.
 
@@ -66,7 +66,7 @@ Dotfiles for Linux and MacOS.
 
 ### Manual Deployment
 
-- In some cases, like sshing to a server, installing new packages may not be desired or permitted.
+- In some cases, like `ssh`ing to a server, installing new packages may not be desired or permitted.
 
 - The *headless.sh* script can be run from the top level directory to only symlink configs for headless dotfiles without installing anything.
     - This is a pure shell script with no dependencies.
