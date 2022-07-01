@@ -11,6 +11,8 @@ Install Packages
     Install    zsh-powerlevel10k
     ...    pacman=zsh-theme-powerlevel10k
     ...    brew=romkatv/powerlevel10k/powerlevel10k
+    # Must be manually installed on  Ubuntu.
+    ...    apt=${NONE}
 
 Common Link
     Add Ignore    *.ttf

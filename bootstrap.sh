@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Source this script to bootstrap dotfiles installation requirements.
 
@@ -17,7 +17,9 @@ source ~/.asdf/asdf.sh
 # asdf saves the current python version in the .tool-versions file and picks it
 # up when sourced. Create that file if it is not there already.
 if [ ! -f "$DOTFILES/.tool-versions" ]; then
-    asdf plugin add python 2> /dev/null
+    if ! asdf plugin list | grep -q python; then
+        asdf plugin add python
+    fi
     asdf install python latest > /dev/null
     asdf local python latest
 fi
