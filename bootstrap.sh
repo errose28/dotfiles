@@ -21,16 +21,18 @@ if [ ! -f "$DOTFILES/.tool-versions" ]; then
         asdf plugin add python
     fi
     asdf install python latest > /dev/null
+    cd "$DOTFILES"
     asdf local python latest
+    cd -
 fi
 
 # Create venv if necessary and load it.
 if [ ! -d "$DOTFILES/.venv" ] ; then
-    python -m venv .venv
-    source .venv/bin/activate
-    python -m pip install -r requirements.txt
+    python -m venv "$DOTFILES"/.venv
+    source "$DOTFILES"/.venv/bin/activate
+    python -m pip install -r "$DOTFILES"/requirements.txt
 else
-    source .venv/bin/activate
+    source "$DOTFILES"/.venv/bin/activate
 fi
 
 # Set default options for robot.
