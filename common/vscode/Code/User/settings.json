@@ -30,6 +30,8 @@
     "editor.insertSpaces": true,
     "editor.lineNumbers": "on",
 
+    "remote.SSH.configFile": "~/.config/vscode/remote-ssh",
+
     // hide errors about using multi line cursor with vim
     "vim.debug.silent": true,
     "vim.textwidth": 120,
