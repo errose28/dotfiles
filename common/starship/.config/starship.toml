@@ -3,14 +3,6 @@
 # 238 is the gray background.
 # 246 is the off-white foreground.
 
-# TODO
-#   fill character being drawn in terminal background color.
-#   direnv config (or any env var module) not showing up.
-#       Maybe use custom module.
-#   custom module ot show OS
-#       use uname to detect mac or linux, then cat /etc/os-release | grep '^ID=' on linux.
-#   test git displays
-
 ### PROMPT FORMAT ###
 
 add_newline = false
@@ -21,16 +13,14 @@ format = """\
     ($status  )\
     ($cmd_duration  )\
     ($jobs  )\
-    ($sudo  )\
-    (${env_var.IN_VM}  )\
-    ($directory )[](fg:238)\
+    (${custom.direnv}  )\
+    ((${custom.kernel} )($sudo )$directory )[](fg:238)\
     [$fill](fg:238 bold)\
 \
     ([](fg:238)( $git_branch)\
     ( $git_commit)\
     ( $git_state)\
-    ( $git_status)\
-    (  ${env_var.DIRENV_FILE})\
+    ($git_status)\
     (  $java)\
     (  $python)\
     (  $golang)\
@@ -42,6 +32,8 @@ $line_break\
 
 [fill]
 symbol = "·"
+# Fill module has no format key, so style must be explicitly set.
+style = "fg:238 bold"
 
 [status]
 disabled = false
@@ -65,17 +57,24 @@ disabled = false
 format = "[$symbol](fg:yellow bg:238)"
 symbol = ""
 
+[custom.direnv]
+when = "test ! -z $DIRENV_DIR"
+format = "[direnv](fg:yellow bg:238)"
+description = "Whether direnv is enabled."
+
+[custom.kernel]
+format = "[$output](fg:246 bold bg:238)"
+description = "The current kernel according to uname."
+shell = [ "sh", "-c", "starship-get-kernel" ]
+when = true
+
 [directory]
-format = "([$read_only](fg:red bg:238))[$path](fg:31 bg:238)"
+format = "([$read_only](fg:red bg:238) )[$path](fg:31 bg:238)"
 truncation_length = 5
 truncate_to_repo = false
 read_only = ""
 
 ### SHELL STATUS (left) ###
-
-[env_var.IN_VM]
-format = "[$symbol](fg:red bold bg:238)"
-symbol = "VM"
 
 [jobs]
 format = "$symbol $number"
@@ -95,7 +94,7 @@ symbol = ""
 only_attached = true
 
 [git_commit]
-format = "[($hash)](fg:yellow bg:238)"
+format = "[$hash](fg:yellow bg:238)"
 only_detached = true
 
 [git_state]
@@ -118,12 +117,8 @@ renamed = " »"
 
 ### TOOLS (right) ###
 
-[env_var.DIRENV_FILE]
-format = "[$symbol](fg:yellow bg:238)"
-symbol = "direnv"
-
 [java]
-format = "[$symbol](bold) $version"
+format = "[$symbol](fg:246 bold bg:238) $version"
 symbol = ""
 
 [python]
@@ -131,7 +126,7 @@ format = "$symbol $version $virtualenv"
 symbol = ""
 
 [golang]
-format = "[$symbol](bold) $version"
+format = "[$symbol](fg:246 bold bg:238) $version"
 symbol = ""
 
 [rust]

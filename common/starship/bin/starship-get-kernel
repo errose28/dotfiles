@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+kernel="$(uname -s | tr '[:upper:]' '[:lower:]')"
+
+if [ "$kernel" == linux ]; then
+    echo ''
+elif [ "$kernel" == darwin ]; then
+    echo ''
+fi
