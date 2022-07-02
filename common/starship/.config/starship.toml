@@ -5,7 +5,7 @@
 
 ### PROMPT FORMAT ###
 
-add_newline = false
+add_newline = true
 
 format = """\
 [╭─](fg:238 bold)\
