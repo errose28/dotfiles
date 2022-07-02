@@ -13,7 +13,6 @@ format = """\
     ($status  )\
     ($cmd_duration  )\
     ($jobs  )\
-    (${custom.direnv}  )\
     ((${custom.kernel} )($sudo )$directory )[](fg:238)\
     [$fill](fg:238 bold)\
 \
@@ -21,6 +20,7 @@ format = """\
     ( $git_commit)\
     ( $git_state)\
     ($git_status)\
+    (  ${custom.direnv})\
     (  $java)\
     (  $python)\
     (  $golang)\
