@@ -3,16 +3,6 @@ source "$STARTUP_DIR"/shell/load.sh zsh
 
 ### LOAD PLUGINS ###
 
-# Instant prompt before entering tmux seems to cause issues, so load startup scripts (including tmux) first.
-# Instant prompt will be activated within the tmux session.
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 load_plugin() {
     plugin="$1"
     if [ -f "$plugin" ]; then
@@ -24,18 +14,8 @@ load_plugin() {
 
 load_plugin "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
 load_plugin "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# Homebrew installs p10k at a different location than other zsh plugins.
-brew_p10k_file='/opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme'
-if [ -f "$brew_p10k_file" ]; then
-    source "$brew_p10k_file"
-else
-    load_plugin "$ZSH_PLUGIN_DIR/zsh-powerlevel10k/powerlevel10k.zsh-theme"
-fi
 
 ### PLUGINS SETTINGS ###
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-load_plugin ~/.p10k.zsh
 
 # First check history for command completion, then check tab complete.
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)

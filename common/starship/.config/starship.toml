@@ -1,0 +1,140 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# 238 is the gray background.
+# 246 is the off-white foreground.
+
+# TODO
+#   fill character being drawn in terminal background color.
+#   direnv config (or any env var module) not showing up.
+#       Maybe use custom module.
+#   custom module ot show OS
+#       use uname to detect mac or linux, then cat /etc/os-release | grep '^ID=' on linux.
+#   test git displays
+
+### PROMPT FORMAT ###
+
+add_newline = false
+
+format = """\
+[╭─](fg:238 bold)\
+[ \
+    ($status  )\
+    ($cmd_duration  )\
+    ($jobs  )\
+    ($sudo  )\
+    (${env_var.IN_VM}  )\
+    ($directory )[](fg:238)\
+    [$fill](fg:238 bold)\
+\
+    ([](fg:238)( $git_branch)\
+    ( $git_commit)\
+    ( $git_state)\
+    ( $git_status)\
+    (  ${env_var.DIRENV_FILE})\
+    (  $java)\
+    (  $python)\
+    (  $golang)\
+    (  $rust) )\
+](bg:238 fg:246)\
+$line_break\
+[╰─ ](fg:238 bold)\
+"""
+
+[fill]
+symbol = "·"
+
+[status]
+disabled = false
+format = "[$symbol](fg:red bg:238)"
+map_symbol = true
+success_symbol = ""
+# Default failure symbol unless one of the other symbols matches.
+symbol = "✘ $status"
+not_executable_symbol = "✘ $status"
+not_found_symbol = "✘ $status"
+# Default signal symbol unless one of the other symbols matches.
+signal_symbol = ' $signal_name\($status\)'
+sigint_symbol = ' $signal_name\($status\)'
+# Ideally want this to look like powerlevel10k: '✘ 0|127' or '✘ 0|SIGINT(2)'.
+# Currently support for pipe status is too minimal for this, so it is disabled.
+#pipestatus = true
+#pipestatus_format = "$pipestatus"
+
+[sudo]
+disabled = false
+format = "[$symbol](fg:yellow bg:238)"
+symbol = ""
+
+[directory]
+format = "([$read_only](fg:red bg:238))[$path](fg:31 bg:238)"
+truncation_length = 5
+truncate_to_repo = false
+read_only = ""
+
+### SHELL STATUS (left) ###
+
+[env_var.IN_VM]
+format = "[$symbol](fg:red bold bg:238)"
+symbol = "VM"
+
+[jobs]
+format = "$symbol $number"
+symbol = "bg"
+symbol_threshold = 1
+number_threshold = 1
+
+[cmd_duration]
+format = "$duration"
+min_time = 1_000
+
+### GIT (right) ###
+
+[git_branch]
+format = "[$symbol $branch(⇄$remote_branch)](fg:green bg:238)"
+symbol = ""
+only_attached = true
+
+[git_commit]
+format = "[($hash)](fg:yellow bg:238)"
+only_detached = true
+
+[git_state]
+format = "[$state](fg:red bg:238)[($progress_current/$progress_total)](fg:246 bg:238)"
+
+[git_status]
+format = "[$all_status$ahead_behind](fg:yellow bg:238)"
+up_to_date = ""
+conflicted = " ≠"
+modified = " ●"
+deleted = " ⌀"
+# TODO show counts for ahead/behind when not diverged.
+diverged = " ↑$ahead_count ↓$behind_count"
+ahead = " ↑"
+behind = " ↓"
+untracked = " ?"
+stashed = " "
+staged = " +"
+renamed = " »"
+
+### TOOLS (right) ###
+
+[env_var.DIRENV_FILE]
+format = "[$symbol](fg:yellow bg:238)"
+symbol = "direnv"
+
+[java]
+format = "[$symbol](bold) $version"
+symbol = ""
+
+[python]
+format = "$symbol $version $virtualenv"
+symbol = ""
+
+[golang]
+format = "[$symbol](bold) $version"
+symbol = ""
+
+[rust]
+format = "$symbol $version $toolchain"
+symbol = ""
+
