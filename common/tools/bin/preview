@@ -5,6 +5,15 @@ NUM_LINES="$2"
 
 ### HELPER FUNCTIONS ###
 
+# On Ubuntu, the bat package's command has been renamed to batcat. Undo that here.
+bat () {
+    if command -v batcat > /dev/null; then
+        batcat "$@"
+    else
+        command bat "$@"
+    fi
+}
+
 mime_type() {
     # `file --mime-type --brief --dereference` can also get mime type but has
     # issues with mp3 files with images.

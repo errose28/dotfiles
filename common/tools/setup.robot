@@ -17,7 +17,9 @@ Install Preview Packages
     # For pdftotext command:
     Install    xpdf
     Install    w3m
+    # Requires universe repo for apt.
     Install    bat
+    Install    jq
     # TODO: Find a way to mark installs as optional.
     Install    krb5
     ...    apt=krb5-user
