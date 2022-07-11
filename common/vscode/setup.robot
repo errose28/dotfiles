@@ -22,13 +22,14 @@ MacOS Link
 
 Install Extensions
     ${contents} =    Get File    vscode_extensions.txt
-    @{extensions} =    Split To Lines    ${contents}
+    @{extensions_to_install} =    Split To Lines    ${contents}
 
     ${installed_extensions_result} =    Run Process    code    --list-extensions
 
-    FOR     ${extension}    IN    @{extensions}
-        ${is_installed} =    Get Lines Containing String    ${installed_extensions_result.stdout}    ${extension}
+    FOR     ${extension_to_install}    IN    @{extensions_to_install}
+        ${is_installed} =    Get Lines Matching Regexp    ^${installed_extensions_result.stdout}$    ${extension_to_install}
         IF    "${is_installed}" == "${EMPTY}"
-            Interactive    code     --install-extension=${extension}
+            Interactive    code     --install-extension=${extension_to_install}
         END
     END
+
