@@ -6,7 +6,11 @@ Default Tags    macos
 Install Packages
     Install    fzf
     Install    kitty
-    Install    m-cli
+    # Homebrew m-cli install does not have python set correctly, need to do it
+    # manually.
+    Install
+    ...    m-cli
+    ...    brew=python
     Install    blueutil
 
 Link
