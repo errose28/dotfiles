@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 
-# Enter the path to the USB drive as the first argument, path to the ISO as the second argument.
+# Arguments:
+# 1: Path to USB block device.
+# 2. Path to ISO file.
 # make sure drive is unmounted for this to work.
-umount $1
 dd bs=4M if=$2 of=$1 conv=fdatasync status=progress
+
