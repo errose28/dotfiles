@@ -1,14 +1,20 @@
 #!/usr/bin/env sh
 
-is_mute="$(m volume ismute)"
+(
+flock --nonblock 200 || exit 1
+
 icon_font_size=20
 
 if m volume ismute | grep -q true; then
-    label=""
+    label=''
     icon=ﱝ
 else
-    label="$(m volume | awk '{print $2}')%"
     icon=墳
+    label="$(m volume | awk '{print $2}')%"
+    if echo "$label" | grep -q 'missing'; then
+        # Case for external audio device.
+        label=''
+    fi
     # Todo: lower level icon: icon=奔
 fi
 
@@ -19,4 +25,5 @@ LABEL="$label" \
 ICON_FONT_SIZE="$icon_font_size" \
 ICON="$icon" \
 sketchybar-add-item
+) 200>/tmp/sketchybar-volume.lock
 
