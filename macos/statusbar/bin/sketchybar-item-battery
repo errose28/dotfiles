@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-percent=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
+percent=$(pmset -g batt | grep -Eo "[0-9]+%" | cut -d% -f1)
 
 if pmset -g batt | grep -q 'AC Power'; then
     # Charging
