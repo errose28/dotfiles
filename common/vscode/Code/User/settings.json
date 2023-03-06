@@ -41,7 +41,7 @@
 
     "problems.decorations.enabled": true,
 
-    "extensions.ignoreRecommendations": false,
+    "extensions.ignoreRecommendations": true,
 
     "debug.inlineValues": true,
 
