@@ -16,13 +16,12 @@ make_fstab_line() {
     echo UUID="$uuid" none "$fs_type" rw,noauto
 }
 
-# Make a backup of fstab, but do not overwrite one if it is already there.
-if [ -f /etc/fstab.save ]; then
-    echo Remove backup fstab /etc/fstab.save before proceeeding.
-    exit 1
+if [ -f /etc/fstab ]; then
+    # Make a backup of fstab. Requires gnu coreutils cp.
+    cp -v --backup=numbered /etc/fstab /etc/fstab.save
 else
-    cp /etc/fstab /etc/fstab.save
-    echo /etc/fstab backed up to /etc/fstab.save
+    # There may be no fstab file by default.
+    touch /etc/fstab
 fi
 
 for drive in "$@"; do
@@ -30,6 +29,6 @@ for drive in "$@"; do
     # Do not add duplicate lines to fstab.
     grep -q "$fstab_line" /etc/fstab || echo "$fstab_line" >> /etc/fstab
     # Stop spotlight from indexing this drive, which could interfere with ejecting it.
-    mdutil -d "$drive"
+    mdutil -d /Volumes/"$drive"
 done
 
