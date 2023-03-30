@@ -37,3 +37,7 @@ alt - a:
 
 alt - space:
     open-mission-control
+
+alt + shift - b:
+    blueutil --power toggle
+
