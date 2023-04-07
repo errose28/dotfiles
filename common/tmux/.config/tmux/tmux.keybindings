@@ -27,3 +27,7 @@ bind-key Enter new-window
 bind-key = new-window
 bind-key + new-window -c "#{pane_current_path}"
 
+# Make highlighting work like a normal terminal.
+unbind-key -T copy-mode-vi MouseDragEnd1Pane
+bind-key -T copy-mode-vi MouseDown1Pane select-pane\; send-keys -X clear-selection
+

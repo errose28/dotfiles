@@ -16,6 +16,9 @@ set -gF @session-no-prefix-fg "#{@dark}"
 set -gF @session-prefix-bg "#{@alert}"
 set -gF @session-prefix-fg "#{@light}"
 
+# Make highlighting invert text colors.
+set -g mode-style 'reverse'
+
 # Background of non-current window is the same as bar background.
 set -gF @window-fg "#{@light}"
 set -gF @current-window-bg "#{@medium}"
