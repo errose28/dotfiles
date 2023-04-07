@@ -24,8 +24,6 @@ run() {
     # If selection was passed, it is the same name as the current desktop,
     # don't need to do anything.
     yabai -m space --label "$query"
-    # Reload sketchybar to show the new space label.
-    sketchybar-item-yabai-spaces
 }
 
 "$@"

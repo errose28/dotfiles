@@ -4,8 +4,8 @@ Default Tags    macos
 
 *** Tasks ***
 Install
-    Install    FelixKratz/formulae/sketchybar
-    Install    koekeishiya/formulae/yabai
+    Install    sketchybar
+    Install    yabai
     Install    jq
     Install    m-cli
 

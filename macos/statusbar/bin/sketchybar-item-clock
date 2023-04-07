@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-NAME=clock \
-SCRIPT='sketchybar-item-clock' \
-UPDATE_FREQ=5 \
-LABEL="$(date '+%a %b %-e %-l:%M%#p')" \
-sketchybar-add-item
-

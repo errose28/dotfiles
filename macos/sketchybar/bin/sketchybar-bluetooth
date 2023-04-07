@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+bt_json="$(system_profiler -json SPBluetoothDataType)"
+bt_state="$(echo "$bt_json" | jq -r '.SPBluetoothDataType[0].controller_properties.controller_state')"
+
+if [ "$bt_state" = 'attrib_on' ]; then
+    # Bluetooth on.
+    if echo "$bt_json" | jq '.SPBluetoothDataType[0].device_connected' | grep -q '"device_minorType": "Headset"'; then
+        # Headphones connected.
+        icon_font="MesloLGS NF:Bold:17"
+        icon=
+    else
+        icon_font="MesloLGS NF:Bold:12"
+        icon=
+    fi
+
+else
+    # Bluetooth off.
+    icon=
+    icon_font="MesloLGS NF:Bold:15"
+fi
+
+sketchybar --set $NAME icon="$icon" label="$label" icon.font="$icon_font"
+

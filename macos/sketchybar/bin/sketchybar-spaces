@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+# Mode can either be update or refresh.
+# Update will only affect existing spaces in the bar.
+# Refresh will make the bar match yabai's state.
+mode="$1"
+shift 1
+
+# Pass extra args to the bar to run as part of the batch here.
+args=("${@}")
+
+white='0xffffffff'
+grey='0xff888888'
+black='0xff000000'
+
+# Default options for all space items.
+args+=(
+    --default
+    label.color="$black"
+    background.corner_radius=5
+    background.height=20
+    background.padding_right=10
+    label.padding_right=4
+    label.font='Hack Nerd Font:Bold:15.0'
+)
+
+# Set to store current space items in the bar.
+# In refresh mode these will be removed.
+# In update mode these are the only items that will be updated.
+declare -A existing_bar_spaces
+
+while read space; do
+    if [ "$mode" = 'refresh' ]; then
+        args+=(--remove "$space")
+    elif [ "$mode" = 'update' ]; then
+        existing_bar_spaces["$space"]=1
+    else
+        echo Unknown mode $mode >&2
+        exit 1
+    fi
+done < <(sketchybar --query bar | jq -r '.items[] | select(test("space"))')
+
+while read space; do
+    index="$(echo "$space" | awk '{print $1}')"
+
+    # How the space item will be referred to in sketchybar.
+    bar_item_name="space-$index"
+
+    # In update mode, skip spaces that are not already in the bar.
+    if [ "$mode" = 'update' -a -z ${existing_bar_spaces["$bar_item_name"]} ]; then
+        continue
+    fi
+
+    window_count="$(echo "$space" | awk '{print $2}')"
+    display="$(echo "$space" | awk '{print $3}')"
+    focused="$(echo "$space" | awk '{print $4}')"
+    # Capture any white space in the label name.
+    yabai_label="$(echo "$space" | cut -d' ' -f5-)"
+
+    # Build the label for the space shown in the bar.
+    if [ -z "$yabai_label" ]; then
+        bar_item_label="$index"
+    else
+        bar_item_label="${index}: $yabai_label"
+    fi
+    if [ "$window_count" -gt 0 ]; then
+        bar_item_label="$bar_item_label ◉"
+    else
+        bar_item_label="$bar_item_label ∅"
+    fi
+
+    # Set background color for the bar item.
+    if [ "$focused" = true ]; then
+        bg_color="$white"
+    else
+        bg_color="$grey"
+    fi
+
+    # In refresh mode, we deleted all spaces, so need to re-add them.
+    if [ "$mode" = 'refresh' ]; then
+        args+=(--add space "$bar_item_name" left)
+    fi
+
+    args+=(
+    --subscribe "$bar_item_name" space_change
+    --set "$bar_item_name"
+    associated_display="$display"
+    background.color="$bg_color"
+    label="$bar_item_label")
+done < <(yabai -m query --spaces | jq -r '.[] | "\(.index) \(.windows | length) \(.display) \(."has-focus") \(.label)"')
+
+sketchybar "${args[@]}"
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# The wifi_change event supplies a $INFO variable in which the current SSID
+# is passed to the script.
+
+ssid="$INFO"
+
+if [ -z "$INFO" ]; then
+    icon=睊
+else
+    icon=直
+fi
+
+sketchybar --set $NAME icon="$icon" label="$ssid"
+
