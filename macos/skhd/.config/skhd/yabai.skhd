@@ -43,10 +43,10 @@ alt + shift - l:
 
 # Move windows to other screen.
 alt + cmd + shift - k:
-    yabai -m window --display east && yabai-center-mouse-in-focused
+    id="$(yabai -m query --windows --window | jq -r '.id')"; yabai -m window --display east; yabai-center-mouse-in-focused "$id"
 
 alt + cmd + shift - j:
-    yabai -m window --display west && yabai-center-mouse-in-focused
+    id="$(yabai -m query --windows --window | jq -r '.id')"; yabai -m window --display west; yabai-center-mouse-in-focused "$id"
 
 # Move where next window is inserted.
 # Press again to turn off animation.

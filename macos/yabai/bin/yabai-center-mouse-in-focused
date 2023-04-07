@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-x="$(yabai -m query --windows --window | jq '.frame.x + .frame.w / 2 | floor')"
-y="$(yabai -m query --windows --window | jq '.frame.y + .frame.h / 2 | floor')"
+# Optional window to operate on. Uses focused window otherwise.
+win_id="$1"
+
+x="$(yabai -m query --windows --window "$win_id" | jq '.frame.x + .frame.w / 2 | floor')"
+y="$(yabai -m query --windows --window "$win_id" | jq '.frame.y + .frame.h / 2 | floor')"
 
 cliclick m:"$x","$y"
