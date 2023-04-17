@@ -24,6 +24,7 @@ Install Preview Packages
     # TODO: Find a way to mark installs as optional.
     Install    krb5
     ...    apt=krb5-user
+    Install    ffmpeg
 
 Link
     Deep Link    *
