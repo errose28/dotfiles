@@ -53,7 +53,7 @@ while read space; do
 
     window_count="$(echo "$space" | awk '{print $2}')"
     display="$(echo "$space" | awk '{print $3}')"
-    focused="$(echo "$space" | awk '{print $4}')"
+    visible="$(echo "$space" | awk '{print $4}')"
     # Capture any white space in the label name.
     yabai_label="$(echo "$space" | cut -d' ' -f5-)"
 
@@ -70,7 +70,7 @@ while read space; do
     fi
 
     # Set background color for the bar item.
-    if [ "$focused" = true ]; then
+    if [ "$visible" = true ]; then
         bg_color="$white"
     else
         bg_color="$grey"
@@ -87,7 +87,7 @@ while read space; do
     associated_display="$display"
     background.color="$bg_color"
     label="$bar_item_label")
-done < <(yabai -m query --spaces | jq -r '.[] | "\(.index) \(.windows | length) \(.display) \(."has-focus") \(.label)"')
+done < <(yabai -m query --spaces | jq -r '.[] | "\(.index) \(.windows | length) \(.display) \(."is-visible") \(.label)"')
 
 sketchybar "${args[@]}"
 
