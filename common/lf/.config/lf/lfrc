@@ -4,17 +4,18 @@ source ~/.config/lf/lfrc.unmap
 ### CONFIG ###
 
 set info 'size'
-set dircounts on
+set dircounts true
 # Files in $fx and $fs are separated by this char.
 set filesep "\n"
 set ifs "\n"
 # For shell commands, fail on error or undefined variables.
 set shellopts '-eu'
-set mouse on
+set mouse true
 # How frequently to check for external updates (seconds).
 set period 1
 # Only show directory path in prompt.
 set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+set cursorpreviewfmt "\033[7m"
 # Two columns with more room given to preview side.
 set ratios '2:3'
 set tabstop 4
