@@ -2,8 +2,11 @@
 Library    DotfilesLibrary
 Default Tags    macos
 
-# Config should swap caps/escape, and swap cmd/option on my external non-mac keyboard.
-# Also remaps mouse buttons for logitech mouse on when used via bluetooth or dongle.
+# Makes the following keyboard/mouse modifications:
+# - Swap caps lock and escape.
+# - Swap cmd/option on my external non-mac keyboard.
+# - Remaps mouse buttons for logitech mouse on when used via bluetooth or dongle.
+# - Reverse vertical scroll direction for external logitech mouse only (not trackpad).
 
 *** Tasks ***
 Install Packages
