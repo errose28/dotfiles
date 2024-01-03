@@ -9,7 +9,7 @@ mkdir -p "$CACHE_DIR"
 window_title='Fzf Launcher'
 
 # Sticky for yabai requires SIP disabled.
-yabai -m rule --add label=fzf app=kitty title="$window_title" sticky=on manage=off border=off grid='4:4:1:1:2:2'
+yabai -m rule --add label=fzf app=kitty title="$window_title" sticky=on manage=off grid='4:4:1:1:2:2'
 
 kitty \
     --override remember_window_size=no \
