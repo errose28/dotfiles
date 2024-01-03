@@ -15,7 +15,6 @@
     "workbench.startupEditor": "none",
     "workbench.list.openMode": "doubleClick",
     "workbench.panel.defaultLocation": "right",
-    "workbench.activityBar.visible": true,
 
     "editor.minimap.enabled": false,
     "editor.rulers": [ 120 ],
@@ -185,5 +184,5 @@
     "security.workspace.trust.untrustedFiles": "open",
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.enabled": false,
-    "workbench.editor.untitled.hint": "hidden",
+    "workbench.editor.empty.hint": "hidden",
 }
