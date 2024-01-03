@@ -1,11 +1,13 @@
 #!/bin/sh
 
 # The wifi_change event supplies a $INFO variable in which the current SSID
-# is passed to the script.
+# is passed to the script. The SSID is not supplied in Macos Sonoma but the event still fires.
+# See https://github.com/FelixKratz/SketchyBar/issues/407
 
-ssid="$INFO"
+# ssid="$INFO"
+ssid="$(m wifi status | grep SSID | awk '{print $2}')"
 
-if [ -z "$INFO" ]; then
+if [ -z "$ssid" ]; then
     icon=睊
 else
     icon=直
