@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # The wifi_change event supplies a $INFO variable in which the current SSID
 # is passed to the script. The SSID is not supplied in Macos Sonoma but the event still fires.
