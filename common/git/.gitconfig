@@ -29,4 +29,10 @@
     # Now after merging, you will see an output line 'Staged <file> using previous resolution'.
     autoupdate = true
 [core]
-	askPass = 
+    askPass = 
+[alias]
+    # Fuzzy branch checkout.
+    fc = !git checkout "$(git branch --format='%(refname:short)' | fzf)"
+    # Push of a new branch created locally to the specified remote.
+    np = "!f() { test -z \"$1\" && echo 'Remote is required' 1>&2 && exit 1 || git push -u \"$1\" \"$(git branch --show-current)\"; }; f"
+
