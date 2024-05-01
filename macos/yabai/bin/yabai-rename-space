@@ -3,6 +3,6 @@
 new_name="$(prompt-window 'Rename Space' "$(yabai -m query --spaces --space | jq -r '.label')")"
 if [ ! -z "$new_name" ]; then
     yabai -m space --label "$new_name"
-    sketchybar-spaces update
+    sketchybar-yabai-spaces update
 fi
 
