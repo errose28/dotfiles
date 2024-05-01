@@ -29,7 +29,7 @@ alt - d:
     open -na launchpad
 
 alt - a:
-    fzf-launcher apps
+    yabai-rename-space
 
 alt - space:
     open-mission-control

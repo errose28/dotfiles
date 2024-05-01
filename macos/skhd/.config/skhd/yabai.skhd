@@ -24,6 +24,7 @@ alt + cmd + shift - tab:
     yabai -m window --focus recent
 
 # Swap display focus.
+# TODO Mouse is not following the focus change for some windows like Zettlr and Kitty.
 alt + cmd - k:
     yabai -m display --focus next
 alt + cmd - j:
