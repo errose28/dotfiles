@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Can be used to manually connect and disconnect a device such that macos will not re-connect to it while sleeping.
+
+address="$1"
+
+if [ "$(blueutil --is-connected "$address")" == "1" ]; then
+    blueutil --disconnect "$address"
+    blueutil --unpair "$address"
+else
+    blueutil --pair "$address"
+    blueutil --connect "$address"
+fi
+

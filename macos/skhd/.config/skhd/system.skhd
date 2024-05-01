@@ -1,10 +1,6 @@
 # Any commands using yabai will not work when started with brew services.
 # Any commands using custom scripts will not work unless manually started from terminal.
 
-# Misc
-alt - z:
-    toggle-focus-follows-mouse
-
 # Open terminal apps.
 alt - return:
     export USE_TMUX=1; \
@@ -38,6 +34,7 @@ alt - a:
 alt - space:
     open-mission-control
 
+# Address of a problematic pair of headphones.
 alt + shift - b:
-    blueutil --power toggle
+    toggle-bt-connect 88-c9-e8-4f-4a-67
 
