@@ -13,7 +13,7 @@ on run argv
         set default_answer to ""
     end if
 
-    set theResponse to display dialog title default answer default_answer with icon note buttons {"Cancel", "Continue"} default button "Continue"
+    set theResponse to display dialog title default answer default_answer buttons {"Cancel", "Continue"} default button "Continue"
     set output to (text returned of theResponse)
 end run
 
