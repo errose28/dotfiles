@@ -24,7 +24,6 @@ alt + cmd + shift - tab:
     yabai -m window --focus recent
 
 # Swap display focus.
-# TODO Mouse is not following the focus change for some windows like Zettlr and Kitty.
 alt + cmd - k:
     yabai -m display --focus next
 alt + cmd - j:
@@ -42,12 +41,14 @@ alt + shift - k:
 alt + shift - l:
     yabai -m window --warp east && yabai-center-mouse-in-focused
 
-# Move windows to other screen.
+# Swap the spaces of the two displays.
+# j and k determine which display has focus at the end of the command.
+# TODO Mouse does not follow the focus.
 alt + cmd + shift - k:
-    id="$(yabai -m query --windows --window | jq -r '.id')"; yabai -m window --display east; yabai-center-mouse-in-focused "$id"
+    yabai -m space --swap "$(yabai -m query --spaces | jq -r '.[] | select(."has-focus" == false and ."is-visible" == true) | .index')"
 
 alt + cmd + shift - j:
-    id="$(yabai -m query --windows --window | jq -r '.id')"; yabai -m window --display west; yabai-center-mouse-in-focused "$id"
+    yabai -m space --swap "$(yabai -m query --spaces | jq -r '.[] | select(."has-focus" == false and ."is-visible" == true) | .index')"
 
 # Move where next window is inserted.
 # Press again to turn off animation.

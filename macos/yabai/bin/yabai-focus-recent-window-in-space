@@ -44,6 +44,9 @@ else
     # Windows are listed in order used, with current window first.
     # Skip floating windows.
     win_id="$(yabai -m query --windows --space "$target_index" | jq -r --argjson win_index "$win_index" '[.[] | select(."is-floating"==false)] | .[$win_index].id')"
+    # BUG? When mouse follows focus is on, the cursor is snapped to 0,0 in the new window, instead of its center.
+    #   When mff is off and yabai-center-mouse-in-focused is called, the behavior is also observed.
+    #   This is not always observed, and restarting yabai seems to clear the issue temporarily.
     yabai -m window --focus "$win_id"
 fi
 
