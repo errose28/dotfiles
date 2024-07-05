@@ -4,11 +4,9 @@
 
 address="$1"
 
-if [ "$(blueutil --is-connected "$address")" == "1" ]; then
-    blueutil --disconnect "$address"
+if blueutil --paired | grep -q "$address"; then
     blueutil --unpair "$address"
 else
     blueutil --pair "$address"
-    blueutil --connect "$address"
 fi
 
