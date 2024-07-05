@@ -12,6 +12,8 @@ Install Packages
     # Homebrew splits coreutils into some other packages, and requires
     # additional path edits.
     ...    brew=${NONE}
+    # Currently Chat GPT is only offered on MacOS
+    Install    chatgpt
 
 Link
     Deep Link    *
