@@ -60,7 +60,9 @@
     "files.associations": {
         "*SConstruct*": "python",
         "*SConscript*": "python",
-        "*.robot": "robotframework"
+        "*.robot": "robotframework",
+        "*.mdx": "markdown"
+
     },
     "files.exclude": {
         "**/.git": true,
@@ -185,4 +187,5 @@
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.enabled": false,
     "workbench.editor.empty.hint": "hidden",
+    "redhat.telemetry.enabled": false,
 }
