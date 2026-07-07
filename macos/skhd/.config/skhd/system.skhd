@@ -24,9 +24,10 @@ alt + cmd - h:
     skhd -k "ctrl - left"
 alt + cmd - l:
     skhd -k "ctrl - right"
-    
+
+# Launchpad renamed to apps in MacOS Tahoe
 alt - d:
-    open -na launchpad
+    open -na apps
 
 alt - a:
     yabai-rename-space
