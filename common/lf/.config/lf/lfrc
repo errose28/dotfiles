@@ -244,7 +244,10 @@ cmd open &{{
 
 cmd tmuxeditor &{{
     if [ -n "$TMUX" ]; then
-        tmux new-window -a -n "$EDITOR: $(basename $f)" "$EDITOR" "$f"
+        # Tmux window names cannot include . or :
+        # Replace these with similar looking uniqcode alternatives.
+        window_name=$(echo "$EDITOR | $(basename $f)" | sed 's/\./․/g; s/:/∶/g')
+        tmux new-window -a -n "$window_name" "$EDITOR" "$f"
     fi
 }}
 
